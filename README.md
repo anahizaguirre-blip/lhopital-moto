@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Lhopital Moto — lhopital-moto.mx
 
-## Getting Started
+Sitio web de **Lhopital Moto** — Finest Motorcycle Gear.
 
-First, run the development server:
+Construido con [Next.js](https://nextjs.org), usando la misma base que `lhopital-fr.mx`.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## Estructura del proyecto
+
+```
+src/
+├── app/
+│   ├── layout.tsx          ← Layout principal (Header, Footer, metadata)
+│   ├── page.tsx            ← Página de inicio
+│   ├── nosotros/page.tsx   ← Página Nosotros
+│   ├── sitemap.ts          ← Sitemap automático
+│   └── ...otras páginas
+├── components/
+│   ├── Header.tsx          ← Navegación principal (negro + logo blanco)
+│   ├── Footer.tsx          ← Footer con links y contacto
+│   ├── Hero.tsx            ← Hero de la página principal
+│   ├── ProductShowcase.tsx ← Sección de productos destacados
+│   ├── BrandStory.tsx      ← Sección "Nuestra Historia"
+│   ├── HeroContainer.tsx   ← (reutilizado de lhopital-fr)
+│   ├── CTAButton.tsx       ← (reutilizado de lhopital-fr)
+│   ├── Modal.tsx           ← (reutilizado de lhopital-fr)
+│   ├── ContactForm.tsx     ← (reutilizado de lhopital-fr)
+│   ├── Reveal.tsx          ← (reutilizado de lhopital-fr)
+│   └── Partners.tsx        ← (reutilizado de lhopital-fr)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Imágenes necesarias
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Copia tus imágenes en la carpeta `public/`:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+public/
+├── logo/
+│   ├── frase_horizontal_invertido.png   ← Header y Footer
+│   ├── frase_circular_invertido.png     ← Hero
+│   └── frase_vertical.png              ← Sección Nosotros
+├── banners/
+│   ├── hero-moto.webp                  ← Banner del Hero principal
+│   ├── nosotros-moto.webp              ← Banner página Nosotros
+│   └── valores-moto.webp              ← Fondo sección Valores
+├── products/
+│   ├── hedon-casco.webp                ← Foto producto Hedon
+│   └── beeline-moto2.webp             ← Foto producto Beeline
+└── og-image.png                        ← Imagen para redes sociales
+```
 
-## Learn More
+## Instalación
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm install
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Abre [http://localhost:3000](http://localhost:3000).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deploy en Vercel
 
-## Deploy on Vercel
+```bash
+# Conecta tu repositorio de GitHub a Vercel
+# Vercel detecta Next.js automáticamente
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Sube el proyecto a GitHub
+2. Entra a [vercel.com](https://vercel.com) y conecta tu repo
+3. Configura el dominio `lhopital-moto.mx` en Vercel
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Diferencias con lhopital-fr.mx
+
+| lhopital-fr.mx | lhopital-moto.mx |
+|---|---|
+| Colores rojo `#b01f29` y negro | Blanco y negro (monocromático) |
+| Equipos de rescate / bomberos | Accesorios para motociclistas |
+| Fondo blanco en secciones | Fondo negro predominante |
+| Logo FR | Logo Moto (Finest Motorcycle Gear) |
+
+## Contacto
+
+- Tel: +52 56 2162 7604
+- Email: contacto@lhopital.mx
+- Instagram: @lhopitalmx
