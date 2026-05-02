@@ -1,0 +1,12 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+
+# Host
+Host: https://www.lhopital-fr.mx
+
+# Sitemaps
+Sitemap: https://www.lhopital-fr.mx/sitemap.xml
