@@ -23,7 +23,7 @@ const products: Product[] = [
     name: "Heroine Racer",
     badge: "Nuevo",
     price: "Consultar precio",
-    image: "/mnt/user-data/uploads/hedon-casco.jpg",
+    image: "/products/brand-Hedon.jpg",
     placeholder: "HEDON",
   },
   {
@@ -42,7 +42,7 @@ const products: Product[] = [
     name: "Moto 2 — Navegador GPS",
     badge: "Popular",
     price: "Consultar precio",
-    image: "/mnt/user-data/uploads/beeline-moto2.jpg",
+    image: "/products/brand-Moto2.jpg",
     placeholder: "BEELINE",
   },
   {
@@ -68,10 +68,32 @@ export default function Home() {
 
   return (
     <div className="w">
-      <div className="hero">
-        <div className="hero-ov" />
+      <div className="hero" style={{ position: "relative", overflow: "hidden" }}>
+        <video
+          src="/LhopitalVideo.mp4"
+          type="video/mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            zIndex: 0
+          }}
+        />
+        <div className="hero-ov" style={{ zIndex: 1 }} />
         <div className="nav">
-          <span className="nav-brand">LHOPITAL</span>
+          <img 
+            src="/logo/frase_circular_invertido.png" 
+            alt="Lhopital" 
+            style={{ height: '120px', width: 'auto' }}
+          />
           <div className="nav-links">
             <a href="#marcas">Marcas</a>
             <a href="#nosotros">Nosotros</a>
@@ -79,13 +101,13 @@ export default function Home() {
             <a href="#contacto">Contacto</a>
           </div>
         </div>
-        <div className="hero-c">
-          <span className="h-eye">Est. 2021 · CDMX, México</span>
+        <div className="hero-c" style={{ zIndex: 10 }}>
+          <span className="h-eye" style={{ fontWeight: 700, letterSpacing: '0.2em', color: 'rgba(201,168,76,0.75)' }}>Est. 2021 · CDMX, México</span>
           <div className="h-title">
-            RAISE THE
+            WE ARE THE
             <em>standard</em>
           </div>
-          <div className="h-sub">Finest Motorcycle Gear</div>
+          <div className="h-sub" style={{ fontWeight: 700, letterSpacing: '0.3em', color: 'rgba(245,243,240,0.7)' }}>Finest Motorcycle Gear</div>
           <div className="h-btns">
             <button className="btn-w">Ver Productos</button>
             <button className="btn-g">Conocer Marcas</button>
@@ -94,11 +116,29 @@ export default function Home() {
       </div>
 
       <div className="bar">
-        <span>BEELINE</span>
-        <div className="bdiv" />
-        <span>HEDON</span>
-        <div className="bdiv" />
-        <span>LHOPITAL TEE'S</span>
+        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '8px 0' }}>
+          <img 
+            src="/partners/beeline.png" 
+            alt="Beeline" 
+            style={{ height: '28px', width: 'auto', opacity: 0.7, filter: 'brightness(0) invert(1)' }}
+          />
+        </div>
+        <div className="bdiv" style={{ height: '40px' }} />
+        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '8px 0' }}>
+          <img 
+            src="/partners/hedon-white.png" 
+            alt="Hedon" 
+            style={{ height: '28px', width: 'auto', opacity: 0.7 }}
+          />
+        </div>
+        <div className="bdiv" style={{ height: '40px' }} />
+        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '8px 0' }}>
+          <img 
+            src="/logo/frase_horizontal_invertido.png" 
+            alt="Lhopital" 
+            style={{ height: '28px', width: 'auto', opacity: 0.7 }}
+          />
+        </div>
       </div>
 
       <section className="sec" id="marcas">
@@ -109,8 +149,8 @@ export default function Home() {
         <div className="marcas">
           <div className="mc">
             <img
-              src="/mnt/user-data/uploads/beeline-moto2.jpg"
-              alt="Beeline"
+              src="/products/brand-Moto2.jpg"
+              alt="Moto II"
               onError={(event) => {
                 const target = event.currentTarget;
                 target.style.display = "none";
@@ -128,8 +168,9 @@ export default function Home() {
           </div>
           <div className="mc">
             <img
-              src="/mnt/user-data/uploads/hedon-casco.jpg"
+              src="/products/brand-Hedon.jpg"
               alt="Hedon"
+              style={{ objectPosition: "center top" }}
               onError={(event) => {
                 const target = event.currentTarget;
                 target.style.display = "none";
@@ -147,7 +188,16 @@ export default function Home() {
           </div>
           <div className="mc">
             <div className="mc-ph">
-              <span className="mc-ph-t">L</span>
+              <img
+                src="/products/brand-Lhopital.jpg"
+                alt="Lhopital"
+                onError={(event) => {
+                  const target = event.currentTarget;
+                  target.style.display = "none";
+                  const next = target.nextElementSibling as HTMLElement | null;
+                  if (next) next.style.display = "block";
+                }}
+              />
             </div>
             <div className="mc-grad" />
             <div className="mc-cnt">
@@ -155,6 +205,58 @@ export default function Home() {
               <div className="mc-name">LHOPITAL</div>
               <div className="mc-tag">Playeras & merch · Hecho en MX</div>
               <div className="mc-lnk">Ver colección →</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="sec" id="eventos">
+        <div className="sec-lbl">Comunidad</div>
+        <div className="sec-ttl">NUESTROS <em>eventos</em></div>
+        <p style={{ fontSize: '11px', letterSpacing: '0.2em', color: 'rgba(245,243,240,0.4)', textTransform: 'uppercase', marginBottom: '20px' }}>
+          No tenemos showroom por ahora. Checa nuestros eventos.
+        </p>
+
+        <div style={{ marginBottom: '32px' }}>
+          <div style={{ fontSize: '8px', letterSpacing: '0.3em', color: 'var(--gold)', textTransform: 'uppercase', marginBottom: '12px' }}>
+            Próximos
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '2px' }}>
+            <div style={{ position: 'relative', overflow: 'hidden', background: '#111' }}>
+              <img 
+                src="/eventos/PORTADA_DGR2026.png" 
+                alt="DGR 2026 CDMX"
+                style={{ width: '100%', aspectRatio: '16/9', objectFit: 'cover', display: 'block', filter: 'grayscale(15%)' }}
+              />
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 55%)' }} />
+              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '16px' }}>
+                <div style={{ fontSize: '7px', letterSpacing: '0.3em', color: 'var(--gold)', textTransform: 'uppercase', marginBottom: '4px' }}>
+                  17 Mayo 2026 · 11:00 – 18:00 hrs
+                </div>
+                <div style={{ fontSize: '18px', fontWeight: 900, letterSpacing: '0.04em', marginBottom: '2px' }}>
+                  DGR 2026 CDMX
+                </div>
+                <div style={{ fontSize: '9px', color: 'rgba(245,243,240,0.5)', marginBottom: '10px', fontStyle: 'italic', fontFamily: 'Georgia, serif' }}>
+                  San Ángel, Ciudad de México
+                </div>
+                <a 
+                  href="https://dgr.triumphgrandtour.mx/" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ 
+                    display: 'inline-block',
+                    border: '1px solid var(--gold-dim)', 
+                    color: 'var(--gold)', 
+                    padding: '5px 12px', 
+                    fontSize: '8px', 
+                    letterSpacing: '0.15em', 
+                    textTransform: 'uppercase',
+                    textDecoration: 'none'
+                  }}
+                >
+                  Sold Out — Más info aquí →
+                </a>
+              </div>
             </div>
           </div>
         </div>
