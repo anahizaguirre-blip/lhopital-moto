@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { Cormorant_Garamond } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 
-// Lhopital Rider — fuente custom de marca (identidad)
+// Lhopital Rider — fuente custom de marca (display, identidad)
 const rider = localFont({
   src: "../public/LhopitalRider-Regular.ttf",
   variable: "--font-rider",
@@ -10,12 +11,21 @@ const rider = localFont({
   weight: "400",
 });
 
-// Almaq Refined — workhorse legible (body, descripciones)
+// Almaq Refined — workhorse legible (body, textos largos)
 const almaq = localFont({
   src: "../public/Almaq-Refined.otf",
   variable: "--font-almaq",
   display: "swap",
   weight: "400",
+});
+
+// Cormorant Garamond — serif italic editorial (acentos, palabras clave)
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  style: ["italic"],
+  variable: "--font-cormorant",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -31,7 +41,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${rider.variable} ${almaq.variable} h-full antialiased`}
+      className={`${rider.variable} ${almaq.variable} ${cormorant.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-body">{children}</body>
     </html>
