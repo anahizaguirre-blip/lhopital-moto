@@ -1,15 +1,21 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+// Lhopital Rider — fuente custom de marca (identidad)
+const rider = localFont({
+  src: "../public/LhopitalRider-Regular.ttf",
+  variable: "--font-rider",
+  display: "swap",
+  weight: "400",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+// Almaq Refined — workhorse legible (body, descripciones)
+const almaq = localFont({
+  src: "../public/Almaq-Refined.otf",
+  variable: "--font-almaq",
+  display: "swap",
+  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -25,9 +31,9 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${rider.variable} ${almaq.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col font-body">{children}</body>
     </html>
   );
 }
