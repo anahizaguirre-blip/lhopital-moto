@@ -11,7 +11,7 @@ export default function HeroHedon() {
       <div className="mx-auto max-w-[1440px] grid grid-cols-1 lg:grid-cols-2 min-h-[100svh]">
 
         {/* COLUMNA IZQUIERDA · Copy */}
-        <div className="flex flex-col justify-center px-6 py-16 sm:px-10 lg:px-16 lg:py-24 order-2 lg:order-1">
+        <div className="flex flex-col justify-start lg:justify-center px-6 pt-10 pb-16 sm:px-10 lg:px-16 lg:py-24 order-2 lg:order-1">
 
           {/* Microcopy superior con guion editorial */}
           <div
@@ -29,7 +29,7 @@ export default function HeroHedon() {
 
           {/* Título principal */}
           <h1
-            className="font-rider text-hedon-cream text-6xl sm:text-7xl lg:text-8xl xl:text-9xl leading-[0.95] tracking-tight mb-6 opacity-0 animate-fade-in-up"
+            className="font-rider text-hedon-cream text-7xl sm:text-8xl lg:text-8xl xl:text-9xl leading-[0.95] tracking-tight mb-6 opacity-0 animate-fade-in-up"
             style={{ animationDelay: '0.25s' }}
           >
             Hedon.
@@ -73,7 +73,7 @@ export default function HeroHedon() {
         </div>
 
         {/* COLUMNA DERECHA · Foto */}
-        <div className="relative w-full h-[60svh] lg:h-auto order-1 lg:order-2">
+        <div className="relative w-full h-[50svh] lg:h-auto order-1 lg:order-2">
           <Image
             src="/products/hedonist-hero.jpeg"
             alt="Casco Hedonist sobre barra, con flores"
