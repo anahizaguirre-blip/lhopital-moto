@@ -1,0 +1,22 @@
+import HeroHedon from '../components/hedon/HeroHedon'
+
+export const metadata = {
+  title: 'Hedon — Cascos sin compromiso | Lhopital-moto',
+  description:
+    'Cascos Hedon: diseñados en Londres, curados en México. 4 modelos disponibles con certificación ECE 22.06.',
+}
+
+export default function HedonPage() {
+  return (
+    <main className="bg-hedon-cream">
+      <HeroHedon />
+      {/* Próximas secciones:
+          <RitualDeSalida />
+          <EnLaCarretera />
+          <CuatroModelos />
+          <Tienda />
+          <CierreBelstaff />
+      */}
+    </main>
+  )
+}

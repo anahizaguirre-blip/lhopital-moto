@@ -1,3 +1,21 @@
+/* === FUENTES LHOPITAL === */
+@font-face {
+  font-family: 'Lhopital Rider';
+  src: url('/LhopitalRider-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Almaq Refined';
+  src: url('/Almaq-Refined.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -711,4 +729,33 @@ h6 {
     letter-spacing: 0.15em;
     text-transform: uppercase;
     cursor: pointer;
+}/* === ANIMACIONES HERO HEDON === */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-scale {
+  from {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
+}
+
+.animate-fade-in-scale {
+  animation: fade-in-scale 1.2s ease-out forwards;
 }

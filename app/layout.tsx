@@ -3,6 +3,10 @@ import { Cormorant_Garamond } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 
+
+
+
+
 // Lhopital Rider — fuente custom de marca (display, identidad)
 const rider = localFont({
   src: "../public/LhopitalRider-Regular.ttf",
