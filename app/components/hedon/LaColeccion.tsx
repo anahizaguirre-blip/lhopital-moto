@@ -29,10 +29,10 @@ const modelos: Modelo[] = [
     badge: "Foto oficial Hedon UK",
   },
   {
-    nombre: "Psilo Explores",
+    nombre: "Psilo Explorer",
     tagline: "Donde termina el asfalto.",
     imagen: "/products/psilo-1.jpg",
-    alt: "Casco Psilo Explores de Hedon",
+    alt: "Casco Psilo Explorer de Hedon",
     badge: "Colección 2026",
   },
 ];
@@ -92,15 +92,11 @@ export default function LaColeccion() {
                 </div>
               )}
             </div>
-
-            {/* Info debajo de la foto */}
-            <div className="px-1">
-              <h3 className="font-rider text-hedon-cream text-3xl md:text-4xl leading-tight mb-2">
-                {modelo.nombre}
-              </h3>
-              <p className="font-cormorant italic text-hedon-brass text-lg md:text-xl">
-                {modelo.tagline}
-              </p>
+              {/* Info debajo de la foto */}
+              <div className="px-1">
+              <h3 className="font-rider text-hedon-cream text-3xl md:text-4xl leading-tight">
+              {modelo.nombre}
+            </h3>
             </div>
           </article>
         ))}
