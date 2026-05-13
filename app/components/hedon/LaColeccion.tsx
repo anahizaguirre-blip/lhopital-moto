@@ -2,7 +2,6 @@ import Image from "next/image";
 
 type Modelo = {
   nombre: string;
-  tagline: string;
   imagen: string;
   alt: string;
   badge?: string;
@@ -10,27 +9,23 @@ type Modelo = {
 
 const modelos: Modelo[] = [
   {
-    nombre: "Heroine Racer",
-    tagline: "Velocidad con modales.",
+    nombre: "Heroine Racer",  
     imagen: "/products/heroine.jpg",
     alt: "Casco Heroine Racer de Hedon",
   },
   {
     nombre: "Hedonist",
-    tagline: "El placer del aire en la cara.",
     imagen: "/products/hedonist.jpg",
     alt: "Casco Hedonist de Hedon",
   },
   {
     nombre: "Epicurist 2.0",
-    tagline: "Para quien viaja sin prisa.",
     imagen: "/products/epicurist-1.jpg",
     alt: "Casco Epicurist 2.0 de Hedon",
     badge: "Foto oficial Hedon UK",
   },
   {
     nombre: "Psilo Explorer",
-    tagline: "Donde termina el asfalto.",
     imagen: "/products/psilo-1.jpg",
     alt: "Casco Psilo Explorer de Hedon",
     badge: "Colección 2026",
@@ -66,7 +61,7 @@ export default function LaColeccion() {
             }}
           >
             {/* Contenedor de foto */}
-            <div className="relative aspect-square overflow-hidden mb-5">
+            <div className="relative aspect-square overflow-hidden mb-3">
               <Image
               src={modelo.imagen}
               alt={modelo.alt}
