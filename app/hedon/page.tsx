@@ -1,4 +1,5 @@
 import HeroHedon from '../components/hedon/HeroHedon'
+import RitualDeSalida from '../components/hedon/RitualDeSalida'
 
 export const metadata = {
   title: 'Hedon — Cascos sin compromiso | Lhopital-moto',
@@ -8,10 +9,10 @@ export const metadata = {
 
 export default function HedonPage() {
   return (
-    <main className="bg-hedon-cream">
+    <main className="bg-hedon-brown">
       <HeroHedon />
+      <RitualDeSalida />
       {/* Próximas secciones:
-          <RitualDeSalida />
           <EnLaCarretera />
           <CuatroModelos />
           <Tienda />

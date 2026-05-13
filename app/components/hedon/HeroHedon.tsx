@@ -73,7 +73,7 @@ export default function HeroHedon() {
         </div>
 
         {/* COLUMNA DERECHA · Foto */}
-        <div className="relative w-full h-[50svh] lg:h-auto order-1 lg:order-2">
+        <div className="relative w-full h-[50svh] lg:h-full order-1 lg:order-2">
           <Image
             src="/products/hedonist-hero.jpeg"
             alt="Casco Hedonist sobre barra, con flores"

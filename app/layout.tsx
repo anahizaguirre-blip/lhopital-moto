@@ -45,9 +45,9 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${rider.variable} ${almaq.variable} ${cormorant.variable} h-full antialiased`}
+      className={`${rider.variable} ${almaq.variable} ${cormorant.variable} antialiased`}
     >
-      <body className="min-h-full flex flex-col font-body">{children}</body>
+      <body className="font-body">{children}</body>
     </html>
   );
 }
