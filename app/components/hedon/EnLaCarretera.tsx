@@ -2,9 +2,9 @@ import Image from "next/image";
 
 export default function EnLaCarretera() {
   return (
-    <section className="bg-hedon-brown py-24 md:py-32 px-6 md:px-12">
+    <section className="bg-hedon-brown pt-16 md:pt-20 pb-0 px-6 md:px-12">
       {/* Header */}
-      <div className="max-w-7xl mx-auto mb-16 md:mb-24">
+      <div className="max-w-7xl mx-auto mb-10 md:mb-14">
         <p className="font-almaq text-hedon-brass text-xs tracking-[0.25em] uppercase mb-8 animate-fade-in-up">
   <span className="inline-block w-8 h-px bg-hedon-brass align-middle mr-3" />
           En la ciudad.
@@ -12,12 +12,9 @@ export default function EnLaCarretera() {
         <h2 className="font-rider text-hedon-cream text-5xl md:text-7xl lg:text-8xl leading-[0.95] mb-8 animate-fade-in-up">
           El casco en su elemento.
         </h2>
-        <p className="font-cormorant italic text-hedon-cream/90 text-2xl md:text-3xl mb-6 animate-fade-in-up-slow">
-          No fue diseñado para la vitrina.
-        </p>
-        <p className="font-almaq text-hedon-brass/70 text-base md:text-lg max-w-2xl leading-relaxed animate-fade-in-up-slow">
-          Diseñado en Londres para una ciudad que no conoce. Aquí encuentra capas, ruido, luz dura, banquetas que no piden permiso. Aquí se vuelve gesto.
-        </p>
+        <p className="font-cormorant italic text-hedon-brass text-2xl md:text-3xl animate-fade-in-up-slow">
+        No fue diseñado para la vitrina.
+      </p>
       </div>
 
       {/* Grid de fotos */}
