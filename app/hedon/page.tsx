@@ -1,3 +1,4 @@
+import EnLaCarretera from "@/app/components/hedon/EnLaCarretera";
 import HeroHedon from '../components/hedon/HeroHedon'
 import RitualDeSalida from '../components/hedon/RitualDeSalida'
 
@@ -12,8 +13,8 @@ export default function HedonPage() {
     <main className="bg-hedon-brown">
       <HeroHedon />
       <RitualDeSalida />
+        <EnLaCarretera />
       {/* Próximas secciones:
-          <EnLaCarretera />
           <CuatroModelos />
           <Tienda />
           <CierreBelstaff />

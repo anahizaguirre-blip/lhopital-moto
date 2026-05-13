@@ -40,7 +40,7 @@ export default function HeroHedon() {
             className="font-cormorant italic text-hedon-cream text-2xl sm:text-3xl lg:text-4xl leading-snug mb-8 opacity-0 animate-fade-in-up"
             style={{ animationDelay: '0.4s' }}
           >
-            Cascos sin compromiso.
+            El arte de la protección.
           </p>
 
           {/* Descriptor en una sola línea */}
