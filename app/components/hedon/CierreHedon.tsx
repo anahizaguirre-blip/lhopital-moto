@@ -25,11 +25,12 @@ export default function CierreHedon() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             <Link href="/" className="flex items-center">
               <Image
-                src="/lhopital-logo-cream.png"
+                src="/logo/frase_horizontal_invertido.png"
                 alt="Lhopital"
-                width={120}
-                height={40}
-                className="opacity-80 hover:opacity-100 transition-opacity"
+                width={2250}
+                height={527}
+                className="h-10 md:h-12 w-auto opacity-80 hover:opacity-100 transition-opacity"
+                priority 
               />
             </Link>
 
