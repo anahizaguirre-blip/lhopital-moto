@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function EnLaCarretera() {
   return (
-    <section className="bg-hedon-brown pt-16 md:pt-20 pb-0 px-6 md:px-12">
+    <section className="bg-hedon-brown pt-16 md:pt-20 pb-0">
       {/* Header */}
       <div className="w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
         <p className="font-almaq text-hedon-brass text-xs tracking-[0.30em] uppercase mb-8 animate-fade-in-up">
@@ -18,7 +18,7 @@ export default function EnLaCarretera() {
       </div>
 
       {/* Grid de fotos */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+      <div className="w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
         {/* Foto izquierda - Hedonist en Tlatelolco */}
         <figure className="relative aspect-[2/3] overflow-hidden animate-fade-in-scale">
           <Image

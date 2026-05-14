@@ -3,7 +3,7 @@ import Image from 'next/image'
 export default function LaHermandad() {
   return (
     <section className="bg-hedon-brown pt-16 md:pt-20 pb-0">
-      <div className="mx-auto max-w-[1440px] px-6 md:px-10">
+      <div className="w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
         {/* Header */}
         <div className="mb-12 md:mb-16">
           <span className="block mb-6">

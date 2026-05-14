@@ -3,9 +3,10 @@ import Image from 'next/image'
 export default function RitualDeSalida() {
   return (
     <section
+      id="ritual"
       aria-label="El ritual de salida"
       className="relative w-full overflow-hidden h-[100svh] lg:h-[100vh]"
-    >
+          >
       {/* Foto full-bleed de fondo */}
       <Image
         src="/products/hedonist-2.jpg"
