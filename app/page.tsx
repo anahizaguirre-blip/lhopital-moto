@@ -71,7 +71,6 @@ export default function Home() {
       <div className="hero" style={{ position: "relative", overflow: "hidden" }}>
         <video
           src="/LhopitalVideo.mp4"
-          type="video/mp4"
           autoPlay
           muted
           loop
@@ -278,7 +277,7 @@ export default function Home() {
           </div>
           <div className="nos-txt">
             <div className="nos-q">
-              "Así como Guillaume de l'Hôpital tenía una regla para resolver sus problemas, nosotros tenemos una: <span>¡Salir a rodar!</span>"
+              &ldquo;Así como Guillaume de l&rsquo;Hôpital tenía una regla para resolver sus problemas, nosotros tenemos una: <span>¡Salir a rodar!</span>&rdquo;
             </div>
             <p className="nos-body">
               Somos una empresa mexicana fundada por <strong>amantes de las motocicletas</strong> con 17 años de experiencia en la industria de la seguridad. Nuestra misión: traer a México las <strong>mejores marcas del mundo</strong> para llevar cada salida al siguiente nivel.
@@ -355,7 +354,7 @@ export default function Home() {
 
       <div className="mani">
         <div className="mani-lbl">Raise the Standard</div>
-        <p className="mani-q">"Elegancia e innovación para quienes entienden que rodar es un arte."</p>
+        <p className="mani-q">&ldquo;Elegancia e innovación para quienes entienden que rodar es un arte.&rdquo;</p>
         <div className="mani-line" />
         <p className="mani-auth">Lhopital Moto · Est. 2021 · CDMX, México</p>
       </div>
