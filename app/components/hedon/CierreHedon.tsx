@@ -21,7 +21,7 @@ export default function CierreHedon() {
       </section>
 
       <footer className="bg-hedon-brown border-t border-hedon-brass/20 py-12 md:py-16">
-        <div className="mx-auto max-w-[1440px] grid grid-cols-1 lg:grid-cols-2 min-h-[100svh]">
+        <div className="mx-auto max-w-[1440px] px-6 md:px-10">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             <Link href="/" className="flex items-center">
               <Image
@@ -30,7 +30,7 @@ export default function CierreHedon() {
                 width={2250}
                 height={527}
                 className="h-10 md:h-12 w-auto opacity-80 hover:opacity-100 transition-opacity"
-                priority 
+                priority
               />
             </Link>
 
@@ -50,7 +50,7 @@ export default function CierreHedon() {
             </nav>
 
             <div className="flex items-center gap-5">
-      <a
+              <a
                 href="https://instagram.com/lhopitalmx"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -68,7 +68,7 @@ export default function CierreHedon() {
 
           <div className="mt-10 pt-6 border-t border-hedon-brass/10 text-center">
             <p className="font-almaq text-hedon-cream/40 text-[10px] tracking-[0.25em] uppercase">
-              © {new Date().getFullYear()} Lhopital · Raise the Standard
+              © {new Date().getFullYear()} Lhopital-moto · We are the standard
             </p>
           </div>
         </div>

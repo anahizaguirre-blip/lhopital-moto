@@ -27,10 +27,10 @@ const bloques = [
     descripcion: 'Sistema de ventilación de 3 canales. Ultra ligero, perfil bajo.',
   },
 ]
-
+{/* Si mueves el pb a 0 quitas la línea café que separa secciones*/}
 export default function Anatomia() {
   return (
-    <section className="bg-hedon-brown pt-16 md:pt-20 pb-24 md:pb-32">
+    <section className="bg-hedon-brown pt-16 md:pt-20 pb-20">
       <div className="w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
         {/* Header */}
         <div className="mb-12 md:mb-16">
@@ -49,23 +49,24 @@ export default function Anatomia() {
         </div>
 
         {/* Split asimétrico: foto + specs */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
           {/* Foto editorial - 7/12 */}
-           <div className="lg:col-span-7 lg:self-stretch">
-            <div className="relative w-full h-[600px] md:h-[700px] lg:h-full overflow-hidden bg-hedon-brown/40">
+          <div className="lg:col-span-7">
+            <div className="relative w-full h-[600px] md:h-[750px] lg:h-[600px] overflow-hidden bg-hedon-brown/40">
               <Image
                 src="/products/heroine-eastwood-1.jpg"
                 alt="Casco Hedon Heroine Eastwood — detalle artesanal"
                 fill
-                className="object-cover"
-                style={{ objectPosition: 'center -10%' }}
-                sizes="(max-width: 1024px) 100vw, 58vw"
+                className="object-cover scale-[1.0]"
+                style={{ objectPosition: 'center 0%' }}
+                sizes="(max-width: 1024px) 100vw, 67vw"
+                priority
               />
             </div>
           </div>
 
           {/* Specs - 5/12 */}
-          <div className="lg:col-span-5 lg:pt-4">
+          <div className="lg:col-span-5">
             {/* Eyebrow */}
             <p className="font-almaq text-hedon-brass/80 text-[10px] md:text-xs tracking-[0.3em] uppercase mb-10 md:mb-12">
               Hecho a mano · Ultra ligero
