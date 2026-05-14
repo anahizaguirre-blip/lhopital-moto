@@ -57,7 +57,7 @@ export default function TiendaCTA() {
         <div className="mb-12 md:mb-16">
           <span className="block mb-6">
             <span className="inline-block w-8 h-px bg-hedon-brass align-middle mr-3" />
-            <span className="font-almaq text-hedon-brass text-xs tracking-[0.25em] uppercase">
+            <span className="font-almaq text-hedon-brass text-xs tracking-[0.30em] uppercase">
               La Tienda
             </span>
           </span>
@@ -102,11 +102,11 @@ export default function TiendaCTA() {
         <div className="text-center">
           <Link
             href="/tienda"
-            className="inline-block font-almaq text-hedon-brown bg-hedon-brass hover:bg-hedon-cream transition-colors duration-300 px-12 py-5 text-sm tracking-[0.25em] uppercase"
+            className="inline-block font-almaq text-hedon-brown bg-hedon-brass hover:bg-hedon-cream transition-colors duration-300 px-12 py-5 text-sm tracking-[0.30em] uppercase"
           >
             Ver tienda completa →
           </Link>
-          <p className="font-almaq text-hedon-cream/60 text-xs tracking-[0.15em] uppercase mt-6">
+          <p className="font-almaq text-hedon-cream/60 text-xs tracking-[0.30em] uppercase mt-6">
             Pago seguro con Mercado Pago y PayPal · Envíos a todo México
           </p>
         </div>

@@ -37,14 +37,14 @@ export default function LaColeccion() {
     <section className="bg-hedon-brown pt-16 md:pt-20 pb-0">
       {/* Header */}
       <div className="w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
-        <p className="font-almaq text-hedon-brass text-xs tracking-[0.25em] uppercase mb-8 animate-fade-in-up">
+        <p className="font-almaq text-hedon-brass text-xs tracking-[0.30em] uppercase mb-8 animate-fade-in-up">
           <span className="inline-block w-8 h-px bg-hedon-brass align-middle mr-3" />
           La Colección
         </p>
         <h2 className="font-rider text-hedon-cream text-5xl md:text-7xl lg:text-8xl leading-[0.95] mb-6 animate-fade-in-up">
           Cuatro maneras de salir a rodar.
         </h2>
-        <p className="font-cormorant italic text-hedon-brass text-2xl md:text-3xl animate-fade-in-up-slow">
+        <p className="font-cormorant italic text-hedon-brass text-2xl md:text-3xl mb-12 md:mb-16 animate-fade-in-up-slow">
           Cada casco, una decisión.
         </p>
       </div>

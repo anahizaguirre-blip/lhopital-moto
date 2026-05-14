@@ -36,7 +36,7 @@ export default function Anatomia() {
         <div className="mb-12 md:mb-16">
           <span className="block mb-6">
             <span className="inline-block w-8 h-px bg-hedon-brass align-middle mr-3" />
-            <span className="font-almaq text-hedon-brass text-xs tracking-[0.25em] uppercase">
+            <span className="font-almaq text-hedon-brass text-xs tracking-[0.30em] uppercase">
               Anatomía
             </span>
           </span>

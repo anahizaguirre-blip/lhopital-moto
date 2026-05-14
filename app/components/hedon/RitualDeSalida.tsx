@@ -42,7 +42,7 @@ export default function RitualDeSalida() {
                 aria-hidden="true"
                 className="block w-10 h-px bg-hedon-brass"
               />
-              <p className="font-almaq text-hedon-brass text-xs tracking-[0.25em] uppercase">
+              <p className="font-almaq text-hedon-brass text-xs tracking-[0.30em] uppercase">
                 El ritual
               </p>
             </div>

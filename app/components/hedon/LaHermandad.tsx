@@ -23,7 +23,7 @@ export default function LaHermandad() {
         {/* Mosaico asimétrico */}
  <div className="grid grid-cols-1 md:grid-cols-12 md:grid-rows-2 gap-4 md:gap-6 md:h-[700px] lg:h-[800px]">
           {/* Foto grande dominante - izquierda, span 2 rows */}
-          <div className="md:col-span-7 md:row-span-2 relative aspect-[3/4] md:aspect-auto overflow-hidden bg-hedon-brown/40">
+           <div className="md:col-span-7 md:row-span-2 relative aspect-[3/4] md:aspect-auto overflow-hidden bg-hedon-brown/40">
             <Image
               src="/products/hermandad-1.jpeg"
               alt="La hermandad Hedon — primer retrato"
@@ -31,6 +31,11 @@ export default function LaHermandad() {
               className="object-cover"
               sizes="(max-width: 768px) 100vw, 58vw"
             />
+            <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8 z-10">
+              <p className="font-almaq text-hedon-cream text-base md:text-lg leading-tight">
+                Pata Negra · Cuauhtémoc
+              </p>
+            </div>
           </div>
 
           {/* Foto arriba derecha */}
@@ -67,6 +72,7 @@ export default function LaHermandad() {
         </div>
 
        
+
       </div>
     </section>
   )
