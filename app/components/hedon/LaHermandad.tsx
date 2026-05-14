@@ -2,8 +2,8 @@ import Image from 'next/image'
 
 export default function LaHermandad() {
   return (
-    <section className="bg-hedon-brown pt-16 md:pt-20 pb-24 md:pb-32">
-      <div className="max-w-7xl mx-auto px-6 md:px-10">
+    <section className="bg-hedon-brown pt-16 md:pt-20 pb-0">
+      <div className="mx-auto max-w-[1440px] px-6 md:px-10">
         {/* Header */}
         <div className="mb-12 md:mb-16">
           <span className="block mb-6">
@@ -20,8 +20,8 @@ export default function LaHermandad() {
           </p>
         </div>
 
-        {/* Mosaico asimétrico estilo galería */}
-        <div className="grid grid-cols-1 md:grid-cols-12 md:grid-rows-2 gap-4 md:gap-6 mb-12 md:mb-16">
+        {/* Mosaico asimétrico */}
+ <div className="grid grid-cols-1 md:grid-cols-12 md:grid-rows-2 gap-4 md:gap-6 md:h-[700px] lg:h-[800px]">
           {/* Foto grande dominante - izquierda, span 2 rows */}
           <div className="md:col-span-7 md:row-span-2 relative aspect-[3/4] md:aspect-auto overflow-hidden bg-hedon-brown/40">
             <Image
@@ -34,7 +34,7 @@ export default function LaHermandad() {
           </div>
 
           {/* Foto arriba derecha */}
-          <div className="md:col-span-5 relative aspect-[4/3] md:aspect-auto overflow-hidden bg-hedon-brown/40">
+          <div className="md:col-span-5 md:row-span-1 relative aspect-[4/3] md:aspect-auto overflow-hidden bg-hedon-brown/40">
             <Image
               src="/products/hermandad-2.jpeg"
               alt="La hermandad Hedon — segundo retrato"
@@ -45,7 +45,7 @@ export default function LaHermandad() {
           </div>
 
           {/* Abajo derecha — dos fotos chicas */}
-          <div className="md:col-span-3 relative aspect-square md:aspect-auto overflow-hidden bg-hedon-brown/40">
+          <div className="md:col-span-3 md:row-span-1 relative aspect-square md:aspect-auto overflow-hidden bg-hedon-brown/40">
             <Image
               src="/products/hermandad-3.jpeg"
               alt="La hermandad Hedon — tercer retrato"
@@ -55,7 +55,7 @@ export default function LaHermandad() {
             />
           </div>
 
-          <div className="md:col-span-2 relative aspect-square md:aspect-auto overflow-hidden bg-hedon-brown/40">
+          <div className="md:col-span-2 md:row-span-1 relative aspect-square md:aspect-auto overflow-hidden bg-hedon-brown/40">
             <Image
               src="/products/heroine-en-mesa.jpg"
               alt="Heroine sobre la mesa — detalle de objeto"
@@ -66,10 +66,7 @@ export default function LaHermandad() {
           </div>
         </div>
 
-        {/* Cierre editorial */}
-        <p className="font-cormorant italic text-hedon-brass text-xl md:text-2xl text-center max-w-2xl mx-auto">
-          Quienes lo entienden, lo llevan.
-        </p>
+       
       </div>
     </section>
   )

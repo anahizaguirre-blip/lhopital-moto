@@ -21,7 +21,7 @@ export default function CierreHedon() {
       </section>
 
       <footer className="bg-hedon-brown border-t border-hedon-brass/20 py-12 md:py-16">
-        <div className="max-w-7xl mx-auto px-6 md:px-10">
+        <div className="mx-auto max-w-[1440px] grid grid-cols-1 lg:grid-cols-2 min-h-[100svh]">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             <Link href="/" className="flex items-center">
               <Image

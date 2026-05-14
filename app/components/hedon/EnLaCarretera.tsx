@@ -4,7 +4,7 @@ export default function EnLaCarretera() {
   return (
     <section className="bg-hedon-brown pt-16 md:pt-20 pb-0 px-6 md:px-12">
       {/* Header */}
-      <div className="max-w-7xl mx-auto mb-10 md:mb-14">
+      <div className="w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
         <p className="font-almaq text-hedon-brass text-xs tracking-[0.25em] uppercase mb-8 animate-fade-in-up">
   <span className="inline-block w-8 h-px bg-hedon-brass align-middle mr-3" />
           En la ciudad.

@@ -31,7 +31,7 @@ const bloques = [
 export default function Anatomia() {
   return (
     <section className="bg-hedon-brown pt-16 md:pt-20 pb-24 md:pb-32">
-      <div className="max-w-7xl mx-auto px-6 md:px-10">
+      <div className="w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
         {/* Header */}
         <div className="mb-12 md:mb-16">
           <span className="block mb-6">
