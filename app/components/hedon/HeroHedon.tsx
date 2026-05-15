@@ -41,7 +41,7 @@ export default function HeroHedon() {
             className="font-almaq text-hedon-brass/70 text-base sm:text-lg leading-relaxed max-w-xl mb-12 opacity-0 animate-fade-in-up"
             style={{ animationDelay: '0.55s' }}
           >
-            Disenados en Londres. Curados en Mexico por Lhopital.
+            Diseñados en Londres. Curados en Mexico por Lhopital.
           </p>
 
           <div
