@@ -15,7 +15,7 @@ const modelos: Modelo[] = [
   },
   {
     nombre: "Hedonist",
-    imagen: "/products/hedonist.jpg",
+    imagen: "/products/hedon/hedonist.jpg",
     alt: "Casco Hedonist de Hedon",
   },
   {

@@ -22,7 +22,7 @@ export default function EnLaCarretera() {
         {/* Foto izquierda - Hedonist en Tlatelolco */}
         <figure className="relative aspect-[2/3] overflow-hidden animate-fade-in-scale">
           <Image
-            src="/products/hedonist-en-moto.jpg"
+            src="/products/hedon/hedonist-en-moto.jpg"
             alt="Casco Hedonist en Av. Guerrero, Tlatelolco, CDMX"
             fill
             className="object-cover"

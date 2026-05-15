@@ -62,7 +62,7 @@ export default function HeroHedon() {
 
         <div className="relative w-full h-[50svh] lg:h-full order-1 lg:order-2">
           <Image
-            src="/products/hedonist-hero.jpeg"
+            src="/products/hedon/hedonist-hero.jpeg"
             alt="Casco Hedonist sobre barra, con flores"
             fill
             priority

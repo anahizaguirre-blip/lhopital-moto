@@ -25,7 +25,7 @@ export default function LaHermandad() {
           {/* Foto grande dominante - izquierda, span 2 rows */}
            <div className="md:col-span-7 md:row-span-2 relative aspect-[3/4] md:aspect-auto overflow-hidden bg-hedon-brown/40">
             <Image
-              src="/products/hermandad-1.jpeg"
+              src="/products/hedon/hermandad-1.jpeg"
               alt="La hermandad Hedon — primer retrato"
               fill
               className="object-cover"
@@ -52,7 +52,7 @@ export default function LaHermandad() {
           {/* Abajo derecha — dos fotos chicas */}
           <div className="md:col-span-3 md:row-span-1 relative aspect-square md:aspect-auto overflow-hidden bg-hedon-brown/40">
             <Image
-              src="/products/hermandad-3.jpeg"
+              src="/products/hedon/hermandad-3.jpeg"
               alt="La hermandad Hedon — tercer retrato"
               fill
               className="object-cover"
@@ -62,7 +62,7 @@ export default function LaHermandad() {
 
           <div className="md:col-span-2 md:row-span-1 relative aspect-square md:aspect-auto overflow-hidden bg-hedon-brown/40">
             <Image
-              src="/products/heroine-en-mesa.jpg"
+              src="/products/hedon/heroine-en-mesa.jpg"
               alt="Heroine sobre la mesa — detalle de objeto"
               fill
               className="object-cover"

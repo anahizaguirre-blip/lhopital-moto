@@ -1,13 +1,9 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond } from "next/font/google";
+import { Cormorant_Garamond, Inter, JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 
-
-
-
-
-// Lhopital Rider — fuente custom de marca (display, identidad)
+// ─── IDENTIDAD LHOPITAL (display de marca, todas las subpáginas) ───
 const rider = localFont({
   src: "../public/LhopitalRider-Regular.ttf",
   variable: "--font-rider",
@@ -15,7 +11,7 @@ const rider = localFont({
   weight: "400",
 });
 
-// Almaq Refined — workhorse legible (body, textos largos)
+// ─── HEDON (cálido, editorial) ───
 const almaq = localFont({
   src: "../public/Almaq-Refined.otf",
   variable: "--font-almaq",
@@ -23,7 +19,6 @@ const almaq = localFont({
   weight: "400",
 });
 
-// Cormorant Garamond — serif italic editorial (acentos, palabras clave)
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["400", "500"],
@@ -32,9 +27,22 @@ const cormorant = Cormorant_Garamond({
   display: "swap",
 });
 
+// ─── MOTO II (técnico, minimalista) ───
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Lhopital Moto",
-  description: "Raise the standard in motorcycle gear and accessories from CDMX.",
+  description: "We are the standard. Equipo premium para motociclistas desde CDMX.",
 };
 
 export default function RootLayout({
@@ -45,7 +53,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${rider.variable} ${almaq.variable} ${cormorant.variable} antialiased`}
+      className={`${rider.variable} ${almaq.variable} ${cormorant.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased`}
     >
       <body className="font-body">{children}</body>
     </html>

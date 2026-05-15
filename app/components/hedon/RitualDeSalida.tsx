@@ -9,7 +9,7 @@ export default function RitualDeSalida() {
           >
       {/* Foto full-bleed de fondo */}
       <Image
-        src="/products/hedonist-2.jpg"
+        src="/products/hedon/hedonist-2.jpg"
         alt="Motociclista abrochando el barbiquejo de su casco Hedonist, con chamarra camel"
         fill
         priority={false}
