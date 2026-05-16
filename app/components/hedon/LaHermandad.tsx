@@ -12,7 +12,7 @@ export default function LaHermandad() {
               La Hermandad
             </span>
           </span>
-          <h2 className="font-rider text-hedon-cream text-5xl md:text-7xl lg:text-8xl leading-[0.95] mb-4">
+          <h2 className="font-hedon-display text-hedon-cream text-5xl md:text-7xl lg:text-8xl leading-[0.95] mb-4">
             No es un casco.
           </h2>
           <p className="font-cormorant italic text-hedon-brass text-2xl md:text-3xl">
@@ -25,7 +25,7 @@ export default function LaHermandad() {
           {/* Foto grande dominante - izquierda, span 2 rows */}
            <div className="md:col-span-7 md:row-span-2 relative aspect-[3/4] md:aspect-auto overflow-hidden bg-hedon-brown/40">
             <Image
-              src="/products/hedon/hermandad-1.jpeg"
+              src="/products/hedon/Hermandad1.jpeg"
               alt="La hermandad Hedon — primer retrato"
               fill
               className="object-cover"
@@ -33,7 +33,7 @@ export default function LaHermandad() {
             />
             <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8 z-10">
               <p className="font-almaq text-hedon-cream text-base md:text-lg leading-tight">
-                Pata Negra · Cuauhtémoc
+                Colonia Cuauhtémoc
               </p>
             </div>
           </div>
@@ -41,7 +41,7 @@ export default function LaHermandad() {
           {/* Foto arriba derecha */}
           <div className="md:col-span-5 md:row-span-1 relative aspect-[4/3] md:aspect-auto overflow-hidden bg-hedon-brown/40">
             <Image
-              src="/products/hermandad-2.jpeg"
+              src="/products/hedon/Hermandad3.jpeg"
               alt="La hermandad Hedon — segundo retrato"
               fill
               className="object-cover"
@@ -52,7 +52,7 @@ export default function LaHermandad() {
           {/* Abajo derecha — dos fotos chicas */}
           <div className="md:col-span-3 md:row-span-1 relative aspect-square md:aspect-auto overflow-hidden bg-hedon-brown/40">
             <Image
-              src="/products/hedon/hermandad-3.jpeg"
+              src="/products/hedon/motos.jpeg"
               alt="La hermandad Hedon — tercer retrato"
               fill
               className="object-cover"

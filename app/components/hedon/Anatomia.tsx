@@ -40,7 +40,7 @@ export default function Anatomia() {
               Anatomía
             </span>
           </span>
-          <h2 className="font-rider text-hedon-cream text-5xl md:text-7xl lg:text-8xl leading-[0.95] mb-4">
+          <h2 className="font-hedon-display text-hedon-cream text-5xl md:text-7xl lg:text-8xl leading-[0.95] mb-4">
             La cúspide de los cascos artesanales.
           </h2>
           <p className="font-cormorant italic text-hedon-brass text-2xl md:text-3xl">
@@ -76,11 +76,11 @@ export default function Anatomia() {
             <ul className="space-y-8 md:space-y-10">
               {bloques.map((bloque) => (
                 <li key={bloque.numero} className="grid grid-cols-[auto_1fr] gap-5 md:gap-6">
-                  <span className="font-rider text-hedon-brass text-3xl md:text-4xl leading-none pt-1">
+                  <span className="font-hedon-display text-hedon-brass text-3xl md:text-4xl leading-none pt-1">
                     {bloque.numero}
                   </span>
                   <div>
-                    <h3 className="font-rider text-hedon-cream text-xl md:text-2xl mb-2">
+                    <h3 className="font-hedon-display text-hedon-cream text-xl md:text-2xl mb-2">
                       {bloque.titulo}
                     </h3>
                     <p className="font-almaq text-hedon-cream/70 text-sm md:text-base leading-relaxed">

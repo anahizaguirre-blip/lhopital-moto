@@ -50,7 +50,7 @@ export default function RitualDeSalida() {
 
             {/* Título display — rompe en dos líneas */}
             <h2
-              className="font-rider text-hedon-cream text-5xl sm:text-6xl lg:text-7xl xl:text-8xl leading-[0.95] tracking-tight mb-8 opacity-0 animate-fade-in-up-slow"
+              className="font-hedon-display text-hedon-cream text-5xl sm:text-6xl lg:text-7xl xl:text-8xl leading-[0.95] tracking-tight mb-8 opacity-0 animate-fade-in-up-slow"
               style={{ animationDelay: '0.4s' }}
             >
               Antes del<br />

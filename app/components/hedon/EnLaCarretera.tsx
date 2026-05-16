@@ -9,7 +9,7 @@ export default function EnLaCarretera() {
   <span className="inline-block w-8 h-px bg-hedon-brass align-middle mr-3" />
           En la ciudad
         </p>
-        <h2 className="font-rider text-hedon-cream text-5xl md:text-7xl lg:text-8xl leading-[0.95] mb-8 animate-fade-in-up">
+        <h2 className="font-hedon-display text-hedon-cream text-5xl md:text-7xl lg:text-8xl leading-[0.95] mb-8 animate-fade-in-up">
           El casco en su elemento.
         </h2>
         <p className="font-cormorant italic text-hedon-brass text-2xl md:text-3xl mb-12 md:mb-16 animate-fade-in-up-slow">

@@ -32,6 +32,7 @@ export default {
         rider: ["var(--font-rider)", "serif"],
         almaq: ["var(--font-almaq)", "sans-serif"],
         cormorant: ["var(--font-cormorant)", "serif"],
+        "hedon-display": ["var(--font-cormorant)", "serif"],
         // ─── MOTO II (clases nuevas, no chocan con nada) ───
         inter: ["var(--font-inter)", "system-ui", "sans-serif"],
         mono: ["var(--font-jetbrains)", "ui-monospace", "monospace"],

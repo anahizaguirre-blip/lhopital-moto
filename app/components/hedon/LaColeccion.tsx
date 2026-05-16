@@ -41,7 +41,7 @@ export default function LaColeccion() {
           <span className="inline-block w-8 h-px bg-hedon-brass align-middle mr-3" />
           La Colección
         </p>
-        <h2 className="font-rider text-hedon-cream text-5xl md:text-7xl lg:text-8xl leading-[0.95] mb-6 animate-fade-in-up">
+        <h2 className="font-hedon-display text-hedon-cream text-5xl md:text-7xl lg:text-8xl leading-[0.95] mb-6 animate-fade-in-up">
           Cuatro maneras de salir a rodar.
         </h2>
         <p className="font-cormorant italic text-hedon-brass text-2xl md:text-3xl mb-12 md:mb-16 animate-fade-in-up-slow">
@@ -89,7 +89,7 @@ export default function LaColeccion() {
             </div>
               {/* Info debajo de la foto */}
               <div className="px-1">
-              <h3 className="font-rider text-hedon-cream text-3xl md:text-4xl leading-tight">
+              <h3 className="font-hedon-display text-hedon-cream text-3xl md:text-4xl leading-tight">
               {modelo.nombre}
             </h3>
             </div>

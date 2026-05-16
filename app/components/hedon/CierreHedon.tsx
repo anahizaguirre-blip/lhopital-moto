@@ -9,7 +9,7 @@ export default function CierreHedon() {
       <section className="bg-hedon-brown min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
         <div className="text-center px-6">
           <h2
-            className="font-rider text-hedon-cream leading-[0.8] select-none"
+            className="font-hedon-display text-hedon-cream leading-[0.8] select-none"
             style={{ fontSize: 'clamp(6rem, 22vw, 22rem)' }}
           >
             HEDON.

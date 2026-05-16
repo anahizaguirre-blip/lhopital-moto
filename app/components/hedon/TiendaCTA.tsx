@@ -61,7 +61,7 @@ export default function TiendaCTA() {
               La Tienda
             </span>
           </span>
-          <h2 className="font-rider text-hedon-cream text-5xl md:text-7xl lg:text-8xl leading-[0.95] mb-4">
+          <h2 className="font-hedon-display text-hedon-cream text-5xl md:text-7xl lg:text-8xl leading-[0.95] mb-4">
             Llévatelo a casa.
           </h2>
           <p className="font-cormorant italic text-hedon-brass text-2xl md:text-3xl">
@@ -88,7 +88,7 @@ export default function TiendaCTA() {
                   </span>
                 )}
               </div>
-              <h3 className="font-rider text-hedon-cream text-xl md:text-2xl mb-1">
+              <h3 className="font-hedon-display text-hedon-cream text-xl md:text-2xl mb-1">
                 {modelo.nombre}
               </h3>
               <p className="font-almaq text-hedon-brass text-xs md:text-sm tracking-wide">

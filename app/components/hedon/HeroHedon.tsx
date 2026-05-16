@@ -24,7 +24,7 @@ export default function HeroHedon() {
           </div>
 
           <h1
-            className="font-rider text-hedon-cream text-7xl sm:text-8xl lg:text-8xl xl:text-9xl leading-[0.95] tracking-tight mb-6 opacity-0 animate-fade-in-up"
+            className="font-hedon-display text-hedon-cream text-7xl sm:text-8xl lg:text-8xl xl:text-9xl leading-[0.95] tracking-tight mb-6 opacity-0 animate-fade-in-up"
             style={{ animationDelay: '0.25s' }}
           >
             Hedon.
