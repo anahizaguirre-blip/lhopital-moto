@@ -10,7 +10,7 @@ type Modelo = {
 const modelos: Modelo[] = [
   {
     nombre: "Heroine Racer",  
-    imagen: "/products/heroine.jpg",
+    imagen: "/products/hedon/heroine.jpg",
     alt: "Casco Heroine Racer de Hedon",
   },
   {
@@ -20,13 +20,13 @@ const modelos: Modelo[] = [
   },
   {
     nombre: "Epicurist 2.0",
-    imagen: "/products/epicurist-1.jpg",
+    imagen: "/products/hedon/epicurist-1.jpg",
     alt: "Casco Epicurist 2.0 de Hedon",
     badge: "Foto oficial Hedon UK",
   },
   {
     nombre: "Psilo Explorer",
-    imagen: "/products/psilo-1.jpg",
+    imagen: "/products/hedon/psilo-1.jpg",
     alt: "Casco Psilo Explorer de Hedon",
     badge: "Colección 2026",
   },

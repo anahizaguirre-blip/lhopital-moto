@@ -51,7 +51,7 @@ export default function EnLaCarretera() {
           style={{ animationDelay: "200ms", animationFillMode: "backwards" }}
         >
           <Image
-            src="/products/heroine-en-moto.jpg"
+            src="/products/hedon/heroine-en-moto.jpg"
             alt="Casco Heroine Racer en Av. Juárez, frente a Bellas Artes, CDMX"
             fill
             className="object-cover"
