@@ -1,16 +1,16 @@
-// app/marcas/moto-ii/page.tsx
-import type { Metadata } from "next";
+import type { Metadata } from 'next'
+import HeroMotoII from '@/app/components/motoii/HeroMotoII'
 
 export const metadata: Metadata = {
-  title: "Moto II por Beeline | Lhopital",
+  title: 'Moto II por Beeline | Lhopital-moto',
   description:
-    "El navegador minimalista para motociclistas. Traza tu ruta, sigue el camino. Distribuido en México por Lhopital.",
-};
+    'El navegador minimalista para motociclistas. Traza tu ruta. Sigue el camino. Distribuido en México por Lhopital.',
+}
 
 export default function MotoIIPage() {
   return (
-    <main className="bg-moto-black min-h-screen">
-      {/* 01 Hero */}
+    <main className="bg-moto-black min-h-screen text-moto-bone">
+      <HeroMotoII />
       {/* 02 Inicio (Traza el camino) */}
       {/* 03 Anatomía */}
       {/* 04 En la carretera */}
@@ -19,5 +19,5 @@ export default function MotoIIPage() {
       {/* 07 Tienda CTA */}
       {/* 08 Cierre MOTO II */}
     </main>
-  );
+  )
 }
