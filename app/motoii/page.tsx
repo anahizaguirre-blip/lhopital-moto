@@ -3,6 +3,7 @@ import HeroMotoII from '@/app/components/motoii/HeroMotoII'
 import Inicio from '@/app/components/motoii/Inicio'
 import Anatomia from '@/app/components/motoii/Anatomia'
 import EnLaCarretera from '@/app/components/motoii/EnLaCarretera'
+import LaColeccion from '@/app/components/motoii/LaColeccion'
 
 export const metadata: Metadata = {
   title: 'Moto II por Beeline | Lhopital-moto',
@@ -17,7 +18,7 @@ export default function MotoIIPage() {
       <Inicio />
       <Anatomia />
       <EnLaCarretera />
-      {/* 05 La Colección */}
+      <LaColeccion />
       {/* 06 La Hermandad */}
       {/* 07 Tienda CTA */}
       {/* 08 Cierre MOTO II */}
