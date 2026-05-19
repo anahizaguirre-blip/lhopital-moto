@@ -11,7 +11,7 @@ export default function CierreMotoII() {
         <div className="text-center px-6 w-full">
           <h2
             className="font-rider text-[#f5f3f0] leading-[0.85] select-none uppercase"
-            style={{ fontSize: 'clamp(5rem, 20vw, 20rem)', letterSpacing: '-0.01em' }}
+            style={{ fontSize: 'clamp(6rem, 24vw, 24rem)', letterSpacing: '-0.01em' }}
           >
             MOTO II
           </h2>
