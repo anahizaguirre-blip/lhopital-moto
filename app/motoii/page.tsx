@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import HeroMotoII from '@/app/components/motoii/HeroMotoII'
+import Inicio from '@/app/components/motoii/Inicio'
 
 export const metadata: Metadata = {
   title: 'Moto II por Beeline | Lhopital-moto',
@@ -11,7 +12,7 @@ export default function MotoIIPage() {
   return (
     <main className="bg-moto-black min-h-screen text-moto-bone">
       <HeroMotoII />
-      {/* 02 Inicio (Traza el camino) */}
+      <Inicio />
       {/* 03 Anatomía */}
       {/* 04 En la carretera */}
       {/* 05 La Colección */}
