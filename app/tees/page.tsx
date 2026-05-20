@@ -4,6 +4,7 @@ import EnLaRuta from "@/app/components/tees/EnLaRuta";
 import LaColeccion from "@/app/components/tees/LaColeccion";
 import Anatomia from "@/app/components/tees/Anatomia";
 import FranjaConfianza from "@/app/components/tees/FranjaConfianza";
+import LaHermandad from "@/app/components/tees/LaHermandad";
 
 export default function TeesPage() {
   return (
@@ -14,6 +15,7 @@ export default function TeesPage() {
       <LaColeccion />
       <Anatomia />
       <FranjaConfianza />
+      <LaHermandad />
     </main>
   );
 }

@@ -47,7 +47,7 @@ export default function ElOrigen() {
         {/* Columna de imagen */}
         <div className="relative w-full aspect-[4/5] lg:aspect-[3/4] order-1 lg:order-2">
           <Image
-            src="/products/lhopitaltees/GoodTimes.jpg"
+            src="/products/lhopitaltees/ElOrigen.jpg"
             alt="Playera Good Times, Good Rides"
             fill
             quality={90}
