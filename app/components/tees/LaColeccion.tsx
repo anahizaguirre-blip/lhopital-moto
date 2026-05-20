@@ -65,7 +65,7 @@ export default function LaColeccion() {
               className="block w-10 h-px bg-tees-red"
             />
             <p className="font-mono text-tees-red text-xs tracking-[0.30em] uppercase">
-              03 · La Colección
+              La Colección
             </p>
           </div>
 
@@ -76,7 +76,7 @@ export default function LaColeccion() {
         </div>
 
         {/* Bloques editoriales — cada playera */}
-        <div className="space-y-24 lg:space-y-32 pb-24 lg:pb-32">
+        <div className="space-y-16 lg:space-y-20 pb-24 lg:pb-32">
           {playeras.map((playera, index) => {
             const esImpar = index % 2 === 1
 
