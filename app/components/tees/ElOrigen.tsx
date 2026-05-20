@@ -7,7 +7,7 @@ export default function ElOrigen() {
       aria-label="El Origen de Tees"
       className="relative w-full bg-tees-fog overflow-hidden"
     >
-      <div className="mx-auto max-w-[1440px] grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 px-6 sm:px-10 lg:px-16 py-24 lg:py-32 items-center">
+      <div className="mx-auto max-w-[1440px] grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 px-6 sm:px-10 lg:px-16 pt-24 lg:pt-32 pb-16 lg:pb-20 items-center">
 
         {/* Columna de texto */}
         <div className="order-2 lg:order-1">
@@ -19,7 +19,7 @@ export default function ElOrigen() {
               className="block w-10 h-px bg-tees-red"
             />
             <p className="font-mono text-tees-red text-xs tracking-[0.30em] uppercase">
-              02 · El Origen
+              El Origen
             </p>
           </div>
 
