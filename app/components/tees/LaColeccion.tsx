@@ -51,7 +51,7 @@ export default function LaColeccion() {
     <section
       id="coleccion"
       aria-label="La Colección"
-      className="relative w-full bg-tees-fog overflow-hidden"
+      className="relative w-full bg-tees-black overflow-hidden"
     >
       <div className="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16">
 
@@ -70,7 +70,7 @@ export default function LaColeccion() {
           </div>
 
           {/* Headline */}
-          <h2 className="font-rider text-tees-black text-5xl sm:text-6xl lg:text-7xl leading-[0.95] tracking-tight mb-6">
+          <h2 className="font-rider text-tees-white text-5xl sm:text-6xl lg:text-7xl leading-[0.95] tracking-tight mb-6">
             Seis piezas.<br />Cada una con algo que decir.
           </h2>
         </div>
@@ -113,7 +113,7 @@ export default function LaColeccion() {
                   </p>
 
                   {/* Nombre */}
-                  <h3 className="font-rider text-tees-black text-4xl sm:text-5xl lg:text-6xl leading-[0.95] tracking-tight mb-3">
+                  <h3 className="font-rider text-tees-white text-4xl sm:text-5xl lg:text-6xl leading-[0.95] tracking-tight mb-3">
                     {playera.rojo ? (
                       <>
                         <span className="text-tees-red">BBB</span>
@@ -125,25 +125,25 @@ export default function LaColeccion() {
 
                   {/* Nombre completo (solo para BBB) */}
                   {playera.nombreCompleto && (
-                    <p className="font-almaq text-tees-black/60 text-sm sm:text-base tracking-[0.15em] uppercase mb-6">
+                    <p className="font-almaq text-tees-white/80 text-sm sm:text-base tracking-[0.15em] uppercase mb-6">
                       {playera.nombreCompleto}
                     </p>
                   )}
 
                   {/* Copy narrativo */}
-                  <p className="font-almaq text-tees-black/80 text-lg sm:text-xl leading-relaxed max-w-md mb-8">
+                  <p className="font-almaq text-tees-white/80 text-lg sm:text-xl leading-relaxed max-w-md mb-8">
                     {playera.copy}
                   </p>
 
                   {/* CTA sutil */}
                   <a
                     href="#tienda"
-                    className="inline-flex items-center gap-3 font-mono text-xs tracking-[0.3em] uppercase text-tees-black hover:text-tees-red transition-colors duration-300 group w-fit"
+                    className="inline-flex items-center gap-3 font-mono text-xs tracking-[0.3em] uppercase text-tees-white hover:text-tees-red transition-colors duration-300 group w-fit"
                   >
                     <span>Ver en tienda</span>
                     <span
                       aria-hidden="true"
-                      className="inline-block w-12 h-px bg-tees-black group-hover:bg-tees-red transition-colors duration-300"
+                      className="inline-block w-12 h-px bg-tees-white group-hover:bg-tees-red transition-colors duration-300"
                     />
                   </a>
                 </div>

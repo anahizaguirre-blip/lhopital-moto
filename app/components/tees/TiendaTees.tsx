@@ -46,7 +46,7 @@ export default function TiendaTees() {
     <section
       id="tienda"
       aria-label="Tienda"
-      className="relative w-full bg-tees-fog overflow-hidden"
+      className="relative w-full bg-tees-black overflow-hidden"
     >
       <div className="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16 py-24 lg:py-32">
 
@@ -60,17 +60,17 @@ export default function TiendaTees() {
               className="block w-10 h-px bg-tees-red"
             />
             <p className="font-mono text-tees-red text-xs tracking-[0.30em] uppercase">
-              08 · Tienda
+              Tienda
             </p>
           </div>
 
           {/* Headline */}
-          <h2 className="font-rider text-tees-black text-5xl sm:text-6xl lg:text-7xl leading-[0.95] tracking-tight mb-6">
+          <h2 className="font-rider text-tees-white text-5xl sm:text-6xl lg:text-7xl leading-[0.95] tracking-tight mb-6">
             La colección.
           </h2>
 
           {/* Sublínea */}
-          <p className="font-almaq text-tees-black/70 text-lg sm:text-xl leading-relaxed">
+          <p className="font-almaq text-tees-white/80 text-lg sm:text-xl leading-relaxed">
             Seis modelos. Corte oversize. Tallas S a XL.
           </p>
         </div>
@@ -93,7 +93,7 @@ export default function TiendaTees() {
               </div>
 
               {/* Nombre */}
-              <h3 className="font-almaq font-bold text-tees-black text-lg sm:text-xl leading-tight mb-2">
+              <h3 className="font-almaq font-bold text-tees-white text-lg sm:text-xl leading-tight mb-2">
                 {producto.nombre}
               </h3>
 
@@ -102,7 +102,7 @@ export default function TiendaTees() {
                 {tallas.map((talla) => (
                   <span
                     key={talla}
-                    className="font-mono text-tees-black/50 text-xs tracking-wider"
+                    className="font-mono text-tees-white/80 text-xs tracking-wider"
                   >
                     {talla}
                   </span>
@@ -110,8 +110,8 @@ export default function TiendaTees() {
               </div>
 
               {/* Precio */}
-              <p className="font-almaq text-tees-black text-xl mb-5">
-                ${producto.precio} <span className="text-tees-black/50 text-sm">MXN</span>
+              <p className="font-almaq text-tees-white text-xl mb-5">
+                ${producto.precio} <span className="text-tees-white/80 text-sm">MXN</span>
               </p>
 
               {/* Botón Comprar */}

@@ -39,7 +39,7 @@ export default function HeroTees() {
               aria-hidden="true"
               className="block w-10 h-px bg-tees-red"
             />
-            <p className="font-mono text-tees-red text-xs tracking-[0.30em] uppercase">
+            <p className="font-mono bg-tees-red text-xs tracking-[0.30em] uppercase">
               Hecho en México · Diseño propio
             </p>
           </div>

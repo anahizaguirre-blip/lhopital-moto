@@ -26,7 +26,7 @@ export default function Anatomia() {
     <section
       id="anatomia"
       aria-label="Anatomía"
-      className="relative w-full bg-tees-fog overflow-hidden"
+      className="relative w-full bg-tees-black overflow-hidden"
     >
       <div className="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16 py-24 lg:py-32">
 
@@ -45,12 +45,12 @@ export default function Anatomia() {
           </div>
 
           {/* Headline */}
-          <h2 className="font-rider text-tees-black text-5xl sm:text-6xl lg:text-7xl leading-[0.95] tracking-tight mb-6">
+          <h2 className="font-rider text-tees-white text-5xl sm:text-6xl lg:text-7xl leading-[0.95] tracking-tight mb-6">
             El detalle importa.
           </h2>
 
           {/* Sublínea */}
-          <p className="font-almaq text-tees-black/70 text-lg sm:text-xl leading-relaxed">
+          <p className="font-almaq text-tees-white/80 text-lg sm:text-xl leading-relaxed">
             Lo que no se ve en la foto, pero se siente en cada rodada.
           </p>
         </div>
@@ -60,7 +60,7 @@ export default function Anatomia() {
           {especificaciones.map((spec) => (
             <div
               key={spec.numero}
-              className="border-t border-tees-black/15 pt-6"
+              className="border-t border-tees-white/15 pt-6"
             >
               {/* Número grande */}
               <p className="font-rider text-tees-red text-5xl lg:text-6xl leading-none mb-6">
@@ -68,12 +68,12 @@ export default function Anatomia() {
               </p>
 
               {/* Título */}
-              <h3 className="font-almaq font-bold text-tees-black text-xl lg:text-2xl leading-tight mb-3">
+              <h3 className="font-almaq font-bold text-tees-white text-xl lg:text-2xl leading-tight mb-3">
                 {spec.titulo}
               </h3>
 
               {/* Detalle */}
-              <p className="font-almaq text-tees-black/70 text-base leading-relaxed">
+              <p className="font-almaq text-tees-white/80 text-base leading-relaxed">
                 {spec.detalle}
               </p>
             </div>

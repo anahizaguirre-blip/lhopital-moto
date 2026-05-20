@@ -31,6 +31,7 @@ export default {
           grey: "#6B6B6B",
           red: "#C8102E",
           fog: "#F5F5F5",
+          brass: "#C9A961",
         },
       },
       fontFamily: {

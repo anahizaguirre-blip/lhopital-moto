@@ -62,19 +62,19 @@ export default function EnLaCarretera() {
 
           <div className="relative aspect-[4/3]">
             <Image
-              src="/products/lhopitaltees/LaCarretera2.jpg"
+              src="/products/lhopitaltees/HarleyFatBob.jpg"
               alt="Harley-Davidson — comunidad Lhopital"
               fill
               quality={85}
-              sizes="(max-width: 640px) 100vw, 33vw"
-              className="object-cover object-right grayscale"
+               sizes="(max-width: 640px) 100vw, 33vw"
+              className="object-cover object-center grayscale scale-[1.8] translate-y-[-45%]"
             />
           </div>
 
           <div className="relative aspect-[4/3]">
             <Image
-              src="/products/lhopitaltees/LaCarretera3.jpg"
-              alt="Suzuki en ruta — comunidad Lhopital"
+              src="/products/lhopitaltees/YamahaR1.jpg"
+              alt="Yamaha R1 en ruta— comunidad Lhopital"
               fill
               quality={85}
               sizes="(max-width: 640px) 100vw, 33vw"
@@ -83,15 +83,15 @@ export default function EnLaCarretera() {
           </div>
 
           <div className="relative aspect-[4/3] overflow-hidden">
-  <Image
-    src="/products/lhopitaltees/LaCarretera4.jpg"
-    alt="Bobber en ruta — comunidad Lhopital"
-    fill
-    quality={85}
-    sizes="(max-width: 640px) 100vw, 33vw"
-    className="object-cover object-center grayscale scale-[1.8] translate-y-[-45%]"
-  />
-</div>
+            <Image
+              src="/products/lhopitaltees/HarleySportster.jpg"
+              alt="Harley en ruta — comunidad Lhopital"
+              fill
+              quality={85}
+             sizes="(max-width: 640px) 100vw, 33vw"
+              className="object-cover object-right grayscale"
+            />
+          </div>
 
         </div>
 

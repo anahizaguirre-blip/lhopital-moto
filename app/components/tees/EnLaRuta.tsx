@@ -5,7 +5,7 @@ export default function EnLaRuta() {
     <section
       id="ruta"
       aria-label="En la Ruta — Sayula"
-      className="relative w-full bg-tees-fog overflow-hidden"
+      className="relative w-full bg-tees-black overflow-hidden"
     >
       <div className="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16 pt-16 lg:pt-20 pb-24 lg:pb-32">
 
@@ -24,12 +24,12 @@ export default function EnLaRuta() {
           </div>
 
           {/* Headline */}
-          <h2 className="font-rider text-tees-black text-5xl sm:text-6xl lg:text-7xl leading-[0.95] tracking-tight mb-6">
+          <h2 className="font-rider text-tees-white text-5xl sm:text-6xl lg:text-7xl leading-[0.95] tracking-tight mb-6">
             Esto pasó en Sayula.
           </h2>
 
           {/* Sublínea */}
-          <p className="font-almaq text-tees-black/70 text-lg sm:text-xl leading-relaxed">
+          <p className="font-almaq text-tees-white/80 text-lg sm:text-xl leading-relaxed">
             De ahí salieron las playeras.
           </p>
         </div>
