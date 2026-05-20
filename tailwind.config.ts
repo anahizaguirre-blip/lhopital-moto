@@ -23,6 +23,13 @@ export default {
           line: "#2A2A2A",
           signal: "#FF6B35",
         },
+        tees: {
+          black: "#1A1A1A",
+          white: "#FFFFFF",
+          grey: "#6B6B6B",
+          red: "#C8102E",
+          fog: "#F5F5F5",
+        },
       },
       fontFamily: {
         // ─── GLOBALES (Hedon + home dependen de esto) ───
