@@ -13,21 +13,7 @@ export default function CierreTees() {
       <p className="font-cormorant italic text-tees-white/80 text-2xl sm:text-3xl lg:text-4xl mb-16">
         Hecha donde se rueda.
       </p>
-
-      {/* Slogan corporativo */}
-      <div className="flex items-center gap-4">
-        <span
-          aria-hidden="true"
-          className="block w-8 h-px bg-tees-white/30"
-        />
-        <p className="font-mono text-tees-white/50 text-xs sm:text-sm tracking-[0.30em] uppercase">
-         
-        </p>
-        <span
-          aria-hidden="true"
-          className="block w-8 h-px bg-tees-white/30"
-        />
-      </div>
+      
     </section>
   )
 }
