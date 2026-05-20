@@ -7,6 +7,7 @@ import LaColeccion from '@/app/components/motoii/LaColeccion'
 import LaHermandad from '@/app/components/motoii/LaHermandad'
 import TiendaCTA from '@/app/components/motoii/TiendaCTA'
 import CierreMotoII from '@/app/components/motoii/CierreMotoII'
+import Footer from "@/app/components/Footer";
 
 export const metadata: Metadata = {
   title: 'Moto II por Beeline | Lhopital-moto',
@@ -25,6 +26,7 @@ export default function MotoIIPage() {
       <LaHermandad />
       <TiendaCTA />
       <CierreMotoII />
+      <Footer bg="dark" />
     </main>
   )
 }

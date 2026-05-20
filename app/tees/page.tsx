@@ -7,6 +7,8 @@ import FranjaConfianza from "@/app/components/tees/FranjaConfianza";
 import LaHermandad from "@/app/components/tees/LaHermandad";
 import EnLaCarretera from "@/app/components/tees/EnLaCarretera";
 import TiendaTees from "@/app/components/tees/TiendaTees";
+import CierreTees from "@/app/components/tees/CierreTees";
+import Footer from "@/app/components/Footer";
 
 export default function TeesPage() {
   return (
@@ -20,6 +22,8 @@ export default function TeesPage() {
       <LaHermandad />
       <EnLaCarretera />
       <TiendaTees />
+      <CierreTees />
+      <Footer bg="dark" />
     </main>
   );
 }

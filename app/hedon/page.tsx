@@ -7,6 +7,7 @@ import CierreHedon from '@/app/components/hedon/CierreHedon'
 import Anatomia from '@/app/components/hedon/Anatomia'
 import FranjaConfianza from '@/app/components/hedon/FranjaConfianza'
 import LaHermandad from '@/app/components/hedon/LaHermandad'
+import Footer from "@/app/components/Footer";
 
 export const metadata = {
   title: 'Hedon — Cascos sin compromiso | Lhopital-moto',
@@ -26,6 +27,7 @@ export default function HedonPage() {
         <LaHermandad />
         <TiendaCTA />
         <CierreHedon />
+        <Footer bg="hedon" />
     </main>
   )
 }

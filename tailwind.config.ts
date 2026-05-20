@@ -10,6 +10,8 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        brass: "#C9A961",
+        
         hedon: {
           brown: "#2A1810",
           brass: "#C9A961",
