@@ -20,7 +20,7 @@ export default function FranjaConfianza() {
               {index > 0 && (
                 <span
                   aria-hidden="true"
-                  className="hidden sm:block text-tees-red text-xl mx-6 lg:mx-10"
+                  className="hidden sm:block text-brass text-xl mx-6 lg:mx-10"
                 >
                   ·
                 </span>

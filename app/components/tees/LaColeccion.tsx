@@ -62,9 +62,9 @@ export default function LaColeccion() {
           <div className="flex items-center gap-4 mb-8">
             <span
               aria-hidden="true"
-              className="block w-10 h-px bg-tees-red"
+              className="block w-10 h-px bg-brass"
             />
-            <p className="font-mono text-tees-red text-xs tracking-[0.30em] uppercase">
+            <p className="font-mono text-brass text-xs tracking-[0.30em] uppercase">
               La Colección
             </p>
           </div>
@@ -108,7 +108,7 @@ export default function LaColeccion() {
                   }`}
                 >
                   {/* Numeración pequeña */}
-                  <p className="font-mono text-tees-red text-xs tracking-[0.30em] uppercase mb-4">
+                  <p className="font-mono text-brass text-xs tracking-[0.30em] uppercase mb-4">
                     {playera.numero}
                   </p>
 
@@ -116,7 +116,7 @@ export default function LaColeccion() {
                   <h3 className="font-rider text-tees-white text-4xl sm:text-5xl lg:text-6xl leading-[0.95] tracking-tight mb-3">
                     {playera.rojo ? (
                       <>
-                        <span className="text-tees-red">BBB</span>
+                        <span className="text-brass">BBB</span>
                       </>
                     ) : (
                       playera.nombre
@@ -138,12 +138,12 @@ export default function LaColeccion() {
                   {/* CTA sutil */}
                   <a
                     href="#tienda"
-                    className="inline-flex items-center gap-3 font-mono text-xs tracking-[0.3em] uppercase text-tees-white hover:text-tees-red transition-colors duration-300 group w-fit"
+                    className="inline-flex items-center gap-3 font-mono text-xs tracking-[0.3em] uppercase text-tees-white hover:text-brass transition-colors duration-300 group w-fit"
                   >
                     <span>Ver en tienda</span>
                     <span
                       aria-hidden="true"
-                      className="inline-block w-12 h-px bg-tees-white group-hover:bg-tees-red transition-colors duration-300"
+                      className="inline-block w-12 h-px bg-tees-white group-hover:bg-brass transition-colors duration-300"
                     />
                   </a>
                 </div>

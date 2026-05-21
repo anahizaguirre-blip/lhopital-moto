@@ -57,9 +57,9 @@ export default function TiendaTees() {
           <div className="flex items-center gap-4 mb-8">
             <span
               aria-hidden="true"
-              className="block w-10 h-px bg-tees-red"
+              className="block w-10 h-px bg-brass"
             />
-            <p className="font-mono text-tees-red text-xs tracking-[0.30em] uppercase">
+            <p className="font-mono text-brass text-xs tracking-[0.30em] uppercase">
               Tienda
             </p>
           </div>
@@ -117,7 +117,7 @@ export default function TiendaTees() {
               {/* Botón Comprar */}
               <a
                 href={producto.url}
-                className="inline-flex items-center justify-center bg-tees-red text-tees-white font-mono text-xs tracking-[0.2em] uppercase px-6 py-4 hover:bg-tees-black transition-colors duration-300 mt-auto w-full"
+                className="inline-flex items-center justify-center bg-brass text-tees-white font-mono text-xs tracking-[0.2em] uppercase px-6 py-4 hover:bg-tees-black transition-colors duration-300 mt-auto w-full"
               >
                 Comprar
               </a>

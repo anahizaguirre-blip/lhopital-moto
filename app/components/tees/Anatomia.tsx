@@ -37,9 +37,9 @@ export default function Anatomia() {
           <div className="flex items-center gap-4 mb-8">
             <span
               aria-hidden="true"
-              className="block w-10 h-px bg-tees-red"
+              className="block w-10 h-px bg-brass"
             />
-            <p className="font-mono text-tees-red text-xs tracking-[0.30em] uppercase">
+            <p className="font-mono text-brass text-xs tracking-[0.30em] uppercase">
               Anatomía
             </p>
           </div>
@@ -63,7 +63,7 @@ export default function Anatomia() {
               className="border-t border-tees-white/15 pt-6"
             >
               {/* Número grande */}
-              <p className="font-rider text-tees-red text-5xl lg:text-6xl leading-none mb-6">
+              <p className="font-rider text-brass text-5xl lg:text-6xl leading-none mb-6">
                 {spec.numero}
               </p>
 

@@ -23,9 +23,9 @@ export default function EnLaCarretera() {
           <div className="flex items-center gap-4 mb-8">
             <span
               aria-hidden="true"
-              className="block w-10 h-px bg-tees-red"
+              className="block w-10 h-px bg-brass"
             />
-            <p className="font-mono text-tees-red text-xs tracking-[0.30em] uppercase">
+            <p className="font-mono text-brass text-xs tracking-[0.30em] uppercase">
               En la Carretera
             </p>
           </div>

@@ -37,9 +37,9 @@ export default function HeroTees() {
           >
             <span
               aria-hidden="true"
-              className="block w-10 h-px bg-tees-red"
+              className="block w-10 h-px bg-brass"
             />
-            <p className="font-mono bg-tees-red text-xs tracking-[0.30em] uppercase">
+            <p className="font-mono text-brass text-xs tracking-[0.30em] uppercase">
               Hecho en México · Diseño propio
             </p>
           </div>
@@ -68,12 +68,12 @@ export default function HeroTees() {
           >
             <a
               href="#origen"
-              className="inline-flex items-center gap-3 font-mono text-xs tracking-[0.3em] uppercase text-tees-white hover:text-tees-red transition-colors duration-300 group"
+              className="inline-flex items-center gap-3 font-mono text-xs tracking-[0.3em] uppercase text-tees-white hover:text-brass transition-colors duration-300 group"
             >
               <span>Cómo nacieron</span>
               <span
                 aria-hidden="true"
-                className="inline-block w-12 h-px bg-tees-white group-hover:bg-tees-red transition-colors duration-300"
+                className="inline-block w-12 h-px bg-tees-white group-hover:bg-brass transition-colors duration-300"
               />
             </a>
           </div>
