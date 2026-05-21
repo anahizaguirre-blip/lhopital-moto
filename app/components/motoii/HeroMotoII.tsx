@@ -52,7 +52,7 @@ export default function HeroMotoII() {
 
           {/* Título */}
           <h1
-            className="font-rider text-moto-bone text-7xl sm:text-8xl lg:text-9xl leading-[0.9] mb-6 opacity-0 animate-fade-in-up"
+            className="font-black text-moto-bone text-7xl sm:text-8xl lg:text-9xl leading-[0.9] mb-6 opacity-0 animate-fade-in-up"
             style={{ animationDelay: '0.25s' }}
           >
             Moto II.
@@ -71,13 +71,13 @@ export default function HeroMotoII() {
           {/* CTA naranja siempre, hover lo aclara */}
           <button
             onClick={scrollToInicio}
-            className="group inline-flex items-center gap-3 font-mono text-xs tracking-[0.3em] uppercase text-moto-bone hover:text-moto-signal transition-colors duration-300 opacity-0 animate-fade-in-up"
+            className="group inline-flex items-center gap-3 font-mono text-xs tracking-[0.3em] uppercase text-moto-bone hover:text-moto-brass transition-colors duration-300 opacity-0 animate-fade-in-up"
             style={{ animationDelay: '0.55s' }}
         >
           <span>Descubrir</span>
           <span
             aria-hidden="true"
-            className="inline-block w-12 h-px bg-moto-bone group-hover:bg-moto-signal transition-colors duration-300"
+            className="inline-block w-12 h-px bg-moto-bone group-hover:bg-moto-brass transition-colors duration-300"
          />
       </button>
         </div>

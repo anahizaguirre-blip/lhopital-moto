@@ -32,9 +32,9 @@ export default function Inicio() {
           <span className="block mb-6">
             <span
               aria-hidden="true"
-              className="inline-block w-8 h-px bg-moto-signal align-middle mr-3"
+              className="inline-block w-8 h-px bg-moto-brass align-middle mr-3"
             />
-            <span className="font-mono text-moto-signal text-xs tracking-[0.3em] uppercase">
+            <span className="font-mono text-moto-brass text-xs tracking-[0.3em] uppercase">
               Cómo funciona
             </span>
           </span>
@@ -101,7 +101,7 @@ export default function Inicio() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           {pasos.map((paso) => (
             <div key={paso.numero} className="border-t border-moto-line pt-6">
-              <div className="font-mono text-moto-signal text-xs tracking-[0.3em] uppercase mb-4">
+              <div className="font-mono text-moto-brass text-xs tracking-[0.3em] uppercase mb-4">
                 / {paso.numero}
               </div>
               <h3 className="font-rider text-moto-bone text-3xl md:text-4xl mb-3">

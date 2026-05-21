@@ -37,9 +37,9 @@ const modelos = [
           <span className="block mb-6">
             <span
               aria-hidden="true"
-              className="inline-block w-8 h-px bg-moto-signal align-middle mr-3"
+              className="inline-block w-8 h-px bg-moto-brass align-middle mr-3"
             />
-            <span className="font-mono text-moto-signal text-xs tracking-[0.3em] uppercase">
+            <span className="font-mono text-moto-brass text-xs tracking-[0.3em] uppercase">
               La colección
             </span>
           </span>
