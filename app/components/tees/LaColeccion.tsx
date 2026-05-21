@@ -6,6 +6,7 @@ const playeras = [
     nombre: "It's a Biker Thing",
     copy: "El saludo. La mano abajo, dedos abiertos, paz al cruzarse en la ruta. No se explica. Se entiende rodando.",
     imagen: '/products/lhopitaltees/BikerThing.jpg',
+    posicion: 'right',   // ← esta foto se pega a la derecha
     rojo: false,
   },
   {
@@ -34,6 +35,7 @@ const playeras = [
     nombre: "Tiny Movement",
     copy: "Dos centímetros de muñeca. Eso es la diferencia entre estar parado y ser libre.",
     imagen: '/products/lhopitaltees/Tiny.jpg',
+    posicion: 'right',   // ← esta foto se pega a la derecha
     rojo: false,
   },
   {
@@ -97,7 +99,7 @@ export default function LaColeccion() {
                     fill
                     quality={90}
                     sizes="(max-width: 1024px) 100vw, 50vw"
-                    className="object-cover"
+                    className={`object-cover ${playera.posicion === 'right' ? 'object-right' : ''}`}
                   />
                 </div>
 

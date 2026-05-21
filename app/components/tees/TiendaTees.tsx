@@ -5,6 +5,7 @@ const productos = [
     nombre: "It's a Biker Thing",
     precio: 400,
     imagen: '/products/lhopitaltees/BikerThing.jpg',
+    posicion: 'right',   // ← a la derecha
     url: '#',
   },
   {
@@ -29,6 +30,7 @@ const productos = [
     nombre: 'Tiny Movement of Your Wrist',
     precio: 400,
     imagen: '/products/lhopitaltees/Tiny.jpg',
+    posicion: 'right',   // ← a la derecha
     url: '#',
   },
   {
@@ -88,7 +90,7 @@ export default function TiendaTees() {
                   fill
                   quality={90}
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  className={`object-cover transition-transform duration-500 group-hover:scale-105 ${producto.posicion === 'right' ? 'object-right' : ''}`}
                 />
               </div>
 

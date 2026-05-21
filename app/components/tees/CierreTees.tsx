@@ -1,19 +1,17 @@
 export default function CierreTees() {
   return (
-    <section
-      aria-label="Cierre Tees"
-      className="relative w-full min-h-screen bg-tees-black overflow-hidden flex flex-col items-center justify-center text-center px-6 sm:px-10 lg:px-16"
-    >
-      {/* Lhopital gigante */}
-      <h2 className="font-rider text-tees-white text-7xl sm:text-8xl lg:text-9xl xl:text-[12rem] leading-[0.85] tracking-tight mb-8">
-        LHOPITAL
-      </h2>
-
-      {/* Frase de cierre Tees */}
-      <p className="font-cormorant italic text-tees-white/80 text-2xl sm:text-3xl lg:text-4xl mb-16">
-        Hecha donde se rueda.
-      </p>
-      
+    <section className="bg-tees-black min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
+      <div className="text-center px-6">
+        <h2
+          className="font-rider text-tees-white leading-[0.8] select-none"
+          style={{ fontSize: 'clamp(6rem, 22vw, 22rem)' }}
+        >
+          LHOPITAL.
+        </h2>
+        <p className="font-cormorant italic text-brass text-xl md:text-2xl mt-4 md:mt-6">
+          Hecha donde se rueda.
+        </p>
+      </div>
     </section>
   )
 }
