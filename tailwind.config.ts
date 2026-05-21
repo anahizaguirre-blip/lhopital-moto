@@ -46,6 +46,7 @@ export default {
         // ─── MOTO II (clases nuevas, no chocan con nada) ───
         inter: ["var(--font-inter)", "system-ui", "sans-serif"],
         mono: ["var(--font-jetbrains)", "ui-monospace", "monospace"],
+        sora: ["var(--font-sora)", "sans-serif"],
       },
     },
   },

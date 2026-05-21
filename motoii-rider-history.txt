@@ -1,0 +1,954 @@
+commit 78ec2f2fb372c5d4d59d83029218facf91039e3d
+Author: Anahí Izaguirre <anahizaguirre@gmail.com>
+Date:   Wed May 20 19:18:52 2026 -0600
+
+    MOTOII - Cambio de singal por brass
+
+diff --git a/app/components/motoii/HeroMotoII.tsx b/app/components/motoii/HeroMotoII.tsx
+index 88bd46a..611a41a 100644
+--- a/app/components/motoii/HeroMotoII.tsx
++++ b/app/components/motoii/HeroMotoII.tsx
+@@ -52,7 +52,7 @@ export default function HeroMotoII() {
+ 
+           {/* Título */}
+           <h1
+-            className="font-rider text-moto-bone text-7xl sm:text-8xl lg:text-9xl leading-[0.9] mb-6 opacity-0 animate-fade-in-up"
++            className="font-black text-moto-bone text-7xl sm:text-8xl lg:text-9xl leading-[0.9] mb-6 opacity-0 animate-fade-in-up"
+             style={{ animationDelay: '0.25s' }}
+           >
+             Moto II.
+@@ -71,13 +71,13 @@ export default function HeroMotoII() {
+           {/* CTA naranja siempre, hover lo aclara */}
+           <button
+             onClick={scrollToInicio}
+-            className="group inline-flex items-center gap-3 font-mono text-xs tracking-[0.3em] uppercase text-moto-bone hover:text-moto-signal transition-colors duration-300 opacity-0 animate-fade-in-up"
++            className="group inline-flex items-center gap-3 font-mono text-xs tracking-[0.3em] uppercase text-moto-bone hover:text-moto-brass transition-colors duration-300 opacity-0 animate-fade-in-up"
+             style={{ animationDelay: '0.55s' }}
+         >
+           <span>Descubrir</span>
+           <span
+             aria-hidden="true"
+-            className="inline-block w-12 h-px bg-moto-bone group-hover:bg-moto-signal transition-colors duration-300"
++            className="inline-block w-12 h-px bg-moto-bone group-hover:bg-moto-brass transition-colors duration-300"
+          />
+       </button>
+         </div>
+
+commit 9ea143ddbca92ab508c8aaca374c72d0c9c66d51
+Author: Anahí Izaguirre <anahizaguirre@gmail.com>
+Date:   Wed May 20 16:55:29 2026 -0600
+
+    Se creo un footer global, podemos cambiar el fondo para cuando lo insertemos en alguna página de color- ejemplo Café con Hedon
+
+diff --git a/app/components/motoii/CierreMotoII.tsx b/app/components/motoii/CierreMotoII.tsx
+index 4f4bd54..aadba63 100644
+--- a/app/components/motoii/CierreMotoII.tsx
++++ b/app/components/motoii/CierreMotoII.tsx
+@@ -23,83 +23,7 @@ export default function CierreMotoII() {
+         </div>
+       </section>
+ 
+-      {/* === FOOTER INSTITUCIONAL LHOPITAL — Rider en nav y copyright (el sello de casa) === */}
+-      <footer className="bg-[#0a0a0a] border-t border-[var(--gold-faint)] py-12 md:py-16">
+-        <div className="mx-auto max-w-[1440px] px-6 md:px-10">
+-          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+-            {/* Logo Lhopital */}
+-            <Link href="/" className="flex items-center">
+-              <Image
+-                src="/logo/frase_horizontal_invertido.png"
+-                alt="Lhopital"
+-                width={2250}
+-                height={527}
+-                className="h-10 md:h-12 w-auto opacity-80 hover:opacity-100 transition-opacity"
+-                priority
+-              />
+-            </Link>
+-
+-            {/* Navegación entre páginas — MOTO II en dorado porque estás aquí */}
+-            <nav className="flex flex-wrap items-center justify-center gap-6 md:gap-8">
+-              <Link
+-                href="/"
+-                className="font-rider text-[rgba(245,243,240,0.7)] hover:text-[var(--gold)] text-xs tracking-[0.2em] uppercase transition-colors"
+-              >
+-                Inicio
+-              </Link>
+-              <Link
+-                href="/motoii"
+-                className="font-rider text-[var(--gold)] text-xs tracking-[0.2em] uppercase"
+-              >
+-                Moto II
+-              </Link>
+-              <Link
+-                href="/hedon"
+-                className="font-rider text-[rgba(245,243,240,0.7)] hover:text-[var(--gold)] text-xs tracking-[0.2em] uppercase transition-colors"
+-              >
+-                Hedon
+-              </Link>
+-              <Link
+-                href="/contacto"
+-                className="font-rider text-[rgba(245,243,240,0.7)] hover:text-[var(--gold)] text-xs tracking-[0.2em] uppercase transition-colors"
+-              >
+-                Contacto
+-              </Link>
+-            </nav>
+-
+-            {/* Instagram */}
+-            <div className="flex items-center gap-5">
+-              <a
+-                href="https://instagram.com/lhopitalmx"
+-                target="_blank"
+-                rel="noopener noreferrer"
+-                aria-label="Instagram Lhopital"
+-                className="text-[rgba(245,243,240,0.7)] hover:text-[var(--gold)] transition-colors"
+-              >
+-                <svg
+-                  width="18"
+-                  height="18"
+-                  viewBox="0 0 24 24"
+-                  fill="none"
+-                  stroke="currentColor"
+-                  strokeWidth="1.5"
+-                >
+-                  <rect x="2" y="2" width="20" height="20" rx="5" />
+-                  <circle cx="12" cy="12" r="4" />
+-                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
+-                </svg>
+-              </a>
+-            </div>
+-          </div>
+-
+-          {/* Línea separadora + copyright */}
+-          <div className="mt-10 pt-6 border-t border-[var(--gold-faint)] text-center">
+-            <p className="font-rider text-[rgba(245,243,240,0.4)] text-[10px] tracking-[0.25em] uppercase">
+-              © {new Date().getFullYear()} Lhopital-moto · We are the standard
+-            </p>
+-          </div>
+-        </div>
+-      </footer>
++      
+     </>
+   )
+ }
+
+commit 1d799769edd2971375f0ed93cc9d60cb5669b29c
+Author: Anahí Izaguirre <anahizaguirre@gmail.com>
+Date:   Tue May 19 13:56:38 2026 -0600
+
+    Cierre Moto II V1
+
+diff --git a/app/components/motoii/CierreMotoII.tsx b/app/components/motoii/CierreMotoII.tsx
+index e69de29..ee972ce 100644
+--- a/app/components/motoii/CierreMotoII.tsx
++++ b/app/components/motoii/CierreMotoII.tsx
+@@ -0,0 +1,105 @@
++'use client'
++
++import Link from 'next/link'
++import Image from 'next/image'
++
++export default function CierreMotoII() {
++  return (
++    <>
++      {/* === 08 CIERRE MOTO II — letra gigante mic-drop en Lhopital Rider === */}
++      <section className="bg-[#0a0a0a] min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
++        <div className="text-center px-6 w-full">
++          <h2
++            className="font-rider text-[#f5f3f0] leading-[0.85] select-none uppercase"
++            style={{ fontSize: 'clamp(5rem, 20vw, 20rem)', letterSpacing: '-0.01em' }}
++          >
++            MOTO II
++          </h2>
++          <p
++            className="font-cormorant italic text-[var(--gold)] text-xl md:text-2xl mt-4 md:mt-6 tracking-wide"
++          >
++            Navegación pura.
++          </p>
++        </div>
++      </section>
++
++      {/* === FOOTER INSTITUCIONAL LHOPITAL — Rider en nav y copyright (el sello de casa) === */}
++      <footer className="bg-[#0a0a0a] border-t border-[var(--gold-faint)] py-12 md:py-16">
++        <div className="mx-auto max-w-[1440px] px-6 md:px-10">
++          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
++            {/* Logo Lhopital */}
++            <Link href="/" className="flex items-center">
++              <Image
++                src="/logo/frase_horizontal_invertido.png"
++                alt="Lhopital"
++                width={2250}
++                height={527}
++                className="h-10 md:h-12 w-auto opacity-80 hover:opacity-100 transition-opacity"
++                priority
++              />
++            </Link>
++
++            {/* Navegación entre páginas — MOTO II en dorado porque estás aquí */}
++            <nav className="flex flex-wrap items-center justify-center gap-6 md:gap-8">
++              <Link
++                href="/"
++                className="font-rider text-[rgba(245,243,240,0.7)] hover:text-[var(--gold)] text-xs tracking-[0.2em] uppercase transition-colors"
++              >
++                Inicio
++              </Link>
++              <Link
++                href="/motoii"
++                className="font-rider text-[var(--gold)] text-xs tracking-[0.2em] uppercase"
++              >
++                Moto II
++              </Link>
++              <Link
++                href="/hedon"
++                className="font-rider text-[rgba(245,243,240,0.7)] hover:text-[var(--gold)] text-xs tracking-[0.2em] uppercase transition-colors"
++              >
++                Hedon
++              </Link>
++              <Link
++                href="/contacto"
++                className="font-rider text-[rgba(245,243,240,0.7)] hover:text-[var(--gold)] text-xs tracking-[0.2em] uppercase transition-colors"
++              >
++                Contacto
++              </Link>
++            </nav>
++
++            {/* Instagram */}
++            <div className="flex items-center gap-5">
++              <a
++                href="https://instagram.com/lhopitalmx"
++                target="_blank"
++                rel="noopener noreferrer"
++                aria-label="Instagram Lhopital"
++                className="text-[rgba(245,243,240,0.7)] hover:text-[var(--gold)] transition-colors"
++              >
++                <svg
++                  width="18"
++                  height="18"
++                  viewBox="0 0 24 24"
++                  fill="none"
++                  stroke="currentColor"
++                  strokeWidth="1.5"
++                >
++                  <rect x="2" y="2" width="20" height="20" rx="5" />
++                  <circle cx="12" cy="12" r="4" />
++                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
++                </svg>
++              </a>
++            </div>
++          </div>
++
++          {/* Línea separadora + copyright */}
++          <div className="mt-10 pt-6 border-t border-[var(--gold-faint)] text-center">
++            <p className="font-rider text-[rgba(245,243,240,0.4)] text-[10px] tracking-[0.25em] uppercase">
++              © {new Date().getFullYear()} Lhopital-moto · We are the standard
++            </p>
++          </div>
++        </div>
++      </footer>
++    </>
++  )
++}
+
+commit 043e36f2d3887d4a45dcce76c14fe557ea3a2f91
+Author: Anahí Izaguirre <anahizaguirre@gmail.com>
+Date:   Mon May 18 21:02:24 2026 -0600
+
+    LaColección motoii 1ra versión con fotos descuadradas
+
+diff --git a/app/components/motoii/LaColeccion.tsx b/app/components/motoii/LaColeccion.tsx
+index e69de29..0326f48 100644
+--- a/app/components/motoii/LaColeccion.tsx
++++ b/app/components/motoii/LaColeccion.tsx
+@@ -0,0 +1,99 @@
++import Image from 'next/image'
++
++export default function LaColeccion() {
++const modelos = [
++  {
++    nombre: 'Black',
++    archivo: 'ModeloBlack.jpg',
++    codigo: 'MTII_BLK',
++    objectPosition: '50% 35%',
++    scale: 'scale-[3]',
++  },
++  {
++  nombre: 'Gun Metal',
++  archivo: 'ModeloGun.jpg',
++  codigo: 'MTII_GMG',
++  objectPosition: '40% 50%',   // ← cambia este valor
++  scale: 'scale-[2.5]',
++},
++  {
++    nombre: 'Silver',
++    archivo: 'ModeloSilver.jpg',
++    codigo: 'MTII_SVR',
++    objectPosition: '50% 50%',
++    scale: 'scale-[2]',
++  },
++]
++
++  return (
++    <section
++      aria-label="La colección Moto II"
++      className="bg-moto-black pt-24 md:pt-32 pb-0"
++    >
++      <div className="w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
++
++        {/* Header de sección */}
++        <div className="mb-16 md:mb-20 max-w-3xl">
++          <span className="block mb-6">
++            <span
++              aria-hidden="true"
++              className="inline-block w-8 h-px bg-moto-signal align-middle mr-3"
++            />
++            <span className="font-mono text-moto-signal text-xs tracking-[0.3em] uppercase">
++              La colección
++            </span>
++          </span>
++
++          <h2 className="font-rider text-moto-bone text-5xl md:text-7xl lg:text-8xl leading-[0.95] mb-6">
++            Tres acabados.
++            <br />
++            Una misma promesa.
++          </h2>
++
++          <p className="font-inter font-light text-moto-bone/70 text-lg md:text-xl leading-relaxed max-w-2xl">
++            Mismo navegador. Mismas capacidades. Tres lecturas estéticas para que combines con tu
++            moto, no contra ella.
++          </p>
++        </div>
++
++        {/* Grid de 3 modelos */}
++        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
++          {modelos.map((modelo, idx) => (
++            <div key={modelo.nombre} className="group">
++
++              {/* Foto del modelo con zoom personalizado */}
++              <div className="relative w-full aspect-[3/2] overflow-hidden mb-6 bg-moto-line">
++                <Image
++                  src={`/products/motoii/${modelo.archivo}`}
++                  alt={`Beeline Moto II acabado ${modelo.nombre}`}
++                  fill
++                  quality={90}
++                  sizes="(max-width: 768px) 100vw, 33vw"
++                  className={`object-cover ${modelo.scale} transition-transform duration-700`}
++                  style={{ objectPosition: modelo.objectPosition }}
++                />
++              </div>
++
++              {/* Info del modelo */}
++              <div className="flex items-baseline justify-between border-t border-moto-line pt-4">
++                <div>
++                  <div className="font-mono text-moto-grey text-xs tracking-[0.3em] uppercase mb-2">
++                    / 0{idx + 1}
++                  </div>
++                  <h3 className="font-rider text-moto-bone text-3xl md:text-4xl">
++                    {modelo.nombre}
++                  </h3>
++                </div>
++                <span className="font-mono text-moto-grey text-xs tracking-[0.2em] uppercase">
++                  {modelo.codigo}
++                </span>
++              </div>
++
++            </div>
++          ))}
++        </div>
++
++      </div>
++    </section>
++  )
++}
+\ No newline at end of file
+
+commit 10abe04406b63999fa6c05748c829639a15c1dd7
+Author: Anahí Izaguirre <anahizaguirre@gmail.com>
+Date:   Mon May 18 20:38:22 2026 -0600
+
+    EnLaCarretera Moto ii en su primer versión
+
+diff --git a/app/components/motoii/EnLaCarretera.tsx b/app/components/motoii/EnLaCarretera.tsx
+index e69de29..7cc695c 100644
+--- a/app/components/motoii/EnLaCarretera.tsx
++++ b/app/components/motoii/EnLaCarretera.tsx
+@@ -0,0 +1,88 @@
++import Image from 'next/image'
++
++export default function EnLaCarretera() {
++  return (
++    <section
++      aria-label="Moto II en la carretera mexicana"
++      className="bg-moto-black pt-24 md:pt-32 pb-0"
++    >
++      <div className="w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
++
++        {/* Header de sección */}
++        <div className="mb-16 md:mb-20 max-w-3xl">
++          <span className="block mb-6">
++            <span
++              aria-hidden="true"
++              className="inline-block w-8 h-px bg-moto-signal align-middle mr-3"
++            />
++            <span className="font-mono text-moto-signal text-xs tracking-[0.3em] uppercase">
++              En la carretera
++            </span>
++          </span>
++
++          <h2 className="font-rider text-moto-bone text-5xl md:text-7xl lg:text-8xl leading-[0.95] mb-6">
++            Sin señal.
++            <br />
++            Con dirección.
++          </h2>
++
++          <p className="font-inter font-light text-moto-bone/70 text-lg md:text-xl leading-relaxed max-w-2xl">
++            El Ajusco no tiene 5G. Tampoco hace falta. El Moto II guarda la ruta antes de que pierdas
++            cobertura y la sigue mostrando hasta que llegas.
++          </p>
++        </div>
++      </div>
++
++      {/* Foto principal full-bleed (sale del max-w para mayor impacto) */}
++      <div className="relative w-full aspect-[3/2] mb-6 md:mb-8 overflow-hidden">
++        <Image
++          src="/products/motoii/EnLaCarretera_h1.jpg"
++          alt="Motociclistas en la carretera del Ajusco al amanecer"
++          fill
++          quality={90}
++          sizes="100vw"
++          className="object-cover"
++        />
++      </div>
++
++      {/* Bloque inferior: foto + texto */}
++      <div className="w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
++        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 lg:gap-16 items-center">
++
++          {/* Foto secundaria */}
++          <div className="lg:col-span-7">
++            <div className="relative w-full aspect-[3/2] overflow-hidden">
++              <Image
++                src="/products/motoii/EnLaCarretera_h2.jpg"
++                alt="Vista frontal de motociclistas en ruta de montaña"
++                fill
++                quality={90}
++                sizes="(max-width: 1024px) 100vw, 58vw"
++                className="object-cover"
++              />
++            </div>
++          </div>
++
++          {/* Texto editorial */}
++          <div className="lg:col-span-5">
++            <div className="font-mono text-moto-signal text-xs tracking-[0.3em] uppercase mb-6">
++              / Hecho para México
++            </div>
++
++            <p className="font-inter font-light text-moto-bone text-2xl md:text-3xl leading-snug mb-6">
++              Aquí las carreteras tienen historia.
++            </p>
++
++            <p className="font-inter font-light text-moto-bone/70 text-base md:text-lg leading-relaxed">
++              Diseñado en Londres para enfrentar la lluvia inglesa. Probado en el Ajusco, los Altos
++              de Chiapas y la costa de Oaxaca. El Moto II entiende que rodar en México no es lo mismo
++              que rodar en cualquier parte.
++            </p>
++          </div>
++
++        </div>
++      </div>
++
++    </section>
++  )
++}
+\ No newline at end of file
+
+commit e6a6e4845045bc53d9e18a831e13d318ec714550
+Author: Anahí Izaguirre <anahizaguirre@gmail.com>
+Date:   Mon May 18 20:32:49 2026 -0600
+
+    Anatomía en su primer versión
+
+diff --git a/app/components/motoii/Anatomia.tsx b/app/components/motoii/Anatomia.tsx
+index e69de29..0b84a92 100644
+--- a/app/components/motoii/Anatomia.tsx
++++ b/app/components/motoii/Anatomia.tsx
+@@ -0,0 +1,120 @@
++import Image from 'next/image'
++
++export default function Anatomia() {
++  const specs = [
++    {
++      dato: 'IP67',
++      promesa: 'Protección total contra agua y polvo',
++    },
++    {
++      dato: 'SUNLIGHT',
++      promesa: 'Pantalla legible a plena luz del sol',
++    },
++    {
++      dato: '14H',
++      promesa: 'Autonomía continua sin recargar',
++    },
++    {
++      dato: 'UNIVERSAL',
++      promesa: 'Se adapta a cualquier manillar',
++    },
++    {
++      dato: 'QUICK',
++      promesa: 'Desmontaje en segundos',
++    },
++  ]
++
++  return (
++    <section
++      aria-label="Anatomía del Moto II"
++      className="bg-moto-black pt-24 md:pt-32 pb-0"
++    >
++      <div className="w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
++
++        {/* Header de sección */}
++        <div className="mb-16 md:mb-20 max-w-3xl">
++          <span className="block mb-6">
++            <span
++              aria-hidden="true"
++              className="inline-block w-8 h-px bg-moto-signal align-middle mr-3"
++            />
++            <span className="font-mono text-moto-signal text-xs tracking-[0.3em] uppercase">
++              Anatomía
++            </span>
++          </span>
++
++          <h2 className="font-rider text-moto-bone text-5xl md:text-7xl lg:text-8xl leading-[0.95] mb-6">
++            Cinco razones
++            <br />
++            para confiar.
++          </h2>
++
++          <p className="font-inter font-light text-moto-bone/70 text-lg md:text-xl leading-relaxed max-w-2xl">
++            Lo construyeron para que dejes de pensar en él. La ingeniería se ocupa del trayecto,
++            tú te ocupas del paisaje.
++          </p>
++        </div>
++
++        {/* Grid: foto producto + spec sheet */}
++        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 lg:gap-16">
++
++          {/* Foto del producto */}
++          <div className="lg:col-span-5">
++            <div className="relative w-full aspect-[3662/4424] overflow-hidden">
++              <Image
++                src="/products/motoii/Anatomia.jpg"
++                alt="Moto II por Beeline, vista de producto sobre fondo negro"
++                fill
++                quality={90}
++                sizes="(max-width: 1024px) 100vw, 42vw"
++                className="object-cover"
++                style={{ objectPosition: '35% 65%' }}
++                />
++            </div>
++          </div>
++
++          {/* Spec sheet */}
++          <div className="lg:col-span-7 flex flex-col justify-center">
++
++            {/* Header del spec sheet */}
++            <div className="flex items-center justify-between border-b border-moto-line pb-4 mb-2">
++              <span className="font-mono text-moto-grey text-xs tracking-[0.3em] uppercase">
++                Spec sheet
++              </span>
++              <span className="font-mono text-moto-grey text-xs tracking-[0.3em] uppercase">
++                v 2.0
++              </span>
++            </div>
++
++            {/* Lista de specs */}
++            <div>
++              {specs.map((spec, idx) => (
++                <div
++                  key={spec.dato}
++                  className="grid grid-cols-12 gap-4 md:gap-8 border-b border-moto-line py-6 md:py-8 items-baseline"
++                >
++                  {/* Número de fila */}
++                  <span className="col-span-1 font-mono text-moto-grey text-xs">
++                    / 0{idx + 1}
++                  </span>
++
++                  {/* Dato técnico (grande) */}
++                  <span className="col-span-4 md:col-span-3 font-mono text-moto-bone text-2xl md:text-3xl lg:text-4xl tracking-tight">
++                    {spec.dato}
++                  </span>
++
++                  {/* Promesa (sans light) */}
++                  <span className="col-span-7 md:col-span-8 font-inter font-light text-moto-bone/80 text-base md:text-lg leading-snug">
++                    {spec.promesa}
++                  </span>
++                </div>
++              ))}
++            </div>
++
++          </div>
++        </div>
++
++      </div>
++    </section>
++  )
++}
+\ No newline at end of file
+
+commit 14007ef43a183a65363de6394f94a0194f03b301
+Author: Anahí Izaguirre <anahizaguirre@gmail.com>
+Date:   Mon May 18 20:21:35 2026 -0600
+
+    Inicio en su primer versión
+
+diff --git a/app/components/motoii/Inicio.tsx b/app/components/motoii/Inicio.tsx
+index e69de29..bba8fdf 100644
+--- a/app/components/motoii/Inicio.tsx
++++ b/app/components/motoii/Inicio.tsx
+@@ -0,0 +1,120 @@
++import Image from 'next/image'
++
++export default function Inicio() {
++  const pasos = [
++    {
++      numero: '01',
++      titulo: 'Monta',
++      descripcion: 'Anclas el Moto II al manillar. Cualquier manillar, en segundos.',
++    },
++    {
++      numero: '02',
++      titulo: 'Traza',
++      descripcion: 'Marcas el destino desde tu celular. La app se queda con la ruta.',
++    },
++    {
++      numero: '03',
++      titulo: 'Rueda',
++      descripcion: 'Cierras la app. El navegador hace lo suyo. Tú haces lo tuyo.',
++    },
++  ]
++
++  return (
++    <section
++      id="inicio"
++      aria-label="Cómo funciona Moto II"
++      className="bg-moto-black pt-24 md:pt-32 pb-0"
++    >
++      <div className="w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
++
++        {/* Header de sección */}
++        <div className="mb-16 md:mb-20 max-w-3xl">
++          <span className="block mb-6">
++            <span
++              aria-hidden="true"
++              className="inline-block w-8 h-px bg-moto-signal align-middle mr-3"
++            />
++            <span className="font-mono text-moto-signal text-xs tracking-[0.3em] uppercase">
++              Cómo funciona
++            </span>
++          </span>
++
++          <h2 className="font-rider text-moto-bone text-5xl md:text-7xl lg:text-8xl leading-[0.95] mb-6">
++            Tres movimientos.
++            <br />
++            Una salida.
++          </h2>
++
++          <p className="font-inter font-light text-moto-bone/70 text-lg md:text-xl leading-relaxed max-w-2xl">
++            Sin manuales. Sin tutoriales. El Moto II está pensado para que la curva de aprendizaje
++            sea la propia carretera.
++          </p>
++        </div>
++
++        {/* Grid asimétrico de 3 fotos */}
++        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 mb-16 md:mb-20">
++
++          {/* Foto 1 - izquierda, vertical */}
++          <div className="md:col-span-4 md:mt-12">
++            <div className="relative w-full aspect-[2/3] overflow-hidden">
++              <Image
++                src="/products/motoii/inicio2.jpg"
++                alt="Manos colocando el Moto II en el manillar de la moto"
++                fill
++                quality={85}
++                sizes="(max-width: 768px) 100vw, 33vw"
++                className="object-cover"
++              />
++            </div>
++          </div>
++
++          {/* Foto 2 - centro, más grande */}
++          <div className="md:col-span-4">
++            <div className="relative w-full aspect-[2/3] overflow-hidden">
++              <Image
++                src="/products/motoii/inicio3.jpg"
++                alt="Moto II encendido en el manillar, conectándose al celular"
++                fill
++                quality={85}
++                sizes="(max-width: 768px) 100vw, 33vw"
++                className="object-cover"
++              />
++            </div>
++          </div>
++
++          {/* Foto 3 - derecha, vertical */}
++          <div className="md:col-span-4 md:mt-12">
++            <div className="relative w-full aspect-[2/3] overflow-hidden">
++              <Image
++                src="/products/motoii/EnLaCarretera_v2.jpg"
++                alt="Mano enguantada lista para arrancar"
++                fill
++                quality={85}
++                sizes="(max-width: 768px) 100vw, 33vw"
++                className="object-cover"
++              />
++            </div>
++          </div>
++        </div>
++
++        {/* Los 3 pasos numerados */}
++        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
++          {pasos.map((paso) => (
++            <div key={paso.numero} className="border-t border-moto-line pt-6">
++              <div className="font-mono text-moto-signal text-xs tracking-[0.3em] uppercase mb-4">
++                / {paso.numero}
++              </div>
++              <h3 className="font-rider text-moto-bone text-3xl md:text-4xl mb-3">
++                {paso.titulo}
++              </h3>
++              <p className="font-inter font-light text-moto-bone/70 text-base leading-relaxed">
++                {paso.descripcion}
++              </p>
++            </div>
++          ))}
++        </div>
++
++      </div>
++    </section>
++  )
++}
+\ No newline at end of file
+
+commit 7f7b6254317fcbce1def08909ecf9874cb9cac9c
+Author: Anahí Izaguirre <anahizaguirre@gmail.com>
+Date:   Mon May 18 20:10:45 2026 -0600
+
+    HERO MOTO II en su primer versión
+
+diff --git a/app/components/motoii/HeroMotoII.tsx b/app/components/motoii/HeroMotoII.tsx
+index e69de29..88bd46a 100644
+--- a/app/components/motoii/HeroMotoII.tsx
++++ b/app/components/motoii/HeroMotoII.tsx
+@@ -0,0 +1,87 @@
++'use client'
++
++import Image from 'next/image'
++
++export default function HeroMotoII() {
++  const scrollToInicio = () => {
++    const el = document.getElementById('inicio')
++    if (el) el.scrollIntoView({ behavior: 'smooth' })
++  }
++
++  return (
++    <section
++      aria-label="Hero Moto II"
++      className="relative w-full min-h-[100svh] overflow-hidden bg-moto-black"
++    >
++      {/* Imagen de fondo full bleed */}
++      <Image
++        src="/products/motoii/hero_moto_ii.jpg"
++        alt="Beeline Moto II montado en manillar, carretera mexicana"
++        fill
++        priority
++        quality={90}
++        sizes="100vw"
++        className="object-cover opacity-0 animate-fade-in-scale"
++        style={{ objectPosition: '50% 50%', animationDelay: '0s' }}
++      />
++
++      {/* Overlay degradado para legibilidad */}
++      <div
++        aria-hidden="true"
++        className="absolute inset-0 bg-gradient-to-r from-moto-black/70 via-moto-black/30 to-transparent"
++      />
++
++      {/* Contenido centrado verticalmente, alineado a la izquierda */}
++      <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 min-h-[100svh] flex items-center pb-20 md:pb-31">
++
++        <div className="max-w-2xl">
++
++          {/* Tag de origen */}
++          <div
++            className="flex items-center gap-3 mb-10 opacity-0 animate-fade-in-up"
++            style={{ animationDelay: '0.1s' }}
++          >
++            <span
++              aria-hidden="true"
++              className="block w-8 h-px bg-moto-bone/60"
++            />
++            <p className="font-mono text-moto-bone/80 text-xs tracking-[0.3em] uppercase">
++              Beeline &middot; Reino Unido
++            </p>
++          </div>
++
++          {/* Título */}
++          <h1
++            className="font-rider text-moto-bone text-7xl sm:text-8xl lg:text-9xl leading-[0.9] mb-6 opacity-0 animate-fade-in-up"
++            style={{ animationDelay: '0.25s' }}
++          >
++            Moto II.
++          </h1>
++
++          {/* Tagline */}
++          <p
++            className="font-inter font-light text-moto-bone/90 text-lg sm:text-xl md:text-2xl leading-relaxed mb-10 opacity-0 animate-fade-in-up"
++            style={{ animationDelay: '0.4s' }}
++          >
++            El navegador que no quiere ser visto.
++            <br />
++            Solo quiere que llegues.
++          </p>
++
++          {/* CTA naranja siempre, hover lo aclara */}
++          <button
++            onClick={scrollToInicio}
++            className="group inline-flex items-center gap-3 font-mono text-xs tracking-[0.3em] uppercase text-moto-bone hover:text-moto-signal transition-colors duration-300 opacity-0 animate-fade-in-up"
++            style={{ animationDelay: '0.55s' }}
++        >
++          <span>Descubrir</span>
++          <span
++            aria-hidden="true"
++            className="inline-block w-12 h-px bg-moto-bone group-hover:bg-moto-signal transition-colors duration-300"
++         />
++      </button>
++        </div>
++      </div>
++    </section>
++  )
++}
+\ No newline at end of file
+
+commit 121c9fd00ea1c04a40ebdedcc2f026bb9edc8e08
+Author: Anahí Izaguirre <anahizaguirre@gmail.com>
+Date:   Fri May 15 10:02:11 2026 -0600
+
+    Fix: Acomode todas las fotos usadas para la subpagina dentro de Products-Hedon
+
+diff --git a/tailwind.config.ts b/tailwind.config.ts
+index 8258db2..97e88a5 100644
+--- a/tailwind.config.ts
++++ b/tailwind.config.ts
+@@ -10,30 +10,31 @@ export default {
+       colors: {
+         background: "var(--background)",
+         foreground: "var(--foreground)",
+-        hedon:{
+-        brown: '#2A1810',
+-        brass: '#C9A961',
+-        cream: '#F5EFE0',
+-        tobacco: '#8B6F47',
+-              },
++        hedon: {
++          brown: "#2A1810",
++          brass: "#C9A961",
++          cream: "#F5EFE0",
++          tobacco: "#8B6F47",
++        },
+         moto: {
+           black: "#0A0A0A",
+           bone: "#F4F1EC",
+           grey: "#6B6B6B",
+           line: "#2A2A2A",
+-          signal: "#E63946",
+-              },    
++          signal: "#FF6B35",
++        },
+       },
+       fontFamily: {
++        // ─── GLOBALES (Hedon + home dependen de esto) ───
+         display: ["var(--font-rider)", "sans-serif"],
+         body: ["var(--font-almaq)", "sans-serif"],
+         sans: ["var(--font-almaq)", "sans-serif"],
+-        rider: ['Lhopital Rider', 'serif'],
+-        almaq: ['Almaq Refined', 'sans-serif'],
+-        cormorant: ['var(--font-cormorant)', 'serif'],
+-        sans: ["Inter", "system-ui", "sans-serif"],
+-        mono: ["JetBrains Mono", "ui-monospace", "monospace"],
+-
++        rider: ["var(--font-rider)", "serif"],
++        almaq: ["var(--font-almaq)", "sans-serif"],
++        cormorant: ["var(--font-cormorant)", "serif"],
++        // ─── MOTO II (clases nuevas, no chocan con nada) ───
++        inter: ["var(--font-inter)", "system-ui", "sans-serif"],
++        mono: ["var(--font-jetbrains)", "ui-monospace", "monospace"],
+       },
+     },
+   },
+
+commit 079cd45dc42dd492ec5fb7f0d52cfa8b87505ea5
+Author: Anahí Izaguirre <anahizaguirre@gmail.com>
+Date:   Tue May 12 16:45:33 2026 -0600
+
+    feat(hedon): hero v1 completo - paleta marrón aprobada
+
+diff --git a/tailwind.config.ts b/tailwind.config.ts
+index d9f3f83..18acea1 100644
+--- a/tailwind.config.ts
++++ b/tailwind.config.ts
+@@ -10,11 +10,20 @@ export default {
+       colors: {
+         background: "var(--background)",
+         foreground: "var(--foreground)",
++        hedon:{
++        brown: '#2A1810',
++        brass: '#C9A961',
++        cream: '#F5EFE0',
++        tobacco: '#8B6F47',
++              },
+       },
+       fontFamily: {
+         display: ["var(--font-rider)", "sans-serif"],
+         body: ["var(--font-almaq)", "sans-serif"],
+         sans: ["var(--font-almaq)", "sans-serif"],
++        rider: ['Lhopital Rider', 'serif'],
++        almaq: ['Almaq Refined', 'sans-serif'],
++        cormorant: ['var(--font-cormorant)', 'serif'],
+       },
+     },
+   },
+
+commit 10ad121e6b1c5e459ab8732cd42bb2026d7d89b4
+Author: Anahí Izaguirre <anahizaguirre@gmail.com>
+Date:   Mon May 11 17:32:56 2026 -0600
+
+    fuentes: cargar Rider y Almaq con next/font/local + actualizar tailwind
+
+diff --git a/tailwind.config.ts b/tailwind.config.ts
+index 109807b..d9f3f83 100644
+--- a/tailwind.config.ts
++++ b/tailwind.config.ts
+@@ -2,9 +2,8 @@ import type { Config } from "tailwindcss";
+ 
+ export default {
+   content: [
+-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
++    "./app/**/*.{js,ts,jsx,tsx,mdx}",
++    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+   ],
+   theme: {
+     extend: {
+@@ -12,7 +11,12 @@ export default {
+         background: "var(--background)",
+         foreground: "var(--foreground)",
+       },
++      fontFamily: {
++        display: ["var(--font-rider)", "sans-serif"],
++        body: ["var(--font-almaq)", "sans-serif"],
++        sans: ["var(--font-almaq)", "sans-serif"],
++      },
+     },
+   },
+   plugins: [],
+-} satisfies Config;
++} satisfies Config;
+\ No newline at end of file

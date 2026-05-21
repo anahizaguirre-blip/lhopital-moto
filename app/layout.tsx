@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Inter, JetBrains_Mono } from "next/font/google";
+import { Cormorant_Garamond, Inter, JetBrains_Mono, Sora } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -40,6 +40,13 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
+const sora = Sora({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-sora',
+  display: 'swap',
+})
+
 export const metadata: Metadata = {
   title: "Lhopital Moto",
   description: "We are the standard. Equipo premium para motociclistas desde CDMX.",
@@ -53,7 +60,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${rider.variable} ${almaq.variable} ${cormorant.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased`}
+      className={`${rider.variable} ${almaq.variable} ${cormorant.variable} ${inter.variable} ${jetbrainsMono.variable} ${sora.variable} antialiased`}
     >
       <body className="font-body">{children}</body>
     </html>

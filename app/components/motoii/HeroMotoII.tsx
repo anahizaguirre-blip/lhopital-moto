@@ -52,7 +52,7 @@ export default function HeroMotoII() {
 
           {/* Título */}
           <h1
-            className="font-black text-moto-bone text-7xl sm:text-8xl lg:text-9xl leading-[0.9] mb-6 opacity-0 animate-fade-in-up"
+            className="font-sora font-extrabold text-moto-bone text-7xl sm:text-8xl lg:text-9xl leading-[0.9] tracking-tight mb-7 opacity-0 animate-fade-in-up"
             style={{ animationDelay: '0.25s' }}
           >
             Moto II.

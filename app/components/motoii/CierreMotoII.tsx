@@ -5,7 +5,7 @@ export default function CierreMotoII() {
       <section className="bg-[#0a0a0a] min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
         <div className="text-center px-6 w-full">
           <h2
-            className="font-rider text-[#f5f3f0] leading-[0.85] select-none uppercase"
+            className="font-sora font-extrabold text-[#f5f3f0] leading-[0.85] select-none uppercase"
             style={{ fontSize: 'clamp(6rem, 24vw, 24rem)', letterSpacing: '-0.01em' }}
           >
             MOTO II

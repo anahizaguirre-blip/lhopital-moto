@@ -44,7 +44,7 @@ const modelos = [
             </span>
           </span>
 
-          <h2 className="font-rider text-moto-bone text-5xl md:text-7xl lg:text-8xl leading-[0.95] mb-6">
+          <h2 className="font-sora text-moto-bone text-4xl md:text-6xl lg:text-7xl leading-[0.95] tracking-tight mb-6">
             Tres acabados.
             <br />
             Una misma promesa.
@@ -80,7 +80,7 @@ const modelos = [
                   <div className="font-mono text-moto-grey text-xs tracking-[0.3em] uppercase mb-2">
                     / 0{idx + 1}
                   </div>
-                  <h3 className="font-rider text-moto-bone text-3xl md:text-4xl">
+                  <h3 className="font-sora text-moto-bone text-3xl md:text-4xl">
                     {modelo.nombre}
                   </h3>
                 </div>

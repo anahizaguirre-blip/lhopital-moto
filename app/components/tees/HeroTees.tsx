@@ -49,7 +49,7 @@ export default function HeroTees() {
             className="font-rider text-tees-white text-6xl sm:text-7xl lg:text-7xl xl:text-8xl leading-[0.95] tracking-tight mb-8 opacity-0 animate-fade-in-up"
             style={{ animationDelay: '0.25s' }}
           >
-            Hecha donde<br />se rueda.
+            Lhopital.
           </h1>
 
           {/* Sublínea */}
@@ -59,7 +59,7 @@ export default function HeroTees() {
           >
             Seis playeras. Seis maneras de decir lo mismo:
             <br />
-            ¡rodar lo es todo!          </p>
+            ¡amamos rodar!          </p>
 
           {/* CTA */}
           <div

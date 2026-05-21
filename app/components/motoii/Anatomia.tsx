@@ -43,7 +43,7 @@ export default function Anatomia() {
             </span>
           </span>
 
-          <h2 className="font-rider text-moto-bone text-5xl md:text-7xl lg:text-8xl leading-[0.95] mb-6">
+          <h2 className="font-sora text-moto-bone text-4xl md:text-6xl lg:text-7xl leading-[0.95] tracking-tight mb-6">
             Cinco razones
             <br />
             para confiar.
