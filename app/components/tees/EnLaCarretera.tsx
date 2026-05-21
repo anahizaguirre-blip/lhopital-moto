@@ -60,7 +60,7 @@ export default function EnLaCarretera() {
         {/* Fotos icónicas */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8">
 
-          <div className="relative aspect-[4/3]">
+          <div className="relative aspect-[4/3] overflow-hidden">
             <Image
               src="/products/lhopitaltees/HarleyFatBob.jpg"
               alt="Harley-Davidson — comunidad Lhopital"
@@ -82,7 +82,7 @@ export default function EnLaCarretera() {
             />
           </div>
 
-          <div className="relative aspect-[4/3] overflow-hidden">
+          <div className="relative aspect-[4/3] object-right">
             <Image
               src="/products/lhopitaltees/HarleySportster.jpg"
               alt="Harley en ruta — comunidad Lhopital"
