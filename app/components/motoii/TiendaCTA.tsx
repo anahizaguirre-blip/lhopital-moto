@@ -7,28 +7,31 @@ export default function TiendaCTA() {
   return (
     <section
       id="tienda"
-      className="relative bg-[#0a0a0a] text-[#f5f3f0] border-b border-[rgba(245,243,240,0.07)] overflow-hidden"
+      aria-label="Tienda Moto II"
+      className="relative bg-moto-black overflow-hidden pt-24 md:pt-32"
     >
-      {/* Cabecera de sección — mismo lenguaje que las anteriores */}
-      <header className="px-5 pt-16 pb-8 md:pt-24 md:pb-10 text-center">
-        <p className="text-[8px] md:text-[9px] tracking-[0.35em] uppercase text-[var(--gold-dim)] mb-3">
-          — Tienda
-        </p>
-        <h2 className="text-[36px] md:text-[56px] font-black uppercase leading-[0.92] tracking-[0.03em]">
-          Tu próxima ruta
-          <em className="block not-italic">
+      {/* Cabecera — mismo lenguaje que las demás: línea + eyebrow brass, título Sora a la izquierda */}
+      <div className="w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
+        <div className="mb-16 md:mb-20 max-w-3xl">
+          <span className="block mb-6">
             <span
-              className="italic font-normal text-[var(--gold)] text-[0.55em] tracking-[0.12em] mt-2 inline-block"
-              style={{ fontFamily: 'var(--font-cormorant)' }}
-            >
-              empieza con esto.
+              aria-hidden="true"
+              className="inline-block w-8 h-px bg-moto-brass align-middle mr-3"
+            />
+            <span className="font-mono text-moto-brass text-xs tracking-[0.3em] uppercase">
+              Tienda
             </span>
-          </em>
-        </h2>
-        <div className="w-10 h-px bg-[var(--gold-dim)] mx-auto mt-6" />
-      </header>
+          </span>
 
-      {/* Cuerpo: layout asimétrico — foto izquierda, texto derecha en desktop */}
+          <h2 className="font-sora text-moto-bone text-4xl md:text-6xl lg:text-7xl leading-[0.95] tracking-tight mb-6">
+            Tu próxima ruta
+            <br />
+            empieza con esto.
+          </h2>
+        </div>
+      </div>
+
+      {/* Cuerpo: layout asimétrico — INTACTO (foto izquierda, texto derecha en desktop) */}
       <div className="relative max-w-[1280px] mx-auto px-5 md:px-12 pb-20 md:pb-28">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
           {/* Foto — héroe absoluto */}
