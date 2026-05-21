@@ -1,29 +1,11 @@
 import Image from 'next/image'
 
 export default function LaColeccion() {
-const modelos = [
-  {
-    nombre: 'Black',
-    archivo: 'ModeloBlack.jpg',
-    codigo: 'MTII_BLK',
-    objectPosition: '50% 35%',
-    scale: 'scale-[3]',
-  },
-  {
-  nombre: 'Gun Metal',
-  archivo: 'ModeloGun.jpg',
-  codigo: 'MTII_GMG',
-  objectPosition: '40% 50%',   // ← cambia este valor
-  scale: 'scale-[2.5]',
-},
-  {
-    nombre: 'Silver',
-    archivo: 'ModeloSilver.jpg',
-    codigo: 'MTII_SVR',
-    objectPosition: '50% 50%',
-    scale: 'scale-[2]',
-  },
-]
+  const modelos = [
+    { nombre: 'Black',     archivo: 'ModeloBlack.jpg',  codigo: 'MTII_BLK' },
+    { nombre: 'Gun Metal', archivo: 'ModeloGun.jpg',    codigo: 'MTII_GMG' },
+    { nombre: 'Silver',    archivo: 'ModeloSilver.jpg', codigo: 'MTII_SVR' },
+  ]
 
   return (
     <section
@@ -61,7 +43,7 @@ const modelos = [
           {modelos.map((modelo, idx) => (
             <div key={modelo.nombre} className="group">
 
-              {/* Foto del modelo con zoom personalizado */}
+              {/* Foto del modelo — ya viene encuadrada, solo object-cover */}
               <div className="relative w-full aspect-[3/2] overflow-hidden mb-6 bg-moto-line">
                 <Image
                   src={`/products/motoii/${modelo.archivo}`}
@@ -69,8 +51,7 @@ const modelos = [
                   fill
                   quality={90}
                   sizes="(max-width: 768px) 100vw, 33vw"
-                  className={`object-cover ${modelo.scale} transition-transform duration-700`}
-                  style={{ objectPosition: modelo.objectPosition }}
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
 
