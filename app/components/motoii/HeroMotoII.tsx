@@ -60,10 +60,12 @@ export default function HeroMotoII() {
 
           {/* Tagline */}
           <p
-            className="font-inter font-light text-moto-bone/90 text-lg sm:text-xl md:text-2xl leading-relaxed mb-10 opacity-0 animate-fade-in-up"
+            className="font-inter font-light text-moto-bone/90 text-xl sm:text-2xl md:text-3xl leading-relaxed mb-12 opacity-0 animate-fade-in-up"
             style={{ animationDelay: '0.4s' }}
           >
-            El navegador que no quiere ser visto.
+            El navegador que{' '}
+            <br className="sm:hidden" />
+            no quiere ser visto.
             <br />
             Solo quiere que llegues.
           </p>
