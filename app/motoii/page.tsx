@@ -4,6 +4,7 @@ import Inicio from '@/app/components/motoii/Inicio'
 import Anatomia from '@/app/components/motoii/Anatomia'
 import EnLaCarretera from '@/app/components/motoii/EnLaCarretera'
 import LaColeccion from '@/app/components/motoii/LaColeccion'
+import FranjaConfianza from '@/app/components/motoii/FranjaConfianza'
 import LaHermandad from '@/app/components/motoii/LaHermandad'
 import TiendaCTA from '@/app/components/motoii/TiendaCTA'
 import CierreMotoII from '@/app/components/motoii/CierreMotoII'
@@ -23,6 +24,7 @@ export default function MotoIIPage() {
       <Anatomia />
       <EnLaCarretera />
       <LaColeccion />
+      <FranjaConfianza />
       <LaHermandad />
       <TiendaCTA />
       <CierreMotoII />

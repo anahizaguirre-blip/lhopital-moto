@@ -51,26 +51,31 @@ export default function TiendaCTA() {
           {/* Texto + CTA — al lado en desktop, debajo en mobile */}
           <div className="text-center md:text-left max-w-[440px] mx-auto md:mx-0">
             {/* Eyebrow producto */}
-            <p className="text-[8px] md:text-[9px] tracking-[0.3em] uppercase text-[var(--gold-dim)] mb-3">
+            <p className="text-[8px] md:text-[9px] tracking-[0.3em] uppercase text-brass mb-3">
               Beeline · Moto II
             </p>
 
             {/* Cita italic */}
             <p
-              className="text-[22px] md:text-[30px] italic font-medium leading-[1.25] mb-6 text-[rgba(245,243,240,0.92)]"
-              style={{ fontFamily: 'var(--font-cormorant)' }}
+              className="text-[22px] md:text-[30px] font-medium leading-[1.25] mb-6 text-[rgba(245,243,240,0.92)]"
+              style={{ fontFamily: 'var(--font-sora)' }}
             >
               Traza tu ruta.
               <br />
-              <span className="text-[var(--gold)] not-italic font-semibold">
+              <span className="text-brass not-italic font-semibold">
                 Sigue el camino.
               </span>
             </p>
 
             {/* Cuerpo breve */}
             <p className="text-[10px] md:text-[11px] leading-[1.85] text-[rgba(245,243,240,0.5)] mb-9">
-              Navegación minimalista. 30 horas de batería. Mapeo global. Diseñado en Reino Unido,
-              distribuido en México por{' '}
+              Navegación minimalista. 
+              <br />
+              Mapeo global. 
+              <br />
+              Sin pagos mensuales.
+              <br />
+              Distribuido en México por{' '}
               <strong className="text-[rgba(245,243,240,0.85)] font-medium">Lhopital</strong>.
             </p>
 
