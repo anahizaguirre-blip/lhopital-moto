@@ -11,7 +11,7 @@ export default function CierreMotoII() {
           >
             MOTO II
           </h2>
-          <p className="font-cormorant italic text-[var(--gold)] text-xl md:text-2xl mt-4 md:mt-6 tracking-wide">
+          <p className="font-inter font-light text-moto-bone/90 text-xl md:text-2xl mt-4 md:mt-6 tracking-wide">
             Navegación pura.
           </p>
         </div>

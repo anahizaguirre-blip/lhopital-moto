@@ -40,7 +40,7 @@ export default function HeroTees() {
               className="block w-10 h-px bg-brass"
             />
             <p className="font-mono text-brass text-xs tracking-[0.30em] uppercase">
-              Hecho en México · Diseño propio
+              Hecho en México
             </p>
           </div>
 
