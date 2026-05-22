@@ -51,24 +51,21 @@ export default function TiendaCTA() {
           {/* Texto + CTA — al lado en desktop, debajo en mobile */}
           <div className="text-center md:text-left max-w-[440px] mx-auto md:mx-0">
             {/* Eyebrow producto */}
-            <p className="text-[8px] md:text-[9px] tracking-[0.3em] uppercase text-brass mb-3">
+            <p className="text-[8px] md:text-[9px] tracking-[0.3em] uppercase text-moto-brass mb-3">
               Beeline · Moto II
             </p>
 
             {/* Cita italic */}
-            <p
-              className="text-[22px] md:text-[30px] font-medium leading-[1.25] mb-6 text-[rgba(245,243,240,0.92)]"
-              style={{ fontFamily: 'var(--font-sora)' }}
-            >
+            <p className="font-sora text-[22px] md:text-[30px] font-medium leading-[1.25] mb-6 text-[rgba(245,243,240,0.92)]">
               Traza tu ruta.
               <br />
-              <span className="text-brass not-italic font-semibold">
+              <span className="text-moto-brass not-italic font-semibold">
                 Sigue el camino.
               </span>
             </p>
 
-            {/* Cuerpo breve */}
-            <p className="text-[10px] md:text-[11px] leading-[1.85] text-[rgba(245,243,240,0.5)] mb-9">
+            {/* Cuerpo breve — más grande y con más aire vertical */}
+            <p className="text-[12px] md:text-[13px] leading-[2.1] text-[rgba(245,243,240,0.6)] mb-10">
               Navegación minimalista. 
               <br />
               Mapeo global. 
@@ -76,13 +73,13 @@ export default function TiendaCTA() {
               Sin pagos mensuales.
               <br />
               Distribuido en México por{' '}
-              <strong className="text-[rgba(245,243,240,0.85)] font-medium">Lhopital</strong>.
+              <strong className="text-[rgba(245,243,240,0.9)] font-medium">Lhopital</strong>.
             </p>
 
             {/* El único botón */}
             <Link
               href="/tienda"
-              className="inline-block bg-[#f5f3f0] text-[#0a0a0a] px-10 py-4 md:px-12 md:py-5 text-[10px] md:text-[11px] tracking-[0.2em] uppercase font-bold transition-all duration-300 hover:bg-[var(--gold)] hover:tracking-[0.25em]"
+              className="inline-block bg-[#f5f3f0] text-[#0a0a0a] px-10 py-4 md:px-12 md:py-5 text-[10px] md:text-[11px] tracking-[0.2em] uppercase font-bold transition-all duration-300 hover:bg-moto-brass hover:tracking-[0.25em]"
             >
               Conseguir el mío
             </Link>
