@@ -35,7 +35,7 @@ export default function Eventos() {
             </span>
           </h2>
           <p className="font-almaq text-moto-bone/45 text-[11px] md:text-xs tracking-[0.15em] uppercase mt-4">
-            No tenemos showroom. Nos encuentras donde rueda la comunidad.
+            No tenemos showroom por el momento. Nos encuentras donde rueda la comunidad.
           </p>
         </div>
 

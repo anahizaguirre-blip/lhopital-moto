@@ -10,6 +10,7 @@ type Marca = {
   logo: string
   logoW: number
   logoH: number
+  logoClass: string // altura óptica individual: cada logo pesa distinto
   nombre: string
   tagline: string
   cta: string
@@ -23,6 +24,8 @@ const marcas: Marca[] = [
     logo: '/logo/motoii/motoii.png',
     logoW: 4000,
     logoH: 1411,
+    // Moto II: bloque pesado y ancho (2.83:1). Altura media — ya domina solo.
+    logoClass: 'h-10 md:h-12',
     nombre: 'Moto II',
     tagline: 'Navegación satelital · Beeline UK',
     cta: 'Ver accesorios',
@@ -34,6 +37,8 @@ const marcas: Marca[] = [
     logo: '/logo/HEDON/hedon-black.png',
     logoW: 1177,
     logoH: 396,
+    // Hedon: insignia de líneas finas (2.97:1). El más alto — necesita tamaño para pesar igual.
+    logoClass: 'h-12 md:h-16',
     nombre: 'Hedon',
     tagline: 'Cascos artesanales · London UK',
     cta: 'Ver cascos',
@@ -42,9 +47,11 @@ const marcas: Marca[] = [
     num: '03',
     href: '/tees',
     foto: '/products/brand-Lhopital.jpg',
-    logo: '/logo/LHOPITAL/frase_horizontal_invertido.png',
+    logo: '/logo/LHOPITAL/horizontal_invertido.png',
     logoW: 2250,
     logoH: 527,
+    // Lhopital: muy alargado (4.27:1). Altura media-alta; el ancho lo compensa.
+    logoClass: 'h-11 md:h-14',
     nombre: 'Lhopital Tees',
     tagline: 'Playeras & merch · Hecho en MX',
     cta: 'Ver colección',
@@ -81,13 +88,13 @@ export default function GaleriaMarcas() {
               className="group block bg-moto-black"
             >
               {/* Franja del logo — espacio propio arriba, foto intacta abajo */}
-              <div className="flex items-center justify-center py-7 md:py-9">
+              <div className="flex items-center justify-center py-8 md:py-11">
                 <Image
                   src={m.logo}
                   alt={m.nombre}
                   width={m.logoW}
                   height={m.logoH}
-                  className="h-8 md:h-10 w-auto object-contain opacity-90 transition-opacity duration-300 group-hover:opacity-100"
+                  className={`${m.logoClass} w-auto object-contain opacity-90 transition-opacity duration-300 group-hover:opacity-100`}
                 />
               </div>
 
