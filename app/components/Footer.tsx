@@ -29,7 +29,7 @@ export default function Footer({ bg = 'dark' }: { bg?: 'dark' | 'hedon' }) {
           {/* Logo Lhopital */}
           <Link href="/" className="flex items-center">
             <Image
-              src="/logo/frase_horizontal_invertido.png"
+              src="/logo/LHOPITAL/frase_horizontal_invertido.png"
               alt="Lhopital"
               width={2250}
               height={527}

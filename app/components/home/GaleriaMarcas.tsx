@@ -42,7 +42,7 @@ const marcas: Marca[] = [
     num: '03',
     href: '/tees',
     foto: '/products/brand-Lhopital.jpg',
-    logo: '/logo/frase_horizontal_invertido.png',
+    logo: '/logo/LHOPITAL/frase_horizontal_invertido.png',
     logoW: 2250,
     logoH: 527,
     nombre: 'Lhopital Tees',
