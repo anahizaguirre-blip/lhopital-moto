@@ -9,7 +9,7 @@ export default function CierreTees() {
           LHOPITAL.
         </h2>
         <p className="font-almaq text-tees-white/80 text-xl md:text-2xl mt-4 md:mt-6">
-          Hecha donde se rueda.
+          Listos para rodar.
         </p>
       </div>
     </section>
