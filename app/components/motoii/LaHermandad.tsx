@@ -54,7 +54,7 @@ export default function LaHermandad() {
                 className="text-[20px] md:text-[34px] leading-[1.25] italic font-medium text-[#f5f3f0]"
                 style={{ fontFamily: 'var(--font-cormorant)' }}
               >
-                "Aquí no hay señal.
+                &ldquo;Aquí no hay señal.
                 <br />
                 Solo el camino, el aire,
                 <br />
@@ -62,7 +62,7 @@ export default function LaHermandad() {
                 <span className="text-[var(--gold)] not-italic font-semibold">
                   entiende por qué.
                 </span>
-                "
+                &rdquo;
               </p>
               <div className="w-10 h-px bg-[var(--gold-dim)] mt-6 mb-3" />
               <p className="text-[8px] md:text-[9px] tracking-[0.28em] uppercase text-[rgba(245,243,240,0.55)]">
