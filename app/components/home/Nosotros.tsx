@@ -28,7 +28,7 @@ export default function Nosotros() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3 items-stretch">
 
           {/* Foto */}
-          <div className="relative overflow-hidden aspect-[4/5] md:aspect-auto md:min-h-[480px] bg-white/[0.02]">
+          <div className="relative overflow-hidden h-72 sm:h-96 md:h-auto md:min-h-[520px] bg-white/[0.02]">
             <Image
               src="/nosotros-moto.jpg"
               alt="Lhopital · sobre dos ruedas"
@@ -69,7 +69,7 @@ export default function Nosotros() {
             {/* Remate curatorial — conecta con "We are the standard" */}
             <p className="font-almaq text-moto-bone/80 text-base md:text-lg leading-relaxed mb-8">
               Por eso no vendemos cualquier cosa. Traemos a México solo las marcas
-              del mundo que cumplen el estándar.{' '}
+              del mundo que ya cumplen el estándar.{' '}
               <span className="font-cormorant italic text-brass">
                 We are the standard.
               </span>
