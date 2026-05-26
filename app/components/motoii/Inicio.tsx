@@ -10,12 +10,12 @@ export default function Inicio() {
     {
       numero: '02',
       titulo: 'Traza',
-      descripcion: 'Marcas el destino desde tu celular. La app se queda con la ruta.',
+      descripcion: 'Marcas el destino desde la app. El Moto II se queda con la ruta.',
     },
     {
       numero: '03',
       titulo: 'Rueda',
-      descripcion: 'Cierras la app. El navegador hace lo suyo. Tú haces lo tuyo.',
+      descripcion: 'Cierras la app. Guarda tu celular. El navegador hace lo suyo.',
     },
   ]
 
@@ -46,7 +46,7 @@ export default function Inicio() {
           </h2>
 
           <p className="font-inter font-light text-moto-bone/70 text-lg md:text-xl leading-relaxed max-w-2xl">
-            Sin manuales. Sin tutoriales. El Moto II está pensado para que la curva de aprendizaje
+            El Moto II está pensado para que la curva de aprendizaje
             sea la propia carretera.
           </p>
         </div>

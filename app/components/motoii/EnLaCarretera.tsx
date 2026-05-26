@@ -74,8 +74,7 @@ export default function EnLaCarretera() {
             </p>
 
             <p className="font-inter font-light text-moto-bone/70 text-base md:text-lg leading-relaxed">
-              Diseñado en Londres para enfrentar la lluvia inglesa. Probado en el Ajusco, los Altos
-              de Chiapas y la costa de Oaxaca. El Moto II entiende que rodar en México no es lo mismo
+              Diseñado en Londres para enfrentar la lluvia inglesa. Probado en el Ajusco, La Sierra del Tigre y la costa de Mazatlan. El Moto II entiende que rodar en México no es lo mismo
               que rodar en cualquier parte.
             </p>
           </div>

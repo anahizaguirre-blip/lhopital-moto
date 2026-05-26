@@ -52,9 +52,9 @@ export default function EnLaCarretera() {
 
         {/* Cierre del manifiesto */}
         <p className="font-almaq text-tees-white/70 text-lg sm:text-xl leading-relaxed max-w-2xl mb-16 lg:mb-20">
-          Aquí no hay tribu mejor que otra. Hay una sola cosa que importa:
+          Aquí no hay reglas. Sola una cosa que importa:
           {' '}
-          <span className="text-tees-white">que estés rodando.</span>
+          <span className="text-tees-white">¡salir a rodar!</span>
         </p>
 
         {/* Fotos icónicas */}

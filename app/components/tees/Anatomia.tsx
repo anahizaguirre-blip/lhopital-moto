@@ -16,8 +16,8 @@ const especificaciones = [
   },
   {
     numero: '04',
-    titulo: 'Tinta que no se pega',
-    detalle: 'Estampado que aguanta el sudor de la ruta.',
+    titulo: 'Estampado que respira con la tela',
+    detalle: 'Aguanta todo lo que la ruta le ponga enfrente.',
   },
 ]
 

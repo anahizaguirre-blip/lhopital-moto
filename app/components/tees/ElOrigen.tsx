@@ -36,7 +36,7 @@ export default function ElOrigen() {
               Nació en una parada de gasolina, después del sol y antes del próximo tramo.
             </p>
             <p>
-              Por eso es así: oversize porque te subes a la moto. Algodón pesado porque no es ropa de moda. Tinta que no se pega porque sudas.
+              Por eso es así: oversize por comodidad; algodón pesado porque no es ropa de moda; estampado que no se sientes porque se vuelve parte de la tela.
             </p>
             <p className="font-cormorant italic text-tees-white text-2xl sm:text-3xl pt-4">
               Lo que traes puesto lo definimos rodando.

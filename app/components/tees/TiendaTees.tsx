@@ -34,7 +34,7 @@ const productos = [
     url: '#',
   },
   {
-    nombre: 'BBB — Beers, Bikes & Bros',
+    nombre: 'Brotherhood',
     precio: 400,
     imagen: '/products/lhopitaltees/BBB.jpg',
     url: '#',

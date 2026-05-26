@@ -12,7 +12,7 @@ const playeras = [
   {
     numero: '02',
     nombre: "Death Doesn't Die",
-    copy: "La calaca al manubrio. Porque en México, a la muerte se le hace sátira — y luego se le acelera.",
+    copy: "La calaca al manubrio. Porque en México, se hace sátira de la muerte — y luego se acelera.",
     imagen: '/products/lhopitaltees/Death.jpg',
     rojo: false,
   },
@@ -26,7 +26,7 @@ const playeras = [
   {
     numero: '04',
     nombre: "Let's Ride",
-    copy: "El personaje de Lhopital con casco. La invitación de la casa. Si hay duda, la respuesta siempre es la misma: vámonos a rodar.",
+    copy: "El personaje de Lhopital con casco. La invitación de la casa. Si hay duda, la respuesta siempre es la misma: ¡salir a rodar!",
     imagen: '/products/lhopitaltees/LhopitalPersonaje.jpg',
     rojo: false,
   },
@@ -40,7 +40,7 @@ const playeras = [
   },
   {
     numero: '06',
-    nombre: 'BBB',
+    nombre: 'Brotherhood',
     nombreCompleto: 'Beers, Bikes & Bros',
     copy: "Las tres cosas que llegan después de la rodada. En ese orden o en cualquiera.",
     imagen: '/products/lhopitaltees/BBB.jpg',
@@ -118,14 +118,14 @@ export default function LaColeccion() {
                   <h3 className="font-rider text-tees-white text-4xl sm:text-5xl lg:text-6xl leading-[0.95] tracking-tight mb-3">
                     {playera.rojo ? (
                       <>
-                        <span className="text-brass">BBB</span>
+                        <span className="text-brass">Brotherhood</span>
                       </>
                     ) : (
                       playera.nombre
                     )}
                   </h3>
 
-                  {/* Nombre completo (solo para BBB) */}
+                  {/* Nombre completo (solo para Brotherhood) */}
                   {playera.nombreCompleto && (
                     <p className="font-almaq text-tees-white/80 text-sm sm:text-base tracking-[0.15em] uppercase mb-6">
                       {playera.nombreCompleto}
