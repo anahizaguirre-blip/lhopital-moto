@@ -87,29 +87,32 @@ export default function Anatomia() {
             </div>
 
             {/* Lista de specs */}
-            <div>
-              {specs.map((spec, idx) => (
-                <div
-                  key={spec.dato}
-                  className="grid grid-cols-12 gap-4 md:gap-8 border-b border-moto-line py-6 md:py-8 items-baseline"
-                >
-                  {/* Número de fila */}
-                  <span className="col-span-1 font-mono text-moto-grey text-xs">
-                    / 0{idx + 1}
-                  </span>
+<div>
+  {specs.map((spec, idx) => (
+    <div
+      key={spec.dato}
+      className="flex flex-col gap-2 md:grid md:grid-cols-12 md:gap-8 border-b border-moto-line py-6 md:py-8 md:items-baseline"
+    >
+      {/* Fila superior en móvil: número + dato juntos */}
+      <div className="flex items-baseline gap-3 md:contents">
+        {/* Número de fila */}
+        <span className="md:col-span-1 font-mono text-moto-grey text-xs shrink-0">
+          / 0{idx + 1}
+        </span>
 
-                  {/* Dato técnico (grande) */}
-                  <span className="col-span-4 md:col-span-3 font-mono text-moto-bone text-2xl md:text-3xl lg:text-4xl tracking-tight">
-                    {spec.dato}
-                  </span>
+        {/* Dato técnico (grande) */}
+        <span className="md:col-span-3 font-mono text-moto-bone text-2xl md:text-3xl lg:text-4xl tracking-tight">
+          {spec.dato}
+        </span>
+      </div>
 
-                  {/* Promesa (sans light) */}
-                  <span className="col-span-7 md:col-span-8 font-inter font-light text-moto-bone/80 text-base md:text-lg leading-snug">
-                    {spec.promesa}
-                  </span>
-                </div>
-              ))}
-            </div>
+      {/* Promesa (sans light) */}
+      <span className="md:col-span-8 font-inter font-light text-moto-bone/80 text-base md:text-lg leading-snug pl-8 md:pl-0">
+        {spec.promesa}
+      </span>
+    </div>
+  ))}
+</div>
 
           </div>
         </div>

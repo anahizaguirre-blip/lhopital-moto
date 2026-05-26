@@ -67,7 +67,7 @@ export default function Eventos() {
         {/* ANTERIORES — galería de banners horizontales, 2 columnas, sin texto encima */}
         <div>
           <p className="font-almaq text-brass/60 text-[10px] tracking-[0.3em] uppercase mb-5">
-            Donde hemos estado
+            Dónde hemos estado
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
             {eventosPasados.map((ev) => (
