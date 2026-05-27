@@ -61,9 +61,9 @@ const marcas: Marca[] = [
 export default function GaleriaMarcas() {
   return (
     <section
-      id="marcas"
+       id="marcas"
       aria-label="Nuestras marcas"
-      className="bg-moto-black py-20 md:py-28"
+      className="bg-moto-black pt-20 md:pt-28"
     >
       {/* Header — conserva la sangría para que el texto se lea cómodo */}
       <div className="w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 mb-12 md:mb-16">

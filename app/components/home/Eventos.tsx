@@ -17,9 +17,9 @@ const eventosPasados: { foto: string; alt: string }[] = [
 export default function Eventos() {
   return (
     <section
-      id="eventos"
-      aria-label="Eventos"
-      className="bg-moto-black py-20 md:py-28 border-t border-brass/10"
+        id="eventos"
+        aria-label="Eventos"
+        className="bg-moto-black pt-20 md:pt-28 border-t border-brass/10"
     >
       <div className="w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
 

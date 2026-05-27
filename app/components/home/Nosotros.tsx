@@ -7,7 +7,7 @@ export default function Nosotros() {
     <section
       id="nosotros"
       aria-label="Nosotros"
-      className="bg-moto-black py-20 md:py-28 border-t border-brass/10"
+      className="bg-moto-black pt-20 md:pt-28 border-t border-brass/10"
     >
       <div className="w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
 
