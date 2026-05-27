@@ -9,7 +9,7 @@ type Modelo = {
 
 const modelos: Modelo[] = [
   {
-    nombre: "Heroine Racer",  
+    nombre: "Heroine Racer 2.0",  
     imagen: "/products/hedon/heroine.jpg",
     alt: "Casco Heroine Racer de Hedon",
   },
