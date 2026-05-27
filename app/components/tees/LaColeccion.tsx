@@ -58,18 +58,18 @@ export default function LaColeccion() {
       <div className="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16">
 
         {/* Encabezado de sección */}
-        <div className="max-w-2xl pt-24 lg:pt-32 pt-16 lg:pt-20">
+        <div className="max-w-4xl pt-16 lg:pt-20">
 
           {/* Numeración */}
           <div className="flex items-center gap-4 mb-8">
-           <span aria-hidden="true" className="block w-10 h-px bg-brass" />
+            <span aria-hidden="true" className="block w-10 h-px bg-brass" />
             <p className="font-mono text-brass text-xs tracking-[0.30em] uppercase">
               La Colección
             </p>
           </div>
 
           {/* Headline */}
-          <h2 className="font-rider text-tees-white text-5xl sm:text-6xl lg:text-7xl leading-[0.95] tracking-tight mb-6 max-w-none lg:max-w-4xl">
+          <h2 className="font-rider text-tees-white text-5xl sm:text-6xl lg:text-7xl leading-[0.95] tracking-tight mb-6">
             Seis piezas.<br />Cada una con algo que decir.
           </h2>
       </div>

@@ -10,7 +10,7 @@ export default function LaHermandad() {
       <div className="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16 pt-24 lg:pt-20">
 
         {/* Encabezado de sección */}
-        <div className="max-w-2xl mb-16 lg:mb-20">
+        <div className="max-w-4xl mb-16 lg:mb-20">
 
           {/* Numeración */}
           <div className="flex items-center gap-4 mb-8">
