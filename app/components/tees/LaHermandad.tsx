@@ -7,7 +7,7 @@ export default function LaHermandad() {
       aria-label="La Hermandad"
       className="relative w-full bg-tees-black overflow-hidden"
     >
-      <div className="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16 py-24 lg:py-32">
+      <div className="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16 pt-24 lg:pt-20">
 
         {/* Encabezado de sección */}
         <div className="max-w-2xl mb-16 lg:mb-20">

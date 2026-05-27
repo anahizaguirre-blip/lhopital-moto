@@ -7,7 +7,7 @@ export default function EnLaRuta() {
       aria-label="En la Ruta — Sayula"
       className="relative w-full bg-tees-black overflow-hidden"
     >
-      <div className="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16 pt-16 lg:pt-20 pb-24 lg:pb-32">
+      <div className="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16 pt-16 lg:pt-20 pt-16 lg:pt-20">
 
         {/* Encabezado de sección */}
         <div className="max-w-2xl mb-16 lg:mb-20">

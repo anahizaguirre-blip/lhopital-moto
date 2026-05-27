@@ -14,7 +14,7 @@ export default function EnLaCarretera() {
       aria-label="En la Carretera"
       className="relative w-full bg-tees-black overflow-hidden"
     >
-      <div className="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16 py-24 lg:py-32">
+      <div className="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16 pt-16 lg:pt-20">
 
         {/* Encabezado de sección */}
         <div className="max-w-3xl mb-16 lg:mb-20">
@@ -52,9 +52,9 @@ export default function EnLaCarretera() {
 
         {/* Cierre del manifiesto */}
         <p className="font-almaq text-tees-white/70 text-lg sm:text-xl leading-relaxed max-w-2xl mb-16 lg:mb-20">
-          Aquí no hay reglas. Sola una cosa que importa:
+          Una sola regla nos une:
           {' '}
-          <span className="text-tees-white">¡salir a rodar!</span>
+          <span className="text-tees-white">¡rodar!</span>
         </p>
 
         {/* Fotos icónicas */}

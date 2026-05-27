@@ -7,7 +7,7 @@ export default function ElOrigen() {
       aria-label="El Origen de Tees"
       className="relative w-full bg-tees-black overflow-hidden"
     >
-      <div className="mx-auto max-w-[1440px] grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 px-6 sm:px-10 lg:px-16 pt-24 lg:pt-32 pb-16 lg:pb-20 items-center">
+      <div className="mx-auto max-w-[1440px] grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 px-6 sm:px-10 lg:px-16 pt-24 lg:pt-32 pt-16 lg:pt-20 items-center">
 
         {/* Columna de texto */}
         <div className="order-2 lg:order-1">

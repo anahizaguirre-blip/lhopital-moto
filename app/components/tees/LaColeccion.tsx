@@ -58,27 +58,24 @@ export default function LaColeccion() {
       <div className="mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16">
 
         {/* Encabezado de sección */}
-        <div className="max-w-2xl pt-24 lg:pt-32 pb-16 lg:pb-24">
+        <div className="max-w-2xl pt-24 lg:pt-32 pt-16 lg:pt-20">
 
           {/* Numeración */}
           <div className="flex items-center gap-4 mb-8">
-            <span
-              aria-hidden="true"
-              className="block w-10 h-px bg-brass"
-            />
+           <span aria-hidden="true" className="block w-10 h-px bg-brass" />
             <p className="font-mono text-brass text-xs tracking-[0.30em] uppercase">
               La Colección
             </p>
           </div>
 
           {/* Headline */}
-          <h2 className="font-rider text-tees-white text-5xl sm:text-6xl lg:text-7xl leading-[0.95] tracking-tight mb-6">
+          <h2 className="font-rider text-tees-white text-5xl sm:text-6xl lg:text-7xl leading-[0.95] tracking-tight mb-6 max-w-none lg:max-w-4xl">
             Seis piezas.<br />Cada una con algo que decir.
           </h2>
-        </div>
+      </div>
 
         {/* Bloques editoriales — cada playera */}
-        <div className="space-y-16 lg:space-y-20 pb-24 lg:pb-32">
+        <div className="space-y-16 lg:space-y-20 pt-16 lg:pt-20">
           {playeras.map((playera, index) => {
             const esImpar = index % 2 === 1
 
