@@ -3,23 +3,70 @@
 import Image from 'next/image'
 
 // Banners 940x400. El diseño y los datos (nombre, año) ya viven dentro de cada imagen.
-// Solo guardamos la ruta y un alt para accesibilidad/SEO. Orden: más reciente arriba.
-const eventosPasados: { foto: string; alt: string }[] = [
-  { foto: '/eventos/dgr-2026.png', alt: 'DGR 2026 CDMX' },
-  { foto: '/eventos/autocinema-coyote.png', alt: 'Autocinema Coyote, Polanco 2026' },
-  { foto: '/eventos/simm-2025.png', alt: 'SIMM 2025, Ciudad de México' },
-  { foto: '/eventos/dgr-2025.png', alt: 'DGR 2025 CDMX' },
-  { foto: '/eventos/la-grande.png', alt: 'La Grande 2025' },
-  { foto: '/eventos/simm-2024.png', alt: 'SIMM 2024, Ciudad de México' },
-  { foto: '/eventos/vespa-festival-2024.png', alt: 'Vespa Festival 2024' },
+// Cada evento tiene su URL y tipo (youtube/instagram) para el microfeedback al hover.
+// Orden: más reciente arriba.
+const eventosPasados: {
+  foto: string
+  alt: string
+  url: string
+  tipo: 'youtube' | 'instagram'
+}[] = [
+  {
+    foto: '/eventos/dgr-2026.png',
+    alt: 'DGR 2026 CDMX',
+    url: 'https://www.instagram.com/p/DYoIHuvDoN1/?img_index=1',
+    tipo: 'instagram',
+  },
+  {
+    foto: '/eventos/autocinema-coyote.png',
+    alt: 'Autocinema Coyote, Polanco 2026',
+    url: 'https://www.instagram.com/reel/DWjk8Ibg2Oe/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==',
+    tipo: 'instagram',
+  },
+  {
+    foto: '/eventos/simm-2025.png',
+    alt: 'SIMM 2025, Ciudad de México',
+    url: 'https://www.instagram.com/simm_mexico/',
+    tipo: 'instagram',
+  },
+  {
+    foto: '/eventos/dgr-2025.png',
+    alt: 'DGR 2025 CDMX',
+    url: 'https://www.instagram.com/p/DJzuPUaSOKT/',
+    tipo: 'instagram',
+  },
+  {
+    foto: '/eventos/la-grande.png',
+    alt: 'La Grande 2025',
+    url: 'https://www.instagram.com/p/DJ5cfIatELY/',
+    tipo: 'instagram',
+  },
+  {
+    foto: '/eventos/simm-2024.png',
+    alt: 'SIMM 2024, Ciudad de México',
+    url: 'https://www.instagram.com/simm_mexico/',
+    tipo: 'instagram',
+  },
+  {
+    foto: '/eventos/vespa-festival-2024.png',
+    alt: 'Vespa Festival 2024',
+    url: 'https://www.youtube.com/watch?v=mpY1UY5XRl4',
+    tipo: 'youtube',
+  },
 ]
+
+// Leyenda por tipo — copy corto, voz Lhopital
+const leyendaPorTipo = {
+  instagram: 'Ver en Instagram',
+  youtube: 'Ver video',
+}
 
 export default function Eventos() {
   return (
     <section
-        id="eventos"
-        aria-label="Eventos"
-        className="bg-moto-black pt-20 md:pt-28 border-t border-brass/10"
+      id="eventos"
+      aria-label="Eventos"
+      className="bg-moto-black pt-20 md:pt-28 border-t border-brass/10"
     >
       <div className="w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
 
@@ -71,9 +118,13 @@ export default function Eventos() {
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
             {eventosPasados.map((ev) => (
-              <div
+              <a
                 key={ev.foto}
-                className="group relative aspect-[940/400] overflow-hidden bg-white/[0.02]"
+                href={ev.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${ev.alt} — ${leyendaPorTipo[ev.tipo]}`}
+                className="group relative aspect-[940/400] overflow-hidden bg-white/[0.02] block"
               >
                 <Image
                   src={ev.foto}
@@ -82,7 +133,18 @@ export default function Eventos() {
                   sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-              </div>
+
+                {/* Microfeedback al hover: oscurecido + leyenda en esquina superior izquierda */}
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-moto-black/0 group-hover:bg-moto-black/30 transition-all duration-500"
+                >
+                  <span className="absolute top-4 left-4 md:top-5 md:left-5 font-almaq text-brass text-[10px] md:text-xs tracking-[0.3em] uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center gap-3">
+                    {leyendaPorTipo[ev.tipo]}
+                    <span className="inline-block w-6 h-px bg-brass" />
+                  </span>
+                </div>
+              </a>
             ))}
           </div>
         </div>
