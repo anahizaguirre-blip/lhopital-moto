@@ -3,14 +3,6 @@
  *
  * Cloudinary genera URLs como:
  * https://res.cloudinary.com/{cloud_name}/image/upload/{transformaciones}/{public_id}
- *
- * Las transformaciones nos permiten:
- * - Redimensionar (w_800)
- * - Cambiar formato (f_auto entrega WebP/AVIF según navegador)
- * - Calidad automática (q_auto)
- * - Crop (c_fill)
- *
- * Documentación: https://cloudinary.com/documentation/image_transformations
  */
 
 const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || 'lhopital-moto';
@@ -31,17 +23,12 @@ const PRESETS: Record<CloudinaryPreset, string> = {
 
 /**
  * Genera una URL de Cloudinary con preset.
- *
- * @example
- * cloudinaryUrl('hedon/hedonist/macadamia-front', 'card')
- * → https://res.cloudinary.com/lhopital-moto/image/upload/w_600,h_600,c_fill,g_auto,f_auto,q_auto/hedon/hedonist/macadamia-front
  */
 export function cloudinaryUrl(
   publicId: string | null | undefined,
   preset: CloudinaryPreset = 'card'
 ): string {
   if (!publicId) {
-    // Placeholder cuando no hay foto
     return placeholderImage();
   }
   return `${BASE_URL}/${PRESETS[preset]}/${publicId}`;
@@ -49,37 +36,33 @@ export function cloudinaryUrl(
 
 /**
  * Genera las 4 vistas estándar de un producto Hedon.
- * Útil para galerías.
+ * El orden simula rotar el casco: frente → tres cuartos → lado → atrás.
  */
 export function hedonGallery(basePath: string): {
   front: string;
   threeQuarter: string;
-  lifestyle: string;
-  detail: string;
+  side: string;
+  back: string;
 } {
-  // basePath tipo "hedon/hedonist/macadamia"
-  // Las fotos siguen patrón: macadamia-front, macadamia-three-quarter, etc.
   return {
     front: cloudinaryUrl(`${basePath}-front`, 'detail'),
     threeQuarter: cloudinaryUrl(`${basePath}-three-quarter`, 'detail'),
-    lifestyle: cloudinaryUrl(`${basePath}-lifestyle`, 'detail'),
-    detail: cloudinaryUrl(`${basePath}-detail`, 'detail'),
+    side: cloudinaryUrl(`${basePath}-side`, 'detail'),
+    back: cloudinaryUrl(`${basePath}-back`, 'detail'),
   };
 }
 
 /**
- * Convierte un path como "hedon/hedonist/macadamia-front"
- * al basePath sin sufijo: "hedon/hedonist/macadamia"
+ * Convierte un path como "hedonist-macadamia-front"
+ * al baseName sin sufijo: "hedonist-macadamia"
  */
 export function extractBasePath(imagenPrincipal: string | null): string | null {
   if (!imagenPrincipal) return null;
-  // Quita sufijos conocidos
-  return imagenPrincipal.replace(/-(front|three-quarter|lifestyle|detail)$/, '');
+  return imagenPrincipal.replace(/-(front|three-quarter|side|back)$/, '');
 }
 
 /**
  * Placeholder visual cuando no hay foto disponible.
- * SVG embebido para que no requiera red.
  */
 export function placeholderImage(): string {
   return (
