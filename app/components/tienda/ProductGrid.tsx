@@ -8,6 +8,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import { useRouter } from 'next/navigation';
 import type { Product, Collection } from '@/lib/types';
 import { ProductCard } from './ProductCard';
 
@@ -19,10 +20,10 @@ interface ProductGridProps {
 const MODELOS = ['Hedonist', 'Epicurist 2.0', 'Heroine Racer 2.0', 'Psilo Explorer'];
 
 export function ProductGrid({ products, collections }: ProductGridProps) {
+  const router = useRouter();
   const [modeloActivo, setModeloActivo] = useState<string | null>(null);
   const [coleccionActiva, setColeccionActiva] = useState<string | null>(null);
 
-  // Filtra productos según selección
   const productosFiltrados = useMemo(() => {
     return products.filter((p) => {
       if (modeloActivo && p.familia !== modeloActivo) return false;
@@ -31,7 +32,6 @@ export function ProductGrid({ products, collections }: ProductGridProps) {
     });
   }, [products, modeloActivo, coleccionActiva]);
 
-  // Agrupa productos por familia para mostrarlos organizados
   const productosPorFamilia = useMemo(() => {
     const map = new Map<string, Product[]>();
     productosFiltrados.forEach((p) => {
@@ -78,6 +78,15 @@ export function ProductGrid({ products, collections }: ProductGridProps) {
                   {modelo}
                 </button>
               ))}
+
+              {/* Accesorios — navega, no filtra */}
+              <span className="self-center text-[#F4F1EC]/20 text-sm">|</span>
+              <button
+                onClick={() => router.push('/tienda/hedon/personaliza')}
+                className="text-xs tracking-[0.1em] uppercase px-4 py-2 border transition border-[#F4F1EC]/20 text-[#F4F1EC]/70 hover:border-[#C9A961]/50 hover:text-[#C9A961]"
+              >
+                Accesorios →
+              </button>
             </div>
           </div>
 
@@ -114,7 +123,7 @@ export function ProductGrid({ products, collections }: ProductGridProps) {
           </div>
         </div>
 
-        {/* Contador de resultados */}
+        {/* Contador */}
         <div className="mb-8 text-xs tracking-[0.1em] text-[#F4F1EC]/45 font-mono">
           / {productosFiltrados.length} productos
         </div>
@@ -128,7 +137,6 @@ export function ProductGrid({ products, collections }: ProductGridProps) {
         ) : (
           Array.from(productosPorFamilia.entries()).map(([familia, productos]) => (
             <div key={familia} className="mb-16">
-              {/* Header de familia (solo si no hay filtro de modelo) */}
               {!modeloActivo && (
                 <div className="mb-6 flex items-baseline gap-3">
                   <h2 className="text-2xl md:text-3xl font-medium tracking-tight">
@@ -139,8 +147,6 @@ export function ProductGrid({ products, collections }: ProductGridProps) {
                   </span>
                 </div>
               )}
-
-              {/* Grid de productos */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                 {productos.map((p) => (
                   <ProductCard key={p.id} product={p} />
@@ -149,6 +155,7 @@ export function ProductGrid({ products, collections }: ProductGridProps) {
             </div>
           ))
         )}
+
       </div>
     </section>
   );

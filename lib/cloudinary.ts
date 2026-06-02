@@ -1,4 +1,15 @@
 /**
+ * URL directa para accesorios — sin transformaciones de tamaño,
+ * solo optimización de formato y calidad.
+ */
+export function cloudinaryAccesorioUrl(
+  publicId: string | null | undefined
+): string {
+  if (!publicId) return placeholderImage();
+  return `${BASE_URL}/f_auto,q_auto/${publicId}`;
+}
+
+/**
  * Helper para generar URLs de Cloudinary optimizadas.
  *
  * Cloudinary genera URLs como:

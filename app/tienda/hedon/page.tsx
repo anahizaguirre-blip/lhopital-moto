@@ -32,7 +32,9 @@ export default async function TiendaHedonPage() {
     `)
     .eq('marca', 'hedon')
     .eq('visible_publico', true)
-    .in('familia', ['Hedonist', 'Epicurist 2.0', 'Heroine Racer 2.0', 'Psilo Explorer'])
+    //.in('familia', ['Hedonist', 'Epicurist 2.0', 'Heroine Racer 2.0', 'Psilo Explorer'])
+    .in('categoria', ['estrella'])
+    .order('categoria', { ascending: true })
     .order('familia', { ascending: true });
 
   if (productsError) {
