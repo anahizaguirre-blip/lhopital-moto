@@ -1,14 +1,16 @@
 /**
  * Ficha individual de producto Hedon
- * URL: /tienda/hedon/[slug]  ej. /tienda/hedon/hedonist-macadamia
+ * URL: /tienda/hedon/[slug]
  *
- * Server Component que carga producto + variantes + colección + cross-sells.
+ * Renderiza ProductDetail para cascos o ProductDetailAccesorio para accesorios
+ * según la categoría del producto.
  */
 
 import { createSupabaseServer } from '@/lib/supabase/server';
 import { notFound } from 'next/navigation';
 import { ProductDetail } from '@/app/components/tienda/ProductDetail';
-import type { Product, CrossSell } from '@/lib/types';
+import { ProductDetailAccesorio } from '@/app/components/tienda/ProductDetailAccesorio';
+import type { Product, CrossSell, HedonCrossSell } from '@/lib/types';
 import Link from 'next/link';
 
 interface PageProps {
@@ -16,6 +18,8 @@ interface PageProps {
 }
 
 export const revalidate = 60;
+
+const CATEGORIAS_ACCESORIO = ['add_on_dual', 'add_on_simple'];
 
 export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params;
@@ -26,13 +30,13 @@ export async function generateMetadata({ params }: PageProps) {
     .eq('slug', slug)
     .single();
 
-  if (!product) {
-    return { title: 'Producto no encontrado' };
-  }
+  if (!product) return { title: 'Producto no encontrado' };
 
   return {
     title: `${product.nombre} · Tienda Hedon · Lhopital-moto`,
-    description: product.frase_corta || `${product.familia} ${product.color} — Casco Hedon premium en Lhopital-moto.`,
+    description:
+      product.frase_corta ||
+      `${product.familia} ${product.color} — Accesorio Hedon premium en Lhopital-moto.`,
   };
 }
 
@@ -40,35 +44,53 @@ export default async function ProductPage({ params }: PageProps) {
   const { slug } = await params;
   const supabase = createSupabaseServer();
 
-  // Cargar producto con todo lo necesario
   const { data: product, error } = await supabase
     .from('products')
-    .select(`
-      *,
-      variants:product_variants(*),
-      collection:collections(*)
-    `)
+    .select(`*, variants:product_variants(*), collection:collections(*)`)
     .eq('slug', slug)
     .eq('visible_publico', true)
     .single();
 
-  if (error || !product) {
-    notFound();
-  }
+  if (error || !product) notFound();
 
-  // Cargar cross-sells para este producto
+  const productData = product as Product;
+  const esAccesorio = CATEGORIAS_ACCESORIO.includes(productData.categoria);
+
+  // Cross-sells legacy — Moto II
   const { data: crossSells } = await supabase
     .from('cross_sells')
-    .select(`
-      *,
-      suggested_product:products!cross_sells_suggested_product_id_fkey(*)
-    `)
-    .eq('product_id', product.id)
+    .select(`*, suggested_product:products!cross_sells_suggested_product_id_fkey(*)`)
+    .eq('product_id', productData.id)
     .eq('activo', true)
     .order('prioridad');
 
-  const productData = product as Product;
-  const crossSellsData = (crossSells as CrossSell[]) || [];
+  // Cross-sells Hedon — solo para cascos
+  let hedonCrossSellsData: HedonCrossSell[] = [];
+
+  if (!esAccesorio) {
+    const { data: hedonRaw } = await supabase
+      .from('hedon_cross_sell')
+      .select('id, sku_casco, sku_accesorio, mensaje, tiene_foto, fotos, orden')
+      .eq('sku_casco', productData.sku_padre)
+      .order('orden');
+
+    if (hedonRaw && hedonRaw.length > 0) {
+      const skus = hedonRaw.map((r) => r.sku_accesorio);
+
+      const { data: accesorios } = await supabase
+        .from('products')
+        .select('id, sku_padre, nombre, slug, precio_base, familia')
+        .in('sku_padre', skus)
+        .eq('visible_publico', true);
+
+      const map = new Map((accesorios || []).map((a) => [a.sku_padre, a]));
+
+      hedonCrossSellsData = hedonRaw.map((row) => ({
+        ...row,
+        accesorio: map.get(row.sku_accesorio) ?? undefined,
+      }));
+    }
+  }
 
   return (
     <main className="min-h-screen bg-[#0A0A0A] text-[#F4F1EC]">
@@ -88,10 +110,17 @@ export default async function ProductPage({ params }: PageProps) {
         </div>
       </nav>
 
-      {/* Ficha de detalle (Client Component) */}
-      <ProductDetail product={productData} crossSells={crossSellsData} />
+      {/* Renderizado condicional según tipo de producto */}
+      {esAccesorio ? (
+        <ProductDetailAccesorio product={productData} />
+      ) : (
+        <ProductDetail
+          product={productData}
+          crossSells={(crossSells as CrossSell[]) || []}
+          hedonCrossSells={hedonCrossSellsData}
+        />
+      )}
 
-      {/* Footer mínimo */}
       <footer className="py-12 px-6 text-center text-[10px] tracking-[0.2em] uppercase text-[#F4F1EC]/35 border-t border-[#F4F1EC]/8 mt-24">
         Lhopital-moto · We are the standard
       </footer>

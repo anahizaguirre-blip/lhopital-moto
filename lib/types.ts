@@ -97,3 +97,22 @@ export interface CrossSell {
   // Cuando se hace join con products
   suggested_product?: Product;
 }
+export interface HedonCrossSellAccesorio {
+  id: string;
+  sku_padre: string;
+  nombre: string;
+  slug: string;
+  precio_base: number;
+  familia: string | null;
+}
+
+export interface HedonCrossSell {
+  id: number;
+  sku_casco: string;
+  sku_accesorio: string;
+  mensaje: string | null;
+  tiene_foto: boolean;
+  fotos: string[] | null;
+  orden: number;
+  accesorio?: HedonCrossSellAccesorio;
+}
