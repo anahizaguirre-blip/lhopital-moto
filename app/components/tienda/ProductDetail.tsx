@@ -14,13 +14,12 @@
 import { useState, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import type { Product, CrossSell, HedonCrossSell, ProductVariant } from '@/lib/types';
+import type { Product, HedonCrossSell, ProductVariant } from '@/lib/types';
 import { cloudinaryUrl, hedonGallery, extractBasePath } from '@/lib/cloudinary';
 import { CrossSellHedon } from './CrossSellHedon';
 
 interface ProductDetailProps {
   product: Product;
-  crossSells: CrossSell[];
   hedonCrossSells: HedonCrossSell[];
 }
 
@@ -33,7 +32,7 @@ const COLECCION_LABELS: Record<string, string> = {
   clasico_permanente: 'Clásico Hedon',
 };
 
-export function ProductDetail({ product, crossSells: _crossSells, hedonCrossSells }: ProductDetailProps) {
+export function ProductDetail({ product,hedonCrossSells }: ProductDetailProps) {
   // Galería: extrae basePath y genera las 4 vistas
   const basePath = extractBasePath(product.imagen_principal);
   const gallery = basePath ? hedonGallery(basePath) : null;
