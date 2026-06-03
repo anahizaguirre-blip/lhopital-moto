@@ -33,7 +33,7 @@ const COLECCION_LABELS: Record<string, string> = {
   clasico_permanente: 'Clásico Hedon',
 };
 
-export function ProductDetail({ product, crossSells, hedonCrossSells }: ProductDetailProps) {
+export function ProductDetail({ product, crossSells: _crossSells, hedonCrossSells }: ProductDetailProps) {
   // Galería: extrae basePath y genera las 4 vistas
   const basePath = extractBasePath(product.imagen_principal);
   const gallery = basePath ? hedonGallery(basePath) : null;
