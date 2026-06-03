@@ -116,7 +116,6 @@ export default async function ProductPage({ params }: PageProps) {
       ) : (
         <ProductDetail
           product={productData}
-          crossSells={(crossSells as CrossSell[]) || []}
           hedonCrossSells={hedonCrossSellsData}
         />
       )}
