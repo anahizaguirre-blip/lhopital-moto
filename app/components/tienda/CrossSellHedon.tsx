@@ -187,9 +187,9 @@ export function CrossSellHedon({ items, nombreCasco }: CrossSellHedonProps) {
 
                 <div>
                   {/* Precio */}
-                  {modalItem.accesorio?.precio && (
+                  {modalItem.accesorio?.precio_base && (
                     <p className="text-2xl font-medium text-[#C9A961] mb-6">
-                      {formatPrecio(modalItem.accesorio.precio)}
+                      {formatPrecio(modalItem.accesorio.precio_base)}
                     </p>
                   )}
 
@@ -265,9 +265,9 @@ function CrossSellCard({ item, onVerDetalle, formatPrecio }: CardProps) {
           {item.accesorio?.nombre || item.sku_accesorio}
         </p>
         <div className="flex items-center justify-between">
-          {item.accesorio?.precio ? (
+          {item.accesorio?.precio_base ? (
             <span className="text-[#C9A961] text-sm font-medium">
-              + {formatPrecio(item.accesorio.precio)}
+              + {formatPrecio(item.accesorio.precio_base)}
             </span>
           ) : (
             <span />
