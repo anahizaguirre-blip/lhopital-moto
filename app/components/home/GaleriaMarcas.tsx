@@ -119,10 +119,10 @@ export default function GaleriaMarcas() {
                   <p className="font-almaq text-brass/70 text-[10px] tracking-[0.3em] mb-2">
                     {m.num}
                   </p>
-                  <p className="font-cormorant italic text-moto-bone/60 text-sm mb-4">
+                  <p className="font-cormorant italic text-moto-bone/80 text-base mb-4">
                     {m.tagline}
                   </p>
-                  <span className="inline-flex items-center gap-2 font-almaq text-brass text-[10px] md:text-xs tracking-[0.2em] uppercase">
+                  <span className="inline-flex items-center gap-2 font-almaq text-brass text-xs md:text-[13px] tracking-[0.2em] uppercase">
                     {m.cta}
                     <span
                       aria-hidden="true"
