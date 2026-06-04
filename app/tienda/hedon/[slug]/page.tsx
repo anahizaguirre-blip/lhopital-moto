@@ -10,7 +10,7 @@ import { createSupabaseServer } from '@/lib/supabase/server';
 import { notFound } from 'next/navigation';
 import { ProductDetail } from '@/app/components/tienda/ProductDetail';
 import { ProductDetailAccesorio } from '@/app/components/tienda/ProductDetailAccesorio';
-import type { Product, CrossSell, HedonCrossSell } from '@/lib/types';
+import type { Product, HedonCrossSell } from '@/lib/types';
 import Link from 'next/link';
 
 interface PageProps {
@@ -56,13 +56,6 @@ export default async function ProductPage({ params }: PageProps) {
   const productData = product as Product;
   const esAccesorio = CATEGORIAS_ACCESORIO.includes(productData.categoria);
 
-  // Cross-sells legacy — Moto II
-  const { data: crossSells } = await supabase
-    .from('cross_sells')
-    .select(`*, suggested_product:products!cross_sells_suggested_product_id_fkey(*)`)
-    .eq('product_id', productData.id)
-    .eq('activo', true)
-    .order('prioridad');
 
   // Cross-sells Hedon — solo para cascos
   let hedonCrossSellsData: HedonCrossSell[] = [];
