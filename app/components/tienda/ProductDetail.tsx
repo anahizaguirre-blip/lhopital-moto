@@ -37,12 +37,19 @@ export function ProductDetail({ product,hedonCrossSells }: ProductDetailProps) {
   const basePath = extractBasePath(product.imagen_principal);
   const gallery = basePath ? hedonGallery(basePath) : null;
 
+  const interiorUrl = product.foto_interior
+    ? cloudinaryUrl(product.foto_interior, 'detail')
+    : null;
+
   const vistas = gallery
     ? [
         { key: 'front',        label: 'Frente',       url: gallery.front },
         { key: 'threeQuarter', label: 'Tres cuartos', url: gallery.threeQuarter },
         { key: 'side',         label: 'Lado',         url: gallery.side },
         { key: 'back',         label: 'Atrás',        url: gallery.back },
+        ...(interiorUrl
+          ? [{ key: 'interior', label: 'Interior', url: interiorUrl }]
+          : []),
       ]
     : [];
 
@@ -126,15 +133,19 @@ export function ProductDetail({ product,hedonCrossSells }: ProductDetailProps) {
                     }`}
                   >
                     <Image
-                      src={cloudinaryUrl(
-                        `${basePath}-${
-                          v.key === 'threeQuarter' ? 'three-quarter' :
-                          v.key === 'side'         ? 'side'          :
-                          v.key === 'back'         ? 'back'          :
-                          'front'
-                        }`,
-                        'thumbnail'
-                      )}
+                      src={
+                        v.key === 'interior' && product.foto_interior
+                          ? cloudinaryUrl(product.foto_interior, 'thumbnail')
+                          : cloudinaryUrl(
+                              `${basePath}-${
+                                v.key === 'threeQuarter' ? 'three-quarter' :
+                                v.key === 'side'         ? 'side'          :
+                                v.key === 'back'         ? 'back'          :
+                                'front'
+                              }`,
+                              'thumbnail'
+                            )
+                      }
                       alt={v.label}
                       fill
                       sizes="100px"

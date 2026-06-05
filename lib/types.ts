@@ -60,6 +60,7 @@ export interface Product {
   garantia_meses: number;
   imagen_principal: string | null;
   imagenes: string[];
+  foto_interior: string | null; 
   visible_publico: boolean;
   destacado_home: boolean;
   fecha_lanzamiento: string | null;
