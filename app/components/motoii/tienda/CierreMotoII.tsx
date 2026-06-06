@@ -112,8 +112,8 @@ export function CierreMotoII() {
             </div>
 
             <blockquote className="font-cormorant italic text-[24px] md:text-[28px] text-[#F4F1EC] leading-[1.45] mb-6">
-              "Dejé el celular en la mochila.<br className="hidden md:block" />
-              Volví a mirar la calle."
+              &ldquo;Dejé el celular en la mochila.<br className="hidden md:block" />
+              Volví a mirar la calle.&rdquo;
             </blockquote>
 
             <cite className="not-italic text-[10px] tracking-[0.2em] uppercase text-[#F4F1EC]/40">

@@ -58,7 +58,7 @@ export function TiendaMotoII({ dispositivos, accesorios }: TiendaMotoIIProps) {
   const [colorLabel, setColorLabel] = useState<string>(
     LABEL_POR_SKU[dispositivoDefault?.sku_padre] ?? 'Black'
   );
-  const [montajeActivo, setMontajeActivo] = useState<Product | null>(null);
+  const [, setMontajeActivo] = useState<Product | null>(null);
 
   // Callback: HeroTiendaMotoII → TiendaMotoII → SelectorMontaje
   const handleColorChange = useCallback((sku: string, precio: number) => {

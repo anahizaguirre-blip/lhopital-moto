@@ -139,7 +139,6 @@ export function SelectorMontaje({
     ...montajesClasicos.map(m => ({
       sku: m.sku_padre,
       precio: m.variants?.[0]?.precio ?? m.precio_base,
-      nombre: m.nombre,
     })),
   ];
 
@@ -169,7 +168,7 @@ export function SelectorMontaje({
 
         {/* Grid de montajes */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
-          {tarjetas.map(({ sku, precio, nombre }) => {
+          {tarjetas.map(({ sku, precio}) => {
             const meta = MONTAJE_META[sku];
             if (!meta) return null;
             const activo = skuSeleccionado === sku;
