@@ -45,8 +45,8 @@ const MARCAS: MarcaCard[] = [
     slug: 'hedon',
     numero: '/ 01',
     marca: 'HEDON · REINO UNIDO',
-    titulo: 'La protección como arte.',
-    frase: 'Cuatro modelos. Una sola obsesión.',
+    titulo: 'El arte de la protección.',
+    frase: 'Cuatro modelos. Cada casco, una decisión.',
     descripcion: 'Hedonist, Epicurist 2.0, Heroine Racer 2.0 y el nuevo Psilo Explorer.',
     bgColor: 'bg-[#1A1410]',  // Marrón oscuro Hedon
     textColor: 'text-[#F4F1EC]',
@@ -59,7 +59,7 @@ const MARCAS: MarcaCard[] = [
     slug: 'moto-ii',
     numero: '/ 02',
     marca: 'BEELINE · REINO UNIDO',
-    titulo: 'Hecho solo para rodar.',
+    titulo: 'Diseñado para rodar.',
     frase: 'Una ruta. Una distancia. La calle.',
     descripcion: 'El navegador satelital más usado de Reino Unido, ahora en México.',
     bgColor: 'bg-[#0A0A0A]',  // Negro Moto II
@@ -113,7 +113,7 @@ export default function TiendaPage() {
           </h1>
 
           <p className="text-[#F4F1EC]/60 text-base md:text-lg max-w-2xl leading-relaxed">
-            Cada marca, su propio universo. Curados desde México para quien
+            Cada marca, su propio universo. Curados en México para quien
             entiende que rodar bien empieza con el equipo correcto.
           </p>
 
