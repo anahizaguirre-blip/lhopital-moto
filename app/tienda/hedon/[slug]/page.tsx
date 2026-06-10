@@ -1,9 +1,6 @@
 /**
  * Ficha individual de producto Hedon
  * URL: /tienda/hedon/[slug]
- *
- * Renderiza ProductDetail para cascos o ProductDetailAccesorio para accesorios
- * según la categoría del producto.
  */
 
 import { createSupabaseServer } from '@/lib/supabase/server';
@@ -56,8 +53,6 @@ export default async function ProductPage({ params }: PageProps) {
   const productData = product as Product;
   const esAccesorio = CATEGORIAS_ACCESORIO.includes(productData.categoria);
 
-
-  // Cross-sells Hedon — solo para cascos
   let hedonCrossSellsData: HedonCrossSell[] = [];
 
   if (!esAccesorio) {
@@ -88,9 +83,9 @@ export default async function ProductPage({ params }: PageProps) {
   return (
     <main className="min-h-screen bg-[#0A0A0A] text-[#F4F1EC]">
 
-      {/* Breadcrumb */}
-      <nav className="px-6 md:px-12 lg:px-24 pt-32 pb-6">
-        <div className="max-w-6xl mx-auto">
+      {/* Breadcrumb — mismo sistema de margen que ProductDetail */}
+      <nav className="px-6 sm:px-10 lg:px-16 pt-32 pb-6">
+        <div className="max-w-[1440px] mx-auto">
           <div className="text-[11px] tracking-[0.1em] text-[#F4F1EC]/45 font-mono">
             <Link href="/tienda" className="hover:text-[#C9A961] transition">/ Tienda</Link>
             {' · '}
@@ -103,7 +98,6 @@ export default async function ProductPage({ params }: PageProps) {
         </div>
       </nav>
 
-      {/* Renderizado condicional según tipo de producto */}
       {esAccesorio ? (
         <ProductDetailAccesorio product={productData} />
       ) : (

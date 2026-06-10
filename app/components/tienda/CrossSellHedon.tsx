@@ -1,28 +1,38 @@
 'use client';
 
-/**
- * CrossSellHedon.tsx
- * Bloque "Personaliza tu casco" en la PDP de cascos Hedon.
- *
- * - Scroll horizontal de tarjetas independientes por accesorio
- * - Tarjeta con foto: imagen del casco + accesorio, nombre, precio, CTA
- * - Tarjeta sin foto: mensaje editorial, nombre, precio, CTA
- * - Modal al click: galería de vistas + botón agregar al carrito
- */
-
 import { useState } from 'react';
 import Image from 'next/image';
 import type { HedonCrossSell } from '@/lib/types';
 
 const CLOUD = 'https://res.cloudinary.com/lhopital-moto/image/upload';
 
-// Transformación para tarjeta (thumbnail)
-const imgCard = (publicId: string) =>
-  `${CLOUD}/w_400,h_400,c_fill,q_auto,f_auto/${publicId}`;
+const imgCard  = (publicId: string) => `${CLOUD}/w_400,h_400,c_fill,q_auto,f_auto/${publicId}`;
+const imgModal = (publicId: string) => `${CLOUD}/w_900,h_900,c_fit,q_auto,f_auto/${publicId}`;
 
-// Transformación para modal (full quality)
-const imgModal = (publicId: string) =>
-  `${CLOUD}/w_900,h_900,c_fit,q_auto,f_auto/${publicId}`;
+// Orden de visores HR2.0: de más claro a más oscuro
+// La clave es el SKU del accesorio
+const VISOR_ORDER_HR: Record<string, number> = {
+  'VIS-HER-AMB06+AF': 1,  // Amber       — más claro
+  'VIS-HER-SUN06+AF': 2,  // Sunset
+  'VIS-HER-RDS06+AF': 3,  // Red Smoke
+  'VIS-HER-CFH06+AF': 4,  // Coffee Haze
+  'VIS-HER-DPS06+AF': 5,  // Deep Smoke  — más oscuro
+};
+
+function sortItems(items: HedonCrossSell[]): HedonCrossSell[] {
+  // Solo reordena si TODOS los items son visores HR2.0 conocidos
+  // (es decir, si la lista contiene alguno de los 5 visores HR)
+  const esVisorHR = (item: HedonCrossSell) =>
+    item.sku_accesorio in VISOR_ORDER_HR;
+
+  if (!items.some(esVisorHR)) return items; // no tocar otros cascos
+
+  return [...items].sort((a, b) => {
+    const oa = VISOR_ORDER_HR[a.sku_accesorio] ?? 99;
+    const ob = VISOR_ORDER_HR[b.sku_accesorio] ?? 99;
+    return oa - ob;
+  });
+}
 
 interface CrossSellHedonProps {
   items: HedonCrossSell[];
@@ -30,7 +40,9 @@ interface CrossSellHedonProps {
 }
 
 export function CrossSellHedon({ items, nombreCasco }: CrossSellHedonProps) {
-  const [modalItem, setModalItem] = useState<HedonCrossSell | null>(null);
+  const itemsOrdenados = sortItems(items);
+
+  const [modalItem,  setModalItem]  = useState<HedonCrossSell | null>(null);
   const [fotoActiva, setFotoActiva] = useState(0);
 
   if (!items || items.length === 0) return null;
@@ -52,13 +64,16 @@ export function CrossSellHedon({ items, nombreCasco }: CrossSellHedonProps) {
       minimumFractionDigits: 0,
     }).format(precio);
 
+  const fotosModal =
+    modalItem?.tiene_foto && modalItem.fotos && modalItem.fotos.length > 0
+      ? modalItem.fotos
+      : [];
+
   return (
     <>
-      {/* ── Bloque principal ── */}
-      <section className="px-6 md:px-12 lg:px-24 py-16 border-t border-[#F4F1EC]/8">
-        <div className="max-w-6xl mx-auto">
+      <section className="px-6 sm:px-10 lg:px-16 py-16 border-t border-[#F4F1EC]/8">
+        <div className="max-w-[1440px] mx-auto">
 
-          {/* Header */}
           <div className="mb-10">
             <div className="flex items-center gap-3 mb-3">
               <span className="inline-block w-6 h-px bg-[#C9A961]" />
@@ -69,14 +84,13 @@ export function CrossSellHedon({ items, nombreCasco }: CrossSellHedonProps) {
             <h2 className="text-3xl md:text-4xl font-medium text-[#F4F1EC] leading-tight">
               Personaliza tu casco.
             </h2>
-            <p className="mt-2 text-sm text-[#F4F1EC]/50 italic font-cormorant text-lg">
+            <p className="mt-2 font-cormorant italic text-lg text-[#F4F1EC]/50">
               El detalle que solo notan los conocedores.
             </p>
           </div>
 
-          {/* Scroll horizontal de tarjetas */}
           <div className="flex gap-5 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide">
-            {items.map((item) => (
+            {itemsOrdenados.map((item) => (
               <CrossSellCard
                 key={item.id}
                 item={item}
@@ -85,11 +99,9 @@ export function CrossSellHedon({ items, nombreCasco }: CrossSellHedonProps) {
               />
             ))}
           </div>
-
         </div>
       </section>
 
-      {/* ── Modal ── */}
       {modalItem && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-sm p-4"
@@ -99,7 +111,6 @@ export function CrossSellHedon({ items, nombreCasco }: CrossSellHedonProps) {
             className="relative w-full max-w-2xl bg-[#111] border border-[#F4F1EC]/10 overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Cerrar */}
             <button
               onClick={cerrarModal}
               className="absolute top-4 right-4 z-10 text-[#F4F1EC]/50 hover:text-[#F4F1EC] transition text-xl leading-none"
@@ -109,22 +120,19 @@ export function CrossSellHedon({ items, nombreCasco }: CrossSellHedonProps) {
             </button>
 
             <div className="grid md:grid-cols-2">
-
-              {/* Lado izquierdo — imagen */}
               <div className="bg-[#0A0A0A] aspect-square relative">
-                {modalItem.tiene_foto && modalItem.fotos && modalItem.fotos.length > 0 ? (
+                {fotosModal.length > 0 ? (
                   <>
                     <Image
-                      src={imgModal(modalItem.fotos[fotoActiva])}
+                      src={imgModal(fotosModal[fotoActiva])}
                       alt={modalItem.accesorio?.nombre || 'Accesorio Hedon'}
                       fill
                       className="object-contain p-6"
                       sizes="(max-width: 768px) 100vw, 450px"
                     />
-                    {/* Miniaturas si hay más de 1 foto */}
-                    {modalItem.fotos.length > 1 && (
+                    {fotosModal.length > 1 && (
                       <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-2 px-4">
-                        {modalItem.fotos.map((foto, i) => (
+                        {fotosModal.map((foto, i) => (
                           <button
                             key={foto}
                             onClick={() => setFotoActiva(i)}
@@ -147,7 +155,6 @@ export function CrossSellHedon({ items, nombreCasco }: CrossSellHedonProps) {
                     )}
                   </>
                 ) : (
-                  /* Sin foto — placeholder editorial */
                   <div className="flex items-center justify-center h-full p-8">
                     <p className="font-cormorant italic text-2xl text-[#F4F1EC]/40 text-center leading-relaxed">
                       {modalItem.mensaje || 'Accesorio compatible con tu casco.'}
@@ -156,51 +163,38 @@ export function CrossSellHedon({ items, nombreCasco }: CrossSellHedonProps) {
                 )}
               </div>
 
-              {/* Lado derecho — info + CTA */}
               <div className="p-8 flex flex-col justify-between">
                 <div>
-                  {/* Eyebrow */}
                   <div className="flex items-center gap-2 mb-4">
                     <span className="w-4 h-px bg-[#C9A961]" />
                     <span className="text-[10px] tracking-[0.25em] uppercase text-[#C9A961]">
                       {modalItem.accesorio?.familia || 'Accesorio'}
                     </span>
                   </div>
-
-                  {/* Nombre */}
                   <h3 className="text-xl font-medium text-[#F4F1EC] leading-snug mb-3">
                     {modalItem.accesorio?.nombre || modalItem.sku_accesorio}
                   </h3>
-
-                  {/* Mensaje editorial */}
                   {modalItem.mensaje && (
                     <p className="text-sm text-[#F4F1EC]/60 leading-relaxed mb-6">
                       {modalItem.mensaje}
                     </p>
                   )}
-
-                  {/* SKU */}
                   <p className="text-[10px] tracking-[0.2em] font-mono text-[#F4F1EC]/30 mb-6">
                     {modalItem.sku_accesorio}
                   </p>
                 </div>
-
                 <div>
-                  {/* Precio */}
                   {modalItem.accesorio?.precio_base && (
                     <p className="text-2xl font-medium text-[#C9A961] mb-6">
                       {formatPrecio(modalItem.accesorio.precio_base)}
                     </p>
                   )}
-
-                  {/* CTA */}
                   <a
                     href={`/tienda/hedon/${modalItem.accesorio?.slug}`}
                     className="block w-full text-center bg-[#C9A961] text-[#0A0A0A] text-xs tracking-[0.2em] uppercase font-medium py-4 hover:bg-[#B8943A] transition"
                   >
                     Ver accesorio
                   </a>
-
                   <button
                     onClick={cerrarModal}
                     className="block w-full text-center mt-3 text-xs tracking-[0.15em] uppercase text-[#F4F1EC]/40 hover:text-[#F4F1EC]/70 transition py-2"
@@ -209,7 +203,6 @@ export function CrossSellHedon({ items, nombreCasco }: CrossSellHedonProps) {
                   </button>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -218,9 +211,6 @@ export function CrossSellHedon({ items, nombreCasco }: CrossSellHedonProps) {
   );
 }
 
-
-// ── Tarjeta individual ──────────────────────────────────────────
-
 interface CardProps {
   item: HedonCrossSell;
   onVerDetalle: () => void;
@@ -228,35 +218,36 @@ interface CardProps {
 }
 
 function CrossSellCard({ item, onVerDetalle, formatPrecio }: CardProps) {
-  const tieneFoto = item.tiene_foto && item.fotos && item.fotos.length > 0;
+  const tieneFoto   = item.tiene_foto && item.fotos && item.fotos.length > 0;
   const fotoPortada = tieneFoto ? item.fotos![0] : null;
 
+  if (!tieneFoto && !item.mensaje && !item.accesorio) return null;
+
   return (
-    <div className="snap-start flex-shrink-0 w-64 border border-[#F4F1EC]/10 bg-[#111] hover:border-[#C9A961]/40 transition-colors group cursor-pointer"
+    <div
+      className="snap-start flex-shrink-0 w-64 border border-[#F4F1EC]/10 bg-[#111] hover:border-[#C9A961]/40 transition-colors group cursor-pointer"
       onClick={onVerDetalle}
     >
-      {/* Imagen o placeholder */}
       <div className="aspect-square relative bg-[#0A0A0A] overflow-hidden">
         {fotoPortada ? (
           <Image
             src={imgCard(fotoPortada)}
             alt={item.accesorio?.nombre || 'Accesorio'}
             fill
-            className="object-contain p-4"
+            className="object-contain p-4 group-hover:scale-105 transition-transform duration-500"
             sizes="256px"
           />
         ) : (
           <div className="flex items-center justify-center h-full p-6">
             <p className="font-cormorant italic text-base text-[#F4F1EC]/30 text-center leading-relaxed">
               {item.mensaje
-                ? item.mensaje.slice(0, 60) + (item.mensaje.length > 60 ? '…' : '')
+                ? item.mensaje.slice(0, 60) + (item.mensaje.length > 60 ? '...' : '')
                 : item.accesorio?.nombre}
             </p>
           </div>
         )}
       </div>
 
-      {/* Info */}
       <div className="p-4">
         <p className="text-[10px] tracking-[0.2em] uppercase text-[#C9A961]/70 font-mono mb-1">
           {item.accesorio?.familia || 'Accesorio'}

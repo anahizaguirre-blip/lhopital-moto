@@ -2,7 +2,6 @@
 
 import { useState, useMemo, useRef } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import type { Product, HedonCrossSell, ProductVariant } from '@/lib/types';
 import { cloudinaryUrl, hedonGallery, extractBasePath } from '@/lib/cloudinary';
 import { CrossSellHedon } from './CrossSellHedon';
@@ -21,24 +20,16 @@ const COLECCION_LABELS: Record<string, string> = {
   clasico_permanente:             'Clasico Hedon',
 };
 
-// Fotos extra por SKU padre — se agregan despues de las 4 vistas estandar
-const FOTOS_EXTRA: Record<string, { key: string; label: string; cloudinaryId: string }[]> = {
-  'HER-R-KNW-ECE': [
-    {
-      key: 'knight-white-visor-red-smoke',
-      label: 'Visor Red Smoke',
-      cloudinaryId: 'heroine-racer-knight-white-three-quarter-visor-red-smoke',
-    },
-  ],
-};
+const CLOUDINARY_BASE = 'https://res.cloudinary.com/lhopital-moto/image/upload';
+const TALLAS_GUIDE_URL = `${CLOUDINARY_BASE}/detail/hedon-tallas`;
 
-const CLOUDINARY_URL = 'https://res.cloudinary.com/lhopital-moto/image/upload';
-const TALLAS_GUIDE_URL = `${CLOUDINARY_URL}/detail/hedon-tallas`;
+// Cuantos thumbnails mostrar a la vez
+const THUMB_VISIBLE = 4;
 
 export function ProductDetail({ product, hedonCrossSells }: ProductDetailProps) {
-  const basePath     = extractBasePath(product.imagen_principal);
-  const gallery      = basePath ? hedonGallery(basePath) : null;
-  const interiorUrl  = product.foto_interior
+  const basePath    = extractBasePath(product.imagen_principal);
+  const gallery     = basePath ? hedonGallery(basePath) : null;
+  const interiorUrl = product.foto_interior
     ? cloudinaryUrl(product.foto_interior, 'detail')
     : null;
 
@@ -51,31 +42,42 @@ export function ProductDetail({ product, hedonCrossSells }: ProductDetailProps) 
         ...(interiorUrl
           ? [{ key: 'interior', label: 'Interior', url: interiorUrl }]
           : []),
-        // Fotos extra especificas por modelo/color
-        ...(FOTOS_EXTRA[product.sku_padre] ?? []).map((extra) => ({
-          key: extra.key,
-          label: extra.label,
-          url: cloudinaryUrl(extra.cloudinaryId, 'detail'),
-        })),
       ]
     : [];
 
   const [vistaActiva, setVistaActiva] = useState(0);
 
-  // Zoom hover sobre la imagen principal
+  // Zoom hover
   const imgContainerRef = useRef<HTMLDivElement>(null);
-  const [zoom, setZoom]           = useState(false);
-  const [zoomPos, setZoomPos]     = useState({ x: 50, y: 50 });
+  const [zoom, setZoom]       = useState(false);
+  const [zoomPos, setZoomPos] = useState({ x: 50, y: 50 });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = imgContainerRef.current?.getBoundingClientRect();
     if (!rect) return;
-    const x = ((e.clientX - rect.left) / rect.width)  * 100;
-    const y = ((e.clientY - rect.top)  / rect.height) * 100;
-    setZoomPos({ x, y });
+    setZoomPos({
+      x: ((e.clientX - rect.left)  / rect.width)  * 100,
+      y: ((e.clientY - rect.top)   / rect.height) * 100,
+    });
   };
 
-  // Variantes ordenadas por talla
+  const irAnterior  = () => setVistaActiva((v) => (v === 0 ? vistas.length - 1 : v - 1));
+  const irSiguiente = () => setVistaActiva((v) => (v === vistas.length - 1 ? 0 : v + 1));
+
+  // Calcula que 4 thumbnails mostrar, centrados en vistaActiva
+  // Siempre mostramos THUMB_VISIBLE indices consecutivos con el activo
+  // lo mas centrado posible dentro del rango valido
+  const thumbStart = useMemo(() => {
+    if (vistas.length <= THUMB_VISIBLE) return 0;
+    // Queremos el activo en posicion 1 (0-indexed) del bloque de 4
+    const ideal = vistaActiva - 1;
+    const max   = vistas.length - THUMB_VISIBLE;
+    return Math.max(0, Math.min(ideal, max));
+  }, [vistaActiva, vistas.length]);
+
+  const thumbsVisibles = vistas.slice(thumbStart, thumbStart + THUMB_VISIBLE);
+
+  // Variantes
   const variantesOrdenadas = useMemo(() => {
     if (!product.variants) return [];
     return [...product.variants].sort(
@@ -89,7 +91,7 @@ export function ProductDetail({ product, hedonCrossSells }: ProductDetailProps) 
     return conStock || variantesOrdenadas[0] || null;
   });
 
-  const [cantidad, setCantidad]           = useState(1);
+  const [cantidad, setCantidad]             = useState(1);
   const [guiaTallasOpen, setGuiaTallasOpen] = useState(false);
 
   const etiquetaColeccion = product.coleccion_id
@@ -106,17 +108,30 @@ export function ProductDetail({ product, hedonCrossSells }: ProductDetailProps) 
     );
   };
 
+  // Genera la URL del thumbnail para cada vista
+  const thumbUrl = (v: typeof vistas[0]) => {
+    if (v.key === 'interior' && product.foto_interior) {
+      return cloudinaryUrl(product.foto_interior, 'thumbnail');
+    }
+    const suffix =
+      v.key === 'threeQuarter' ? 'three-quarter' :
+      v.key === 'side'         ? 'side'          :
+      v.key === 'back'         ? 'back'          :
+      'front';
+    return cloudinaryUrl(`${basePath}-${suffix}`, 'thumbnail');
+  };
+
   return (
     <>
-      <section className="px-6 md:px-12 lg:px-24 pb-12">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+      <section className="px-6 sm:px-10 lg:px-16 pb-12">
+        <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
 
-          {/* ── COLUMNA IZQUIERDA — Galeria ── */}
+          {/* COLUMNA IZQUIERDA — Carrusel */}
           <div>
-            {/* Imagen principal con zoom hover */}
+            {/* Imagen principal con flechas + zoom */}
             <div
               ref={imgContainerRef}
-              className="relative aspect-square bg-gradient-to-b from-[#1a1a1a] to-[#0d0d0d] overflow-hidden mb-4 cursor-zoom-in"
+              className="relative aspect-square bg-gradient-to-b from-[#1a1a1a] to-[#0d0d0d] overflow-hidden mb-4 cursor-zoom-in select-none"
               onMouseEnter={() => setZoom(true)}
               onMouseLeave={() => setZoom(false)}
               onMouseMove={handleMouseMove}
@@ -132,7 +147,7 @@ export function ProductDetail({ product, hedonCrossSells }: ProductDetailProps) 
                   style={
                     zoom
                       ? {
-                          transform: 'scale(2)',
+                          transform: 'scale(2.2)',
                           transformOrigin: `${zoomPos.x}% ${zoomPos.y}%`,
                         }
                       : undefined
@@ -143,56 +158,83 @@ export function ProductDetail({ product, hedonCrossSells }: ProductDetailProps) 
                   <span className="font-cormorant italic text-[#F4F1EC]/25">Foto pendiente</span>
                 </div>
               )}
+
+              {/* Flechas */}
+              {vistas.length > 1 && (
+                <>
+                  <button
+                    onClick={irAnterior}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center bg-black/50 hover:bg-black/80 transition text-[#F4F1EC] text-2xl font-light"
+                    aria-label="Foto anterior"
+                  >
+                    ‹
+                  </button>
+                  <button
+                    onClick={irSiguiente}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center bg-black/50 hover:bg-black/80 transition text-[#F4F1EC] text-2xl font-light"
+                    aria-label="Foto siguiente"
+                  >
+                    ›
+                  </button>
+                </>
+              )}
+
+              {/* Puntitos */}
+              {vistas.length > 1 && (
+                <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-1.5 z-10">
+                  {vistas.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setVistaActiva(idx)}
+                      className={`h-1.5 rounded-full transition-all duration-300 ${
+                        idx === vistaActiva
+                          ? 'bg-[#C9A961] w-4'
+                          : 'bg-[#F4F1EC]/30 hover:bg-[#F4F1EC]/60 w-1.5'
+                      }`}
+                      aria-label={vistas[idx].label}
+                    />
+                  ))}
+                </div>
+              )}
+
               {/* SKU */}
               <div className="absolute bottom-4 right-4 font-mono text-[10px] tracking-[0.15em] text-[#F4F1EC]/40 uppercase z-10">
                 / {product.sku_padre.replace('-ECE', '')}
               </div>
             </div>
 
-            {/* Carrusel de thumbnails */}
+            {/* Thumbnails sincronizados — siempre 4, siguen al activo */}
             {vistas.length > 0 && (
-              <div className="flex gap-2 overflow-x-auto pb-1">
-                {vistas.map((v, idx) => (
-                  <button
-                    key={v.key}
-                    onClick={() => setVistaActiva(idx)}
-                    className={`relative flex-shrink-0 w-[72px] h-[72px] bg-[#1a1a1a] overflow-hidden border transition ${
-                      vistaActiva === idx
-                        ? 'border-[#C9A961]'
-                        : 'border-transparent hover:border-[#F4F1EC]/25'
-                    }`}
-                    title={v.label}
-                  >
-                    <Image
-                      src={
-                        v.key === 'interior' && product.foto_interior
-                          ? cloudinaryUrl(product.foto_interior, 'thumbnail')
-                          : v.key === 'knight-white-visor-red-smoke'
-                          ? cloudinaryUrl('heroine-racer-knight-white-three-quarter-visor-red-smoke', 'thumbnail')
-                          : cloudinaryUrl(
-                              `${basePath}-${
-                                v.key === 'threeQuarter' ? 'three-quarter' :
-                                v.key === 'side'         ? 'side'          :
-                                v.key === 'back'         ? 'back'          :
-                                'front'
-                              }`,
-                              'thumbnail'
-                            )
-                      }
-                      alt={v.label}
-                      fill
-                      sizes="72px"
-                      className="object-cover"
-                    />
-                  </button>
-                ))}
+              <div className="grid grid-cols-4 gap-2">
+                {thumbsVisibles.map((v) => {
+                  const realIdx = vistas.indexOf(v);
+                  return (
+                    <button
+                      key={v.key}
+                      onClick={() => setVistaActiva(realIdx)}
+                      className={`relative aspect-square bg-[#1a1a1a] overflow-hidden border transition ${
+                        vistaActiva === realIdx
+                          ? 'border-[#C9A961]'
+                          : 'border-transparent hover:border-[#F4F1EC]/25'
+                      }`}
+                      title={v.label}
+                    >
+                      <Image
+                        src={thumbUrl(v)}
+                        alt={v.label}
+                        fill
+                        sizes="(max-width: 1024px) 25vw, 150px"
+                        className="object-cover"
+                      />
+                    </button>
+                  );
+                })}
               </div>
             )}
           </div>
 
-          {/* ── COLUMNA DERECHA — Info y compra ── */}
+          {/* COLUMNA DERECHA — Info y compra */}
           <div className="lg:pt-4">
-            {/* Eyebrow familia */}
             <div className="mb-3 flex items-center gap-2">
               <span className="inline-block w-6 h-px bg-[#C9A961]" />
               <span className="text-[10px] tracking-[0.3em] uppercase text-[#C9A961]">
@@ -200,26 +242,22 @@ export function ProductDetail({ product, hedonCrossSells }: ProductDetailProps) 
               </span>
             </div>
 
-            {/* Nombre */}
             <h1 className="text-4xl md:text-5xl font-medium tracking-tight leading-[1] mb-2">
               {product.color}.
             </h1>
 
-            {/* Frase corta */}
             {product.frase_corta && (
               <p className="font-cormorant italic text-lg text-[#C9A961] mb-5">
                 {product.frase_corta}
               </p>
             )}
 
-            {/* Badge de coleccion */}
             {etiquetaColeccion && (
               <div className="inline-block bg-[#C9A961]/10 border border-[#C9A961]/30 text-[#C9A961] px-3 py-1.5 text-[10px] tracking-[0.15em] uppercase mb-6">
                 {etiquetaColeccion}
               </div>
             )}
 
-            {/* Precio */}
             <div className="flex items-baseline gap-2 mb-6">
               <span className="text-3xl font-bold">
                 ${product.precio_base.toLocaleString('es-MX')}
@@ -229,7 +267,6 @@ export function ProductDetail({ product, hedonCrossSells }: ProductDetailProps) 
               </span>
             </div>
 
-            {/* Banner bajo pedido */}
             {!enStock && esBajoPedido && (
               <div className="bg-[#3871BD]/10 border border-[#558CD2]/40 p-4 mb-6 flex gap-3 items-start">
                 <div className="text-[#9DC5F0] text-lg mt-0.5">⏳</div>
@@ -256,7 +293,6 @@ export function ProductDetail({ product, hedonCrossSells }: ProductDetailProps) 
                 </button>
               </div>
 
-              {/* Guia de tallas — imagen Cloudinary */}
               {guiaTallasOpen && (
                 <div className="mb-4 border border-[#F4F1EC]/10 overflow-hidden">
                   <div className="relative w-full" style={{ aspectRatio: '3/2' }}>
@@ -273,8 +309,8 @@ export function ProductDetail({ product, hedonCrossSells }: ProductDetailProps) 
 
               <div className="grid grid-cols-6 gap-2">
                 {variantesOrdenadas.map((v) => {
-                  const isActive    = varianteSel?.id === v.id;
-                  const tieneStock  = v.stock_actual > 0;
+                  const isActive   = varianteSel?.id === v.id;
+                  const tieneStock = v.stock_actual > 0;
                   return (
                     <button
                       key={v.id}
@@ -296,7 +332,6 @@ export function ProductDetail({ product, hedonCrossSells }: ProductDetailProps) 
                 })}
               </div>
 
-              {/* Estado de la talla seleccionada — sin numero de stock */}
               {varianteSel && (
                 <div className="mt-3 text-[11px] tracking-[0.05em] text-[#F4F1EC]/55">
                   {varianteSel.stock_actual > 0
@@ -306,7 +341,7 @@ export function ProductDetail({ product, hedonCrossSells }: ProductDetailProps) 
               )}
             </div>
 
-            {/* Selector de cantidad */}
+            {/* Cantidad */}
             <div className="flex items-center gap-4 mb-6">
               <span className="text-[10px] tracking-[0.3em] uppercase text-[#F4F1EC]/55">
                 Cantidad
@@ -330,7 +365,6 @@ export function ProductDetail({ product, hedonCrossSells }: ProductDetailProps) 
               </div>
             </div>
 
-            {/* CTA principal */}
             <button
               onClick={handleAgregarCarrito}
               disabled={!varianteSel}
@@ -339,12 +373,10 @@ export function ProductDetail({ product, hedonCrossSells }: ProductDetailProps) 
               {enStock ? 'Agregar al carrito' : 'Reservar bajo pedido'} — ${(product.precio_base * cantidad).toLocaleString('es-MX')}
             </button>
 
-            {/* CTA secundario */}
             <button className="w-full bg-transparent border border-[#F4F1EC]/35 text-[#F4F1EC] py-3 text-xs font-medium tracking-[0.05em] uppercase hover:border-[#F4F1EC]/60 transition">
               Avisame de novedades
             </button>
 
-            {/* Ficha tecnica */}
             <div className="mt-10 pt-8 border-t border-[#F4F1EC]/8">
               <div className="text-[10px] tracking-[0.3em] uppercase text-[#C9A961] mb-4">
                 Ficha tecnica
@@ -378,7 +410,6 @@ export function ProductDetail({ product, hedonCrossSells }: ProductDetailProps) 
         </div>
       </section>
 
-      {/* Venta cruzada */}
       <CrossSellHedon
         items={hedonCrossSells}
         nombreCasco={product.familia ?? 'Hedon'}

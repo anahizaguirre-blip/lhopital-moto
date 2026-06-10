@@ -10,19 +10,19 @@ interface ProductGridProps {
   collections: Collection[];
 }
 
-const MODELOS = ['Hedonist', 'Epicurist 2.0', 'Heroine Racer 2.0', 'Psilo Explorer'];
+// Orden de botones: novedad primero
+const MODELOS = ['Psilo Explorer', 'Heroine Racer 2.0', 'Epicurist 2.0', 'Hedonist'];
 
-// Orden de presentacion: novedad primero
 const FAMILIA_ORDEN: Record<string, number> = {
-  'Psilo Explorer':   1,
+  'Psilo Explorer':    1,
   'Heroine Racer 2.0': 2,
-  'Epicurist 2.0':    3,
-  'Hedonist':         4,
+  'Epicurist 2.0':     3,
+  'Hedonist':          4,
 };
 
 export function ProductGrid({ products, collections }: ProductGridProps) {
   const router = useRouter();
-  const [modeloActivo, setModeloActivo]       = useState<string | null>(null);
+  const [modeloActivo,    setModeloActivo]    = useState<string | null>(null);
   const [coleccionActiva, setColeccionActiva] = useState<string | null>(null);
 
   const productosFiltrados = useMemo(() => {
@@ -33,7 +33,6 @@ export function ProductGrid({ products, collections }: ProductGridProps) {
     });
   }, [products, modeloActivo, coleccionActiva]);
 
-  // Agrupar por familia respetando el orden de novedad
   const productosPorFamilia = useMemo(() => {
     const map = new Map<string, Product[]>();
     productosFiltrados.forEach((p) => {
@@ -41,23 +40,20 @@ export function ProductGrid({ products, collections }: ProductGridProps) {
       if (!map.has(p.familia)) map.set(p.familia, []);
       map.get(p.familia)!.push(p);
     });
-    // Ordenar las entradas del Map segun FAMILIA_ORDEN
     return new Map(
       [...map.entries()].sort(
-        ([a], [b]) =>
-          (FAMILIA_ORDEN[a] ?? 99) - (FAMILIA_ORDEN[b] ?? 99)
+        ([a], [b]) => (FAMILIA_ORDEN[a] ?? 99) - (FAMILIA_ORDEN[b] ?? 99)
       )
     );
   }, [productosFiltrados]);
 
   return (
-    <section className="px-6 md:px-12 lg:px-24 pb-24">
-      <div className="max-w-6xl mx-auto">
+    <section className="px-6 sm:px-10 lg:px-16 pb-24">
+      <div className="max-w-[1440px] mx-auto">
 
         {/* Filtros */}
         <div className="border-y border-[#F4F1EC]/8 py-6 mb-12 flex flex-wrap gap-8 items-start">
 
-          {/* Filtro: Modelo */}
           <div className="flex-1 min-w-[280px]">
             <div className="text-[10px] tracking-[0.3em] uppercase text-[#F4F1EC]/45 mb-3">
               Filtra por modelo
@@ -86,7 +82,6 @@ export function ProductGrid({ products, collections }: ProductGridProps) {
                   {modelo}
                 </button>
               ))}
-              {/* Accesorios — navega, no filtra */}
               <span className="self-center text-[#F4F1EC]/20 text-sm">|</span>
               <button
                 onClick={() => router.push('/tienda/hedon/personaliza')}
@@ -97,7 +92,6 @@ export function ProductGrid({ products, collections }: ProductGridProps) {
             </div>
           </div>
 
-          {/* Filtro: Coleccion */}
           <div className="flex-1 min-w-[280px]">
             <div className="text-[10px] tracking-[0.3em] uppercase text-[#F4F1EC]/45 mb-3">
               Filtra por coleccion
@@ -130,12 +124,10 @@ export function ProductGrid({ products, collections }: ProductGridProps) {
           </div>
         </div>
 
-        {/* Contador de modelos (sin cantidad de stock) */}
         <div className="mb-8 text-xs tracking-[0.1em] text-[#F4F1EC]/45 font-mono">
           / {productosFiltrados.length} colores
         </div>
 
-        {/* Grid por familia */}
         {productosPorFamilia.size === 0 ? (
           <div className="text-center py-24 text-[#F4F1EC]/50">
             <p className="font-cormorant italic text-2xl mb-2">Nada por aqui todavia.</p>
