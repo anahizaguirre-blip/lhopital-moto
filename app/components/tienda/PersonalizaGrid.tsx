@@ -1,9 +1,8 @@
-// app/components/tienda/PersonalizaGrid.tsx
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import type { Product } from '@/lib/types';
-import { ProductCard } from './ProductCard';
 
 interface PersonalizaGridProps {
   products: Product[];
@@ -17,32 +16,136 @@ const TABS: { id: Tab; label: string }[] = [
   { id: 'tornillos', label: 'Tornillos CNC' },
 ];
 
-// Qué familias van en cada tab
+// Que familias van en cada tab
 const FAMILIAS_POR_TAB: Record<Tab, string[]> = {
   viseras:   ['Visera Carbon', 'Visera Classic', 'Visera Gloss', 'Visera Matte', 'Visera MX'],
   visores:   ['Visor', 'Visor Burbuja', 'Visor Protector'],
   tornillos: ['Tornillo CNC'],
 };
 
-// Aviso de compatibilidad por tab
-const COMPAT: Record<Tab, { modelos: string; advertencia?: string }> = {
-  viseras: {
-    modelos: 'Solo Psilo Explorer',
-  },
-  visores: {
-    modelos: 'Hedonist · Heroine Racer 2.0 · Epicurist 2.0',
-  },
-  tornillos: {
-    modelos: 'Epicurist 2.0 · Heroine Racer 2.0',
-    advertencia: 'No compatible con Heroine Racer V1 ni Hedonist.',
-  },
+// Compatibilidad especifica por familia de accesorio — sacada del catalogo v6
+const COMPAT_POR_FAMILIA: Record<string, string> = {
+  // Viseras — para Hedonist
+  'Visera MX':      'Hedonist',
+  'Visera Classic': 'Hedonist',
+  'Visera Gloss':   'Hedonist',
+  'Visera Matte':   'Hedonist',
+  'Visera Carbon':  'Hedonist',
+  // Visores por tipo
+  'Visor':           'Epicurist 2.0',
+  'Visor Burbuja':   'Hedonist',
+  'Visor Protector': 'Hedonist',
+  // Tornillos
+  'Tornillo CNC':    'Epicurist 2.0 · Heroine Racer 2.0',
 };
+
+// Advertencias adicionales
+const ADVERTENCIA_POR_FAMILIA: Record<string, string> = {
+  'Tornillo CNC': 'No compatible con Heroine Racer V1 ni Hedonist.',
+  'Visor':        'El visor se instala lateralmente con tornillos. Solo Epicurist 2.0.',
+};
+
+// Aviso general del tab (para la cabecera)
+const COMPAT_TAB: Record<Tab, string> = {
+  viseras:   'Hedonist',
+  visores:   'Hedonist · Epicurist 2.0',
+  tornillos: 'Epicurist 2.0 · Heroine Racer 2.0',
+};
+
+const CLOUDINARY_BASE = 'https://res.cloudinary.com/lhopital-moto/image/upload';
+
+function AccesorioCard({ product }: { product: Product }) {
+  const router = useRouter();
+  const imgSrc = product.imagen_principal
+    ? `${CLOUDINARY_BASE}/w_600,h_600,c_pad,q_auto,f_auto/${product.imagen_principal}`
+    : null;
+
+  // Estado del accesorio
+  const variante   = product.variants?.[0] ?? null;
+  const enStock    = variante && variante.stock_actual > 0;
+  const estado     = enStock ? 'En stock' : 'Bajo pedido';
+  const statusColor = enStock ? 'text-emerald-400' : 'text-[#9DC5F0]';
+
+  const compat     = COMPAT_POR_FAMILIA[product.familia ?? ''];
+  const advertencia = ADVERTENCIA_POR_FAMILIA[product.familia ?? ''];
+
+  return (
+    <article className="group bg-[#111] border border-[#F4F1EC]/8 hover:border-[#C9A961]/30 transition-colors overflow-hidden">
+      {/* Foto */}
+      <button
+        onClick={() => router.push(`/tienda/hedon/${product.slug}`)}
+        className="block w-full"
+        aria-label={`Ver ${product.nombre}`}
+      >
+        <div className="relative aspect-square bg-gradient-to-b from-[#1a1a1a] to-[#0d0d0d] overflow-hidden">
+          {imgSrc ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={imgSrc}
+              alt={product.nombre}
+              className="w-full h-full object-contain p-6 group-hover:scale-105 transition-transform duration-500"
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="font-cormorant italic text-[#F4F1EC]/25 text-sm">Foto pendiente</span>
+            </div>
+          )}
+        </div>
+      </button>
+
+      {/* Info */}
+      <div className="p-5">
+        {/* Compatible con */}
+        {compat && (
+          <div className="text-[9px] tracking-[0.2em] uppercase text-[#C9A961]/70 mb-2">
+            Compatible · {compat}
+          </div>
+        )}
+
+        {/* Nombre + precio */}
+        <div className="flex items-start justify-between gap-2 mb-1">
+          <h3 className="text-sm font-medium leading-snug">
+            {product.color || product.nombre}
+          </h3>
+          <span className="text-sm font-bold text-[#F4F1EC] whitespace-nowrap">
+            ${product.precio_base.toLocaleString('es-MX')}
+          </span>
+        </div>
+
+        {/* Familia */}
+        <p className="text-[10px] tracking-[0.1em] uppercase text-[#F4F1EC]/40 mb-3">
+          {product.familia}
+        </p>
+
+        {/* Estado */}
+        <div className={`text-[10px] tracking-[0.1em] uppercase ${statusColor} mb-3`}>
+          {estado}
+        </div>
+
+        {/* Advertencia especifica */}
+        {advertencia && (
+          <div className="border border-[#C9A961]/20 bg-[#C9A961]/5 px-3 py-2 text-[10px] text-[#C9A961]/80 tracking-wide mb-3">
+            ⚠ {advertencia}
+          </div>
+        )}
+
+        {/* CTA */}
+        <button
+          onClick={() => router.push(`/tienda/hedon/${product.slug}`)}
+          className="w-full bg-[#F4F1EC] text-[#0A0A0A] py-2.5 text-xs font-bold tracking-[0.1em] uppercase hover:opacity-85 transition"
+        >
+          {enStock ? 'Agregar al carrito' : 'Reservar'}
+        </button>
+      </div>
+    </article>
+  );
+}
 
 export function PersonalizaGrid({ products }: PersonalizaGridProps) {
   const [tabActivo, setTabActivo] = useState<Tab>('viseras');
 
-  const familias = FAMILIAS_POR_TAB[tabActivo];
-  const compat   = COMPAT[tabActivo];
+  const familias  = FAMILIAS_POR_TAB[tabActivo];
+  const compatTab = COMPAT_TAB[tabActivo];
 
   // Productos del tab activo, agrupados por familia
   const grupos = familias
@@ -75,22 +178,15 @@ export function PersonalizaGrid({ products }: PersonalizaGridProps) {
           ))}
         </div>
 
-        {/* Compatibilidad */}
-        <div className="mb-10 flex flex-col gap-3">
-          <div className="flex items-center gap-2">
-            <span className="inline-block w-4 h-px bg-[#C9A961]/50" />
-            <span className="text-[10px] tracking-[0.3em] uppercase text-[#C9A961]/70">
-              Compatible con
-            </span>
-            <span className="text-[10px] tracking-[0.15em] uppercase text-[#F4F1EC]/60">
-              {compat.modelos}
-            </span>
-          </div>
-          {compat.advertencia && (
-            <div className="border border-[#C9A961]/20 bg-[#C9A961]/5 px-5 py-3 text-xs text-[#C9A961]/80 tracking-wide max-w-xl">
-              ⚠ {compat.advertencia}
-            </div>
-          )}
+        {/* Compatibilidad general del tab */}
+        <div className="mb-10 flex items-center gap-2">
+          <span className="inline-block w-4 h-px bg-[#C9A961]/50" />
+          <span className="text-[10px] tracking-[0.3em] uppercase text-[#C9A961]/70">
+            Compatible con
+          </span>
+          <span className="text-[10px] tracking-[0.15em] uppercase text-[#F4F1EC]/60">
+            {compatTab}
+          </span>
         </div>
 
         {/* Contador */}
@@ -102,7 +198,7 @@ export function PersonalizaGrid({ products }: PersonalizaGridProps) {
         {grupos.length === 0 ? (
           <div className="text-center py-24 text-[#F4F1EC]/50">
             <p className="font-cormorant italic text-2xl mb-2">Sin piezas disponibles.</p>
-            <p className="text-sm">Próximamente.</p>
+            <p className="text-sm">Proximamente.</p>
           </div>
         ) : (
           grupos.map(({ familia, productos }) => (
@@ -111,19 +207,19 @@ export function PersonalizaGrid({ products }: PersonalizaGridProps) {
                 <h2 className="text-xl font-medium tracking-tight">
                   {familia}.
                 </h2>
-                <span className="text-xs tracking-[0.15em] text-[#F4F1EC]/40 font-mono">
-                  {productos.length} {productos.length === 1 ? 'opción' : 'opciones'}
+                <span className="text-[10px] tracking-[0.2em] uppercase text-[#C9A961]/60">
+                  Compatible · {COMPAT_POR_FAMILIA[familia] ?? compatTab}
                 </span>
               </div>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                 {productos.map((p) => (
-                  <ProductCard key={p.id} product={p} />
+                  <AccesorioCard key={p.id} product={p} />
                 ))}
               </div>
             </div>
           ))
         )}
-
       </div>
     </section>
   );

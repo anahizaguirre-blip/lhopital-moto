@@ -1,13 +1,5 @@
 'use client';
 
-/**
- * Ficha de detalle para accesorios Hedon.
- * - Una sola foto (imagen_principal directo, sin galería de vistas)
- * - Sin selector de talla — accesorios son unitalla
- * - Stock y estado tomados de la primera variante
- * - Compatible con: Viseras, Visores, Tornillos CNC
- */
-
 import { useState } from 'react';
 import Image from 'next/image';
 import type { Product } from '@/lib/types';
@@ -17,13 +9,33 @@ interface ProductDetailAccesorioProps {
   product: Product;
 }
 
+// Compatibilidad especifica por familia — catalogo v6
+const COMPAT_POR_FAMILIA: Record<string, string> = {
+  'Visera MX':       'Hedonist',
+  'Visera Classic':  'Hedonist',
+  'Visera Gloss':    'Hedonist',
+  'Visera Matte':    'Hedonist',
+  'Visera Carbon':   'Hedonist',
+  'Visor':           'Epicurist 2.0',
+  'Visor Burbuja':   'Hedonist',
+  'Visor Protector': 'Hedonist',
+  'Tornillo CNC':    'Epicurist 2.0 · Heroine Racer 2.0',
+};
+
+const ADVERTENCIA_POR_FAMILIA: Record<string, string> = {
+  'Tornillo CNC': 'No compatible con Heroine Racer V1 ni Hedonist.',
+  'Visor':        'El visor se instala lateralmente con tornillos. Solo Epicurist 2.0.',
+};
+
 export function ProductDetailAccesorio({ product }: ProductDetailAccesorioProps) {
   const [cantidad, setCantidad] = useState(1);
 
-  // Accesorios tienen una sola variante (unitalla)
-  const variante = product.variants?.[0] ?? null;
-  const enStock = variante && variante.stock_actual > 0;
+  const variante     = product.variants?.[0] ?? null;
+  const enStock      = variante && variante.stock_actual > 0;
   const esBajoPedido = variante?.estado === 'bajo_pedido';
+
+  const compat      = COMPAT_POR_FAMILIA[product.familia ?? ''] ?? product.descripcion_corta;
+  const advertencia = ADVERTENCIA_POR_FAMILIA[product.familia ?? ''];
 
   const handleAgregarCarrito = () => {
     if (!variante) return;
@@ -36,7 +48,7 @@ export function ProductDetailAccesorio({ product }: ProductDetailAccesorioProps)
     <section className="px-6 md:px-12 lg:px-24 pb-12">
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
 
-        {/* COLUMNA IZQUIERDA — Foto única */}
+        {/* Foto unica */}
         <div>
           <div className="relative aspect-square bg-gradient-to-b from-[#1a1a1a] to-[#0d0d0d] overflow-hidden">
             {product.imagen_principal ? (
@@ -53,18 +65,15 @@ export function ProductDetailAccesorio({ product }: ProductDetailAccesorioProps)
                 <span className="font-cormorant italic text-[#F4F1EC]/25">Foto pendiente</span>
               </div>
             )}
-
-            {/* SKU */}
             <div className="absolute bottom-4 right-4 font-mono text-[10px] tracking-[0.15em] text-[#F4F1EC]/40 uppercase">
               / {product.sku_padre}
             </div>
           </div>
         </div>
 
-        {/* COLUMNA DERECHA — Info y compra */}
+        {/* Info y compra */}
         <div className="lg:pt-4">
-
-          {/* Eyebrow familia */}
+          {/* Eyebrow */}
           <div className="mb-3 flex items-center gap-2">
             <span className="inline-block w-6 h-px bg-[#C9A961]" />
             <span className="text-[10px] tracking-[0.3em] uppercase text-[#C9A961]">
@@ -84,15 +93,22 @@ export function ProductDetailAccesorio({ product }: ProductDetailAccesorioProps)
             </p>
           )}
 
-          {/* Compatible con */}
-          {product.descripcion_corta && (
-            <div className="flex items-center gap-2 mb-6">
+          {/* Compatible con (especifico) */}
+          {compat && (
+            <div className="flex items-center gap-2 mb-2">
               <span className="text-[10px] tracking-[0.2em] uppercase text-[#F4F1EC]/45">
                 Compatible con
               </span>
               <span className="text-[10px] tracking-[0.15em] uppercase text-[#F4F1EC]/70">
-                {product.descripcion_corta}
+                {compat}
               </span>
+            </div>
+          )}
+
+          {/* Advertencia si aplica */}
+          {advertencia && (
+            <div className="border border-[#C9A961]/20 bg-[#C9A961]/5 px-4 py-2.5 text-xs text-[#C9A961]/80 tracking-wide mb-5 max-w-sm">
+              ⚠ {advertencia}
             </div>
           )}
 
@@ -113,16 +129,16 @@ export function ProductDetailAccesorio({ product }: ProductDetailAccesorioProps)
               <div>
                 <div className="font-medium text-[#9DC5F0] mb-1">Bajo pedido</div>
                 <p className="text-[12px] text-[#9DC5F0]/80 leading-relaxed">
-                  Lo traemos en 3 semanas a 90 días. Pagas hoy, te apartamos uno.
+                  Lo traemos en 3 semanas a 90 dias. Pagas hoy, te apartamos uno.
                 </p>
               </div>
             </div>
           )}
 
-          {/* Stock disponible */}
+          {/* Estado (sin numero de stock) */}
           {enStock && (
             <div className="mb-6 text-[11px] tracking-[0.05em] text-[#F4F1EC]/55">
-              {variante!.stock_actual} en stock · envío en 24-72h
+              En stock · envio en 24-72h
             </div>
           )}
 
@@ -161,18 +177,18 @@ export function ProductDetailAccesorio({ product }: ProductDetailAccesorioProps)
 
           {/* CTA secundario */}
           <button className="w-full bg-transparent border border-[#F4F1EC]/35 text-[#F4F1EC] py-3 text-xs font-medium tracking-[0.05em] uppercase hover:border-[#F4F1EC]/60 transition">
-            Avísame de novedades
+            Avisame de novedades
           </button>
 
-          {/* Ficha técnica */}
+          {/* Ficha tecnica */}
           <div className="mt-10 pt-8 border-t border-[#F4F1EC]/8">
             <div className="text-[10px] tracking-[0.3em] uppercase text-[#C9A961] mb-4">
-              Ficha técnica
+              Ficha tecnica
             </div>
             <dl className="space-y-3 text-sm">
               {product.certificacion && (
                 <div className="flex justify-between border-b border-[#F4F1EC]/8 pb-3">
-                  <dt className="text-[#F4F1EC]/55">Certificación</dt>
+                  <dt className="text-[#F4F1EC]/55">Certificacion</dt>
                   <dd>{product.certificacion}</dd>
                 </div>
               )}
@@ -189,12 +205,11 @@ export function ProductDetailAccesorio({ product }: ProductDetailAccesorioProps)
                 </div>
               )}
               <div className="flex justify-between border-b border-[#F4F1EC]/8 pb-3">
-                <dt className="text-[#F4F1EC]/55">Garantía</dt>
+                <dt className="text-[#F4F1EC]/55">Garantia</dt>
                 <dd>{product.garantia_meses} meses</dd>
               </div>
             </dl>
           </div>
-
         </div>
       </div>
     </section>
