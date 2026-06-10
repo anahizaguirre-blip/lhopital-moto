@@ -55,8 +55,8 @@ export default async function TiendaHedonPage() {
     <main className="min-h-screen bg-[#0A0A0A] text-[#F4F1EC]">
 
       {/* Hero de la tienda Hedon */}
-      <section className="px-6 md:px-12 lg:px-24 pt-32 pb-16">
-        <div className="max-w-6xl mx-auto">
+      <section className="px-6 sm:px-10 lg:px-16 pt-32 pb-16">
+        <div className="max-w-[1440px] mx-auto">
 
           {/* Tag editorial */}
           <div className="mb-4 flex items-center gap-2">
