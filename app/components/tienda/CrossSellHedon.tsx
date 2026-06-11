@@ -71,8 +71,8 @@ export function CrossSellHedon({ items, nombreCasco }: CrossSellHedonProps) {
 
   return (
     <>
-      <section className="px-6 sm:px-10 lg:px-16 py-16 border-t border-[#F4F1EC]/8">
-        <div className="max-w-[1440px] mx-auto">
+      <section className="py-16 border-t border-[#F4F1EC]/8">
+        <div className="w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
 
           <div className="mb-10">
             <div className="flex items-center gap-3 mb-3">

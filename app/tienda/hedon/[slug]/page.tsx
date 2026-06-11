@@ -1,8 +1,3 @@
-/**
- * Ficha individual de producto Hedon
- * URL: /tienda/hedon/[slug]
- */
-
 import { createSupabaseServer } from '@/lib/supabase/server';
 import { notFound } from 'next/navigation';
 import { ProductDetail } from '@/app/components/tienda/ProductDetail';
@@ -15,7 +10,6 @@ interface PageProps {
 }
 
 export const revalidate = 60;
-
 const CATEGORIAS_ACCESORIO = ['add_on_dual', 'add_on_simple'];
 
 export async function generateMetadata({ params }: PageProps) {
@@ -26,14 +20,10 @@ export async function generateMetadata({ params }: PageProps) {
     .select('nombre, familia, color, frase_corta')
     .eq('slug', slug)
     .single();
-
   if (!product) return { title: 'Producto no encontrado' };
-
   return {
     title: `${product.nombre} · Tienda Hedon · Lhopital-moto`,
-    description:
-      product.frase_corta ||
-      `${product.familia} ${product.color} — Accesorio Hedon premium en Lhopital-moto.`,
+    description: product.frase_corta || `${product.familia} ${product.color} — Accesorio Hedon premium en Lhopital-moto.`,
   };
 }
 
@@ -64,15 +54,12 @@ export default async function ProductPage({ params }: PageProps) {
 
     if (hedonRaw && hedonRaw.length > 0) {
       const skus = hedonRaw.map((r) => r.sku_accesorio);
-
       const { data: accesorios } = await supabase
         .from('products')
         .select('id, sku_padre, nombre, slug, precio_base, familia')
         .in('sku_padre', skus)
         .eq('visible_publico', true);
-
       const map = new Map((accesorios || []).map((a) => [a.sku_padre, a]));
-
       hedonCrossSellsData = hedonRaw.map((row) => ({
         ...row,
         accesorio: map.get(row.sku_accesorio) ?? undefined,
@@ -83,9 +70,9 @@ export default async function ProductPage({ params }: PageProps) {
   return (
     <main className="min-h-screen bg-[#0A0A0A] text-[#F4F1EC]">
 
-      {/* Breadcrumb — mismo sistema de margen que ProductDetail */}
-      <nav className="px-6 sm:px-10 lg:px-16 pt-32 pb-6">
-        <div className="max-w-[1440px] mx-auto">
+      {/* Breadcrumb — patrón storytelling */}
+      <nav className="pt-32 pb-6">
+        <div className="w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
           <div className="text-[11px] tracking-[0.1em] text-[#F4F1EC]/45 font-mono">
             <Link href="/tienda" className="hover:text-[#C9A961] transition">/ Tienda</Link>
             {' · '}
@@ -101,10 +88,7 @@ export default async function ProductPage({ params }: PageProps) {
       {esAccesorio ? (
         <ProductDetailAccesorio product={productData} />
       ) : (
-        <ProductDetail
-          product={productData}
-          hedonCrossSells={hedonCrossSellsData}
-        />
+        <ProductDetail product={productData} hedonCrossSells={hedonCrossSellsData} />
       )}
 
       <footer className="py-12 px-6 text-center text-[10px] tracking-[0.2em] uppercase text-[#F4F1EC]/35 border-t border-[#F4F1EC]/8 mt-24">

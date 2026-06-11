@@ -123,8 +123,8 @@ export function ProductDetail({ product, hedonCrossSells }: ProductDetailProps) 
 
   return (
     <>
-      <section className="px-6 sm:px-10 lg:px-16 pb-12">
-        <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+      <section className="pb-12">
+        <div className="w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
 
           {/* COLUMNA IZQUIERDA — Carrusel */}
           <div>

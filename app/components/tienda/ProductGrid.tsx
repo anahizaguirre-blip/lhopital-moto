@@ -48,8 +48,8 @@ export function ProductGrid({ products, collections }: ProductGridProps) {
   }, [productosFiltrados]);
 
   return (
-    <section className="px-6 sm:px-10 lg:px-16 pb-24">
-      <div className="max-w-[1440px] mx-auto">
+    <section className="pb-24">
+      <div className="w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
 
         {/* Filtros */}
         <div className="border-y border-[#F4F1EC]/8 py-6 mb-12 flex flex-wrap gap-8 items-start">

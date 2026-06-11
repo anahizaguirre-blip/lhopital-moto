@@ -55,8 +55,8 @@ export default async function TiendaHedonPage() {
     <main className="min-h-screen bg-[#0A0A0A] text-[#F4F1EC]">
 
       {/* Hero de la tienda Hedon */}
-      <section className="px-6 sm:px-10 lg:px-16 pt-32 pb-16">
-        <div className="max-w-[1440px] mx-auto">
+      <section className="pt-32 pb-16">
+  <div className="w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
 
           {/* Tag editorial */}
           <div className="mb-4 flex items-center gap-2">
@@ -69,7 +69,7 @@ export default async function TiendaHedonPage() {
           {/* Título principal con Cormorant italic */}
           <h1 className="font-cormorant text-5xl md:text-7xl font-medium italic text-[#F4F1EC] leading-[0.95] mb-6">
             Cuatro modelos. <br/>
-            <span className="text-[#C9A961]">Una sola obsesión.</span>
+            <span className="text-[#C9A961]">Cada casco, una decisión.</span>
           </h1>
 
           <p className="text-[#F4F1EC]/60 text-base md:text-lg max-w-2xl leading-relaxed">

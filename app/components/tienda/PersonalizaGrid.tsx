@@ -158,8 +158,8 @@ export function PersonalizaGrid({ products }: PersonalizaGridProps) {
   const totalTab = grupos.reduce((acc, g) => acc + g.productos.length, 0);
 
   return (
-    <section className="px-6 md:px-12 lg:px-24 pb-24">
-      <div className="max-w-6xl mx-auto">
+    <section className="pb-24">
+      <div className="w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
 
         {/* Tabs */}
         <div className="border-b border-[#F4F1EC]/8 mb-12 flex gap-0">
