@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import type { Product, Collection } from '@/lib/types';
 import { ProductCard } from './ProductCard';
 
@@ -22,7 +22,11 @@ const FAMILIA_ORDEN: Record<string, number> = {
 
 export function ProductGrid({ products, collections }: ProductGridProps) {
   const router = useRouter();
-  const [modeloActivo,    setModeloActivo]    = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const modeloParam = searchParams.get('modelo');
+  const [modeloActivo,    setModeloActivo]    = useState<string | null>(() =>
+    MODELOS.includes(modeloParam ?? '') ? modeloParam : null
+  );
   const [coleccionActiva, setColeccionActiva] = useState<string | null>(null);
 
   const productosFiltrados = useMemo(() => {

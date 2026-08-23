@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useRef } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import type { Product, HedonCrossSell, ProductVariant } from '@/lib/types';
 import { cloudinaryUrl, hedonGallery, extractBasePath } from '@/lib/cloudinary';
 import { CrossSellHedon } from './CrossSellHedon';
@@ -100,6 +101,10 @@ export function ProductDetail({ product, hedonCrossSells }: ProductDetailProps) 
 
   const enStock      = varianteSel && varianteSel.stock_actual > 0;
   const esBajoPedido = varianteSel?.estado === 'bajo_pedido';
+
+  const hedonModeloHref = product.familia
+    ? `/tienda/hedon?modelo=${encodeURIComponent(product.familia)}`
+    : '/tienda/hedon';
 
   const handleAgregarCarrito = () => {
     if (!varianteSel) return;
@@ -237,9 +242,12 @@ export function ProductDetail({ product, hedonCrossSells }: ProductDetailProps) 
           <div className="lg:pt-4">
             <div className="mb-3 flex items-center gap-2">
               <span className="inline-block w-6 h-px bg-[#C9A961]" />
-              <span className="text-[10px] tracking-[0.3em] uppercase text-[#C9A961]">
+              <Link
+                href={hedonModeloHref}
+                className="text-[10px] tracking-[0.3em] uppercase text-[#C9A961] hover:underline"
+              >
                 {product.familia}
-              </span>
+              </Link>
             </div>
 
             <h1 className="text-4xl md:text-5xl font-medium tracking-tight leading-[1] mb-2">

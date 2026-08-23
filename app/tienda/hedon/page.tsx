@@ -6,6 +6,7 @@
  * y los renderiza en un grid filtrable.
  */
 
+import { Suspense } from 'react';
 import { createSupabaseServer } from '@/lib/supabase/server';
 import type { Product, Collection } from '@/lib/types';
 import { ProductGrid } from '@/app/components/tienda/ProductGrid';
@@ -89,7 +90,9 @@ export default async function TiendaHedonPage() {
       </section>
 
       {/* Grid de productos */}
-      <ProductGrid products={productList} collections={collectionList} />
+      <Suspense fallback={null}>
+        <ProductGrid products={productList} collections={collectionList} />
+      </Suspense>
 
       {/* Footer mínimo */}
       <footer className="py-12 px-6 text-center text-[10px] tracking-[0.2em] uppercase text-[#F4F1EC]/35 border-t border-[#F4F1EC]/8">
