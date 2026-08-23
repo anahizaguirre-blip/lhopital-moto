@@ -1,27 +1,21 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import type { Product } from '@/lib/types';
+import { FAMILIAS_POR_TAB, familiaToId, type PersonalizaTab } from '@/lib/personaliza';
 
 interface PersonalizaGridProps {
   products: Product[];
 }
 
-type Tab = 'viseras' | 'visores' | 'tornillos';
+type Tab = PersonalizaTab;
 
 const TABS: { id: Tab; label: string }[] = [
   { id: 'viseras',   label: 'Viseras' },
   { id: 'visores',   label: 'Visores' },
   { id: 'tornillos', label: 'Tornillos CNC' },
 ];
-
-// Que familias van en cada tab
-const FAMILIAS_POR_TAB: Record<Tab, string[]> = {
-  viseras:   ['Visera Carbon', 'Visera Classic', 'Visera Gloss', 'Visera Matte', 'Visera MX'],
-  visores:   ['Visor', 'Visor Burbuja', 'Visor Protector'],
-  tornillos: ['Tornillo CNC'],
-};
 
 // Compatibilidad especifica por familia de accesorio — sacada del catalogo v6
 const COMPAT_POR_FAMILIA: Record<string, string> = {
@@ -142,7 +136,18 @@ function AccesorioCard({ product }: { product: Product }) {
 }
 
 export function PersonalizaGrid({ products }: PersonalizaGridProps) {
-  const [tabActivo, setTabActivo] = useState<Tab>('viseras');
+  const searchParams = useSearchParams();
+  const tabParam = searchParams.get('tab');
+  const [tabActivo, setTabActivo] = useState<Tab>(() =>
+    TABS.some((t) => t.id === tabParam) ? (tabParam as Tab) : 'viseras'
+  );
+
+  useEffect(() => {
+    const familiaParam = searchParams.get('familia');
+    if (!familiaParam) return;
+    const el = document.getElementById(familiaToId(familiaParam));
+    el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, [tabActivo, searchParams]);
 
   const familias  = FAMILIAS_POR_TAB[tabActivo];
   const compatTab = COMPAT_TAB[tabActivo];
@@ -202,7 +207,7 @@ export function PersonalizaGrid({ products }: PersonalizaGridProps) {
           </div>
         ) : (
           grupos.map(({ familia, productos }) => (
-            <div key={familia} className="mb-16">
+            <div key={familia} id={familiaToId(familia)} className="mb-16 scroll-mt-24">
               <div className="mb-6 flex items-baseline gap-3">
                 <h2 className="text-xl font-medium tracking-tight">
                   {familia}.

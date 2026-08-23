@@ -2,8 +2,10 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import type { Product } from '@/lib/types';
 import { cloudinaryUrl } from '@/lib/cloudinary';
+import { personalizaHref } from '@/lib/personaliza';
 
 interface ProductDetailAccesorioProps {
   product: Product;
@@ -103,9 +105,12 @@ export function ProductDetailAccesorio({ product }: ProductDetailAccesorioProps)
           {/* Eyebrow */}
           <div className="mb-3 flex items-center gap-2">
             <span className="inline-block w-6 h-px bg-[#C9A961]" />
-            <span className="text-[10px] tracking-[0.3em] uppercase text-[#C9A961]">
+            <Link
+              href={personalizaHref(product.familia)}
+              className="text-[10px] tracking-[0.3em] uppercase text-[#C9A961] hover:underline"
+            >
               {product.familia}
-            </span>
+            </Link>
           </div>
 
           {/* Nombre */}

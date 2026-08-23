@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { createSupabaseServer } from '@/lib/supabase/server';
 import type { Product } from '@/lib/types';
 import { PersonalizaGrid } from '@/app/components/tienda/PersonalizaGrid';
@@ -56,7 +57,9 @@ export default async function PersonalizaPage() {
         </div>
       </section>
 
-      <PersonalizaGrid products={productList} />
+      <Suspense fallback={null}>
+        <PersonalizaGrid products={productList} />
+      </Suspense>
 
       <footer className="py-12 px-6 text-center text-[10px] tracking-[0.2em] uppercase text-[#F4F1EC]/35 border-t border-[#F4F1EC]/8">
         Lhopital-moto · We are the standard
