@@ -77,6 +77,7 @@ export interface ProductVariant {
   sku_variante: string;
   talla: string | null;
   color_variante: string | null;
+  acabado_tornillo: string | null;
   precio: number | null;
   precio_promocional: number | null;
   estado: EstadoProducto;

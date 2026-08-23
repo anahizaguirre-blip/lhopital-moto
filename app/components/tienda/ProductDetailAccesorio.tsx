@@ -27,15 +27,42 @@ const ADVERTENCIA_POR_FAMILIA: Record<string, string> = {
   'Visor':        'El visor se instala lateralmente con tornillos. Solo Epicurist 2.0.',
 };
 
+const FAMILIAS_CON_ACABADO = ['Visor Burbuja', 'Visor Protector'];
+
+const ACABADOS = [
+  { nombre: 'Copper',   color: '#B87333' },
+  { nombre: 'Steel',    color: '#8C8C8C' },
+  { nombre: 'Gunmetal', color: '#3A3B3C' },
+  { nombre: 'Brass',    color: '#C9A961' },
+] as const;
+
+function getImagenAcabado(acabado: string, product: Product): string | null {
+  if (acabado === 'Copper') return product.imagen_principal;
+  const idx = ['Steel', 'Gunmetal', 'Brass'].indexOf(acabado);
+  return product.imagenes?.[idx] ?? product.imagen_principal;
+}
+
 export function ProductDetailAccesorio({ product }: ProductDetailAccesorioProps) {
   const [cantidad, setCantidad] = useState(1);
+  const [acabadoSeleccionado, setAcabadoSeleccionado] = useState<string>('Copper');
 
-  const variante     = product.variants?.[0] ?? null;
-  const enStock      = variante && variante.stock_actual > 0;
+  const tieneAcabados =
+    FAMILIAS_CON_ACABADO.includes(product.familia ?? '') &&
+    (product.variants ?? []).some((v) => v.acabado_tornillo);
+
+  const variante = tieneAcabados
+    ? product.variants?.find((v) => v.acabado_tornillo === acabadoSeleccionado) ?? null
+    : product.variants?.[0] ?? null;
+
+  const enStock      = variante ? variante.stock_actual > 0 : false;
   const esBajoPedido = variante?.estado === 'bajo_pedido';
 
   const compat      = COMPAT_POR_FAMILIA[product.familia ?? ''] ?? product.descripcion_corta;
   const advertencia = ADVERTENCIA_POR_FAMILIA[product.familia ?? ''];
+
+  const imagenActual = tieneAcabados
+    ? getImagenAcabado(acabadoSeleccionado, product)
+    : product.imagen_principal;
 
   const handleAgregarCarrito = () => {
     if (!variante) return;
@@ -51,9 +78,9 @@ export function ProductDetailAccesorio({ product }: ProductDetailAccesorioProps)
         {/* Foto unica */}
         <div>
           <div className="relative aspect-square bg-gradient-to-b from-[#1a1a1a] to-[#0d0d0d] overflow-hidden">
-            {product.imagen_principal ? (
+            {imagenActual ? (
               <Image
-                src={cloudinaryUrl(product.imagen_principal, 'detail')}
+                src={cloudinaryUrl(imagenActual, 'detail')}
                 alt={product.nombre}
                 fill
                 priority
@@ -121,6 +148,36 @@ export function ProductDetailAccesorio({ product }: ProductDetailAccesorioProps)
               MXN
             </span>
           </div>
+
+          {/* Selector de acabado de tornillo */}
+          {tieneAcabados && (
+            <div className="mb-6">
+              <div className="text-[10px] tracking-[0.3em] uppercase text-[#F4F1EC]/55 mb-3">
+                Acabado de tornillo
+              </div>
+              <div className="flex gap-3">
+                {ACABADOS.map((a) => (
+                  <button
+                    key={a.nombre}
+                    type="button"
+                    onClick={() => setAcabadoSeleccionado(a.nombre)}
+                    title={a.nombre}
+                    aria-label={a.nombre}
+                    aria-pressed={acabadoSeleccionado === a.nombre}
+                    className={`w-9 h-9 rounded-full border-2 transition ${
+                      acabadoSeleccionado === a.nombre
+                        ? 'border-[#F4F1EC] scale-110'
+                        : 'border-[#F4F1EC]/20 hover:border-[#F4F1EC]/50'
+                    }`}
+                    style={{ backgroundColor: a.color }}
+                  />
+                ))}
+              </div>
+              <p className="text-[11px] text-[#F4F1EC]/45 mt-2">
+                Mismo precio en todos los acabados
+              </p>
+            </div>
+          )}
 
           {/* Banner bajo pedido */}
           {!enStock && esBajoPedido && (
