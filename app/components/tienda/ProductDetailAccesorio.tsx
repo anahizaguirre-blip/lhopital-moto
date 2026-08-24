@@ -11,22 +11,24 @@ interface ProductDetailAccesorioProps {
   product: Product;
 }
 
-// Compatibilidad especifica por familia — catalogo v6
+// Compatibilidad especifica por familia — catalogo v7
 const COMPAT_POR_FAMILIA: Record<string, string> = {
-  'Visera MX':       'Hedonist',
-  'Visera Classic':  'Hedonist',
-  'Visera Gloss':    'Hedonist',
-  'Visera Matte':    'Hedonist',
-  'Visera Carbon':   'Hedonist',
-  'Visor':           'Epicurist 2.0',
-  'Visor Burbuja':   'Hedonist',
-  'Visor Protector': 'Hedonist',
-  'Tornillo CNC':    'Epicurist 2.0 · Heroine Racer 2.0',
+  'Visera MotoCross':        'Hedonist',
+  'Visera Classic':          'Hedonist',
+  'Visera Gloss':            'Hedonist',
+  'Visera Matte':            'Hedonist',
+  'Visera Carbon':           'Hedonist',
+  'Visor Epicurist 2.0':     'Epicurist 2.0',
+  'Visor Heroine Racer 2.0': 'Heroine Racer 2.0',
+  'Visor Burbuja':           'Hedonist',
+  'Visor Protector':         'Hedonist',
+  'Tornillo CNC':            'Epicurist 2.0 · Heroine Racer 2.0',
 };
 
 const ADVERTENCIA_POR_FAMILIA: Record<string, string> = {
-  'Tornillo CNC': 'No compatible con Heroine Racer V1 ni Hedonist.',
-  'Visor':        'El visor se instala lateralmente con tornillos. Solo Epicurist 2.0.',
+  'Tornillo CNC':            'No compatible con Heroine Racer V1 ni Hedonist.',
+  'Visor Epicurist 2.0':     'El visor se instala lateralmente con tornillos.',
+  'Visor Heroine Racer 2.0': 'El visor se instala lateralmente con tornillos.',
 };
 
 const FAMILIAS_CON_ACABADO = ['Visor Burbuja', 'Visor Protector'];

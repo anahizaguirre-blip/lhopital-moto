@@ -17,32 +17,34 @@ const TABS: { id: Tab; label: string }[] = [
   { id: 'tornillos', label: 'Tornillos CNC' },
 ];
 
-// Compatibilidad especifica por familia de accesorio — sacada del catalogo v6
+// Compatibilidad especifica por familia de accesorio — sacada del catalogo v7
 const COMPAT_POR_FAMILIA: Record<string, string> = {
   // Viseras — para Hedonist
-  'Visera MX':      'Hedonist',
-  'Visera Classic': 'Hedonist',
-  'Visera Gloss':   'Hedonist',
-  'Visera Matte':   'Hedonist',
-  'Visera Carbon':  'Hedonist',
+  'Visera MotoCross': 'Hedonist',
+  'Visera Classic':   'Hedonist',
+  'Visera Gloss':     'Hedonist',
+  'Visera Matte':     'Hedonist',
+  'Visera Carbon':    'Hedonist',
   // Visores por tipo
-  'Visor':           'Epicurist 2.0',
-  'Visor Burbuja':   'Hedonist',
-  'Visor Protector': 'Hedonist',
+  'Visor Epicurist 2.0':     'Epicurist 2.0',
+  'Visor Heroine Racer 2.0': 'Heroine Racer 2.0',
+  'Visor Burbuja':           'Hedonist',
+  'Visor Protector':         'Hedonist',
   // Tornillos
   'Tornillo CNC':    'Epicurist 2.0 · Heroine Racer 2.0',
 };
 
 // Advertencias adicionales
 const ADVERTENCIA_POR_FAMILIA: Record<string, string> = {
-  'Tornillo CNC': 'No compatible con Heroine Racer V1 ni Hedonist.',
-  'Visor':        'El visor se instala lateralmente con tornillos. Solo Epicurist 2.0.',
+  'Tornillo CNC':             'No compatible con Heroine Racer V1 ni Hedonist.',
+  'Visor Epicurist 2.0':      'El visor se instala lateralmente con tornillos.',
+  'Visor Heroine Racer 2.0':  'El visor se instala lateralmente con tornillos.',
 };
 
 // Aviso general del tab (para la cabecera)
 const COMPAT_TAB: Record<Tab, string> = {
   viseras:   'Hedonist',
-  visores:   'Hedonist · Epicurist 2.0',
+  visores:   'Hedonist · Epicurist 2.0 · Heroine Racer 2.0',
   tornillos: 'Epicurist 2.0 · Heroine Racer 2.0',
 };
 
@@ -57,8 +59,6 @@ function AccesorioCard({ product }: { product: Product }) {
   // Estado del accesorio
   const variante   = product.variants?.[0] ?? null;
   const enStock    = variante && variante.stock_actual > 0;
-  const estado     = enStock ? 'En stock' : 'Bajo pedido';
-  const statusColor = enStock ? 'text-emerald-400' : 'text-[#9DC5F0]';
 
   const compat     = COMPAT_POR_FAMILIA[product.familia ?? ''];
   const advertencia = ADVERTENCIA_POR_FAMILIA[product.familia ?? ''];
@@ -96,24 +96,31 @@ function AccesorioCard({ product }: { product: Product }) {
           </div>
         )}
 
-        {/* Nombre + precio */}
-        <div className="flex items-start justify-between gap-2 mb-1">
-          <h3 className="text-sm font-medium leading-snug">
-            {product.color || product.nombre}
-          </h3>
-          <span className="text-sm font-bold text-[#F4F1EC] whitespace-nowrap">
-            ${product.precio_base.toLocaleString('es-MX')}
-          </span>
-        </div>
+        {/* Nombre */}
+        <h3 className="text-sm font-medium leading-snug mb-1">
+          {product.color || product.nombre}
+        </h3>
 
         {/* Familia */}
         <p className="text-[10px] tracking-[0.1em] uppercase text-[#F4F1EC]/40 mb-3">
           {product.familia}
         </p>
 
-        {/* Estado */}
-        <div className={`text-[10px] tracking-[0.1em] uppercase ${statusColor} mb-3`}>
-          {estado}
+        {/* Precio + estado */}
+        <div className="flex items-center justify-between mb-3">
+          <span className="text-sm font-bold text-[#F4F1EC] whitespace-nowrap">
+            ${product.precio_base.toLocaleString('es-MX')}
+          </span>
+
+          {enStock ? (
+            <span className="rounded-full border-[0.5px] border-[#C9A961] bg-[#C9A961] px-[9px] py-[3px] text-[11px] font-medium tracking-[0.02em] text-[#2A1810]">
+              En stock
+            </span>
+          ) : (
+            <span className="rounded-full border-[0.5px] border-[#6B5D42] bg-transparent px-[9px] py-[3px] text-[11px] font-medium tracking-[0.02em] text-[#8B6F47]">
+              Bajo pedido
+            </span>
+          )}
         </div>
 
         {/* Advertencia especifica */}

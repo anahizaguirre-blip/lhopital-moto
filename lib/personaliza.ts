@@ -6,8 +6,8 @@
 export type PersonalizaTab = 'viseras' | 'visores' | 'tornillos';
 
 export const FAMILIAS_POR_TAB: Record<PersonalizaTab, string[]> = {
-  viseras:   ['Visera Carbon', 'Visera Classic', 'Visera Gloss', 'Visera Matte', 'Visera MX'],
-  visores:   ['Visor', 'Visor Burbuja', 'Visor Protector'],
+  viseras:   ['Visera Carbon', 'Visera Classic', 'Visera Gloss', 'Visera Matte', 'Visera MotoCross'],
+  visores:   ['Visor Epicurist 2.0', 'Visor Heroine Racer 2.0', 'Visor Burbuja', 'Visor Protector'],
   tornillos: ['Tornillo CNC'],
 };
 
