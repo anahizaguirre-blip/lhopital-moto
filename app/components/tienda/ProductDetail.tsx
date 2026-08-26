@@ -22,7 +22,7 @@ const COLECCION_LABELS: Record<string, string> = {
 };
 
 const CLOUDINARY_BASE = 'https://res.cloudinary.com/lhopital-moto/image/upload';
-const TALLAS_GUIDE_URL = `${CLOUDINARY_BASE}/detail/hedon-tallas`;
+const TALLAS_GUIDE_URL = `${CLOUDINARY_BASE}/hedon-tallas`;
 
 // Cuantos thumbnails mostrar a la vez
 const THUMB_VISIBLE = 4;
@@ -33,6 +33,9 @@ export function ProductDetail({ product, hedonCrossSells }: ProductDetailProps) 
   const interiorUrl = product.foto_interior
     ? cloudinaryUrl(product.foto_interior, 'detail')
     : null;
+  const headmostUrl = product.foto_headmost
+    ? cloudinaryUrl(product.foto_headmost, 'detail')
+    : null;
 
   const vistas = gallery
     ? [
@@ -40,6 +43,9 @@ export function ProductDetail({ product, hedonCrossSells }: ProductDetailProps) 
         { key: 'threeQuarter', label: 'Tres cuartos', url: gallery.threeQuarter },
         { key: 'side',         label: 'Lado',         url: gallery.side },
         { key: 'back',         label: 'Atras',        url: gallery.back },
+        ...(headmostUrl
+          ? [{ key: 'headmost', label: 'Vista superior', url: headmostUrl }]
+          : []),
         ...(interiorUrl
           ? [{ key: 'interior', label: 'Interior', url: interiorUrl }]
           : []),
@@ -117,6 +123,9 @@ export function ProductDetail({ product, hedonCrossSells }: ProductDetailProps) 
   const thumbUrl = (v: typeof vistas[0]) => {
     if (v.key === 'interior' && product.foto_interior) {
       return cloudinaryUrl(product.foto_interior, 'thumbnail');
+    }
+    if (v.key === 'headmost' && product.foto_headmost) {
+      return cloudinaryUrl(product.foto_headmost, 'thumbnail');
     }
     const suffix =
       v.key === 'threeQuarter' ? 'three-quarter' :

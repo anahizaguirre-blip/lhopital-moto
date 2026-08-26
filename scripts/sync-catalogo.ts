@@ -197,6 +197,7 @@ async function syncHedonCascos(wb: XLSX.WorkBook): Promise<SyncResult> {
         certificacion: clean(row['Certificación']) || 'ECE 22.06',
         imagen_principal: clean(row['Foto Cloudinary']),
         foto_interior: clean(row['Foto Interior Cloudinary']),
+        foto_headmost: clean(row['Foto Headmost Cloudinary']),
         numero_fotos_esperadas: 4,
         visible_publico: true,
         destacado_home: row['Familia'] === 'Psilo Explorer',
