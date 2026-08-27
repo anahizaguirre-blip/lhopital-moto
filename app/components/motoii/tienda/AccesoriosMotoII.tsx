@@ -40,28 +40,28 @@ const ACCESORIO_META: Record<string, {
 }> = {
   'CHR_CSE_3.0': {
     descripcion: 'Estuche rígido EVA con mosquetón. Para llevarlo cuando no ruedas.',
-    publicId: 'motoii-acc-carry-case',
+    publicId: 'chr-cse-front',
   },
   'CHR_MNT3.0_AMPS': {
     descripcion: 'Compatible con sistemas RAM y estándar AMPS de 4 orificios.',
-    publicId: 'motoii-acc-amps',
+    publicId: 'chr-mnt-amps-1',
   },
   'CHR_MNT3.0_BALL': {
     descripcion: 'Adaptador de 1 pulgada para sistemas de bola universales.',
-    publicId: 'motoii-acc-ball',
+    publicId: 'chr-mnt-ball-1',
   },
   'CHR_MNT3.0_FORK': {
     descripcion: 'Montaje en horquilla delantera. Ideal para motos deportivas.',
-    publicId: 'motoii-acc-fork',
+    publicId: 'chr-mnt-fork-1',
   },
   'CHR_MNT3.0_MOD': {
     descripcion: 'Extiende y ajusta la posición de cualquier montaje existente.',
-    publicId: 'motoii-acc-mod',
+    // Sin foto subida a Cloudinary todavía — se agrega el publicId cuando exista.
   },
   'CHR_MNT3.0_M2_M1ADAPTER': {
     descripcion: 'Usa tu montaje Moto I con el nuevo Moto II. Sin comprar uno nuevo.',
     esAdaptador: true,
-    publicId: 'motoii-acc-adapter',
+    publicId: 'chr-mnt-m2-m1adapter-1',
   },
 };
 

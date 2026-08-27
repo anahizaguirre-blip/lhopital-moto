@@ -24,24 +24,27 @@ import type { Product } from '@/lib/types';
 
 const CLOUD = 'https://res.cloudinary.com/lhopital-moto/image/upload';
 
-// Las 14 fotos en orden de presentación para cada color
-// Orden: frontal con pantalla → 3/4 frontal → lateral → trasera → bottom
-const FOTO_SUFIJOS = [
-  'front-map',
-  'front-hour',
-  'front-logo',
-  'tq-front-map',
-  'tq-front-hour',
-  'tq-front-logo',
-  'tq-map',
-  'tq-hour',
-  'tq-logo',
-  'side',
-  'tq-back',
-  'tq-side',
-  'back',
-  'bottom',
-] as const;
+// Orden de presentación deseado: frontal con pantalla → 3/4 frontal → lateral → trasera → bottom.
+// No todos los sufijos están subidos a Cloudinary para los 3 acabados — cada
+// color solo lista aquí las fotos que realmente existen (verificado contra
+// Cloudinary), para no mostrar miniaturas rotas.
+const FOTOS_POR_SKU: Record<string, string[]> = {
+  'CHR_BLD3.0_BLK': [
+    'front-map', 'front-hour', 'front-logo',
+    'tq-front-map', 'tq-front-logo',
+    'side', 'tq-back', 'tq-side', 'back', 'bottom',
+  ],
+  'CHR_BLD3.0_GMG': [
+    'front-map', 'front-hour', 'front-logo',
+    'tq-front-map', 'tq-front-logo', 'tq-map',
+    'side', 'tq-back', 'back', 'bottom',
+  ],
+  'CHR_BLD3.0_SVR': [
+    'front-map', 'front-hour', 'front-logo',
+    'tq-front-map', 'tq-front-logo', 'tq-map',
+    'side', 'tq-back', 'tq-side', 'back', 'bottom',
+  ],
+};
 
 // Configuración de cada acabado — datos que complementan lo que viene de Supabase
 const ACABADOS_CONFIG: Record<string, {
@@ -117,8 +120,9 @@ export function HeroTiendaMotoII({ dispositivos, onColorChange }: HeroMotoIIProp
   const enCamino = varianteActiva?.estado === 'en_camino';
   const precio = varianteActiva?.precio ?? dispositivoActivo?.precio_base ?? 0;
 
-  // Fotos del color activo
-  const fotos = FOTO_SUFIJOS.map(sufijo =>
+  // Fotos del color activo — solo las que están realmente subidas a Cloudinary
+  const sufijosActivos = FOTOS_POR_SKU[skuActivo] ?? [];
+  const fotos = sufijosActivos.map(sufijo =>
     cloudUrl(`${configActivo.prefix}-${sufijo}`)
   );
 
@@ -129,6 +133,14 @@ export function HeroTiendaMotoII({ dispositivos, onColorChange }: HeroMotoIIProp
     const p = d?.variants?.[0]?.precio ?? d?.precio_base ?? 0;
     onColorChange?.(sku, p);
   }, [ordenados, onColorChange]);
+
+  const irFotoAnterior = useCallback(() => {
+    setFotoIndex(i => (i === 0 ? fotos.length - 1 : i - 1));
+  }, [fotos.length]);
+
+  const irFotoSiguiente = useCallback(() => {
+    setFotoIndex(i => (i === fotos.length - 1 ? 0 : i + 1));
+  }, [fotos.length]);
 
   return (
     <section className="bg-[#0A0A0A] pt-24 pb-0">
@@ -164,20 +176,40 @@ export function HeroTiendaMotoII({ dispositivos, onColorChange }: HeroMotoIIProp
                 </div>
               )}
 
+              {/* Flechas de navegación */}
+              {fotos.length > 1 && (
+                <>
+                  <button
+                    onClick={irFotoAnterior}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center bg-black/50 hover:bg-black/80 transition text-[#F4F1EC] text-2xl font-light"
+                    aria-label="Foto anterior"
+                  >
+                    ‹
+                  </button>
+                  <button
+                    onClick={irFotoSiguiente}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center bg-black/50 hover:bg-black/80 transition text-[#F4F1EC] text-2xl font-light"
+                    aria-label="Foto siguiente"
+                  >
+                    ›
+                  </button>
+                </>
+              )}
+
               {/* SKU discreto */}
               <div className="absolute bottom-4 right-4 font-mono text-[10px] text-[#F4F1EC]/30 tracking-[0.15em]">
                 / {skuActivo.replace('CHR_', '')}
               </div>
             </div>
 
-            {/* Miniaturas — 14 fotos en grid scrollable */}
-            <div className="grid grid-cols-7 gap-1.5">
+            {/* Miniaturas — una sola fila, con scroll horizontal si no caben */}
+            <div className="flex gap-1.5 overflow-x-auto pb-1">
               {fotos.map((src, i) => (
                 <button
                   key={i}
                   onClick={() => setFotoIndex(i)}
                   className={`
-                    relative aspect-square bg-[#111] overflow-hidden transition-all duration-150
+                    relative aspect-square w-16 flex-shrink-0 bg-[#111] overflow-hidden transition-all duration-150
                     ${fotoIndex === i
                       ? 'ring-1 ring-[#C9A961]'
                       : 'opacity-50 hover:opacity-80'
@@ -190,7 +222,7 @@ export function HeroTiendaMotoII({ dispositivos, onColorChange }: HeroMotoIIProp
                     alt=""
                     fill
                     className="object-contain p-1"
-                    sizes="80px"
+                    sizes="64px"
                   />
                 </button>
               ))}
