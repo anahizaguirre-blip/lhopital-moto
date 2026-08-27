@@ -36,32 +36,32 @@ function formatMXN(n: number) {
 const ACCESORIO_META: Record<string, {
   descripcion: string;
   esAdaptador?: boolean;
-  publicId?: string; // public_id en Cloudinary (a definir cuando suban fotos)
+  publicIds?: string[]; // public_ids en Cloudinary, en orden (a definir cuando suban fotos)
 }> = {
   'CHR_CSE_3.0': {
     descripcion: 'Estuche rígido EVA con mosquetón. Para llevarlo cuando no ruedas.',
-    publicId: 'chr-cse-front',
+    publicIds: ['chr-cse-front', 'chr-cse-open'],
   },
   'CHR_MNT3.0_AMPS': {
     descripcion: 'Compatible con sistemas RAM y estándar AMPS de 4 orificios.',
-    publicId: 'chr-mnt-amps-1',
+    publicIds: ['chr-mnt-amps-1', 'chr-mnt-amps-2', 'chr-mnt-amps-3', 'chr-mnt-amps-4'],
   },
   'CHR_MNT3.0_BALL': {
     descripcion: 'Adaptador de 1 pulgada para sistemas de bola universales.',
-    publicId: 'chr-mnt-ball-1',
+    publicIds: ['chr-mnt-ball-1', 'chr-mnt-ball-2', 'chr-mnt-ball-3', 'chr-mnt-ball-4'],
   },
   'CHR_MNT3.0_FORK': {
     descripcion: 'Montaje en horquilla delantera. Ideal para motos deportivas.',
-    publicId: 'chr-mnt-fork-1',
+    publicIds: ['chr-mnt-fork-1', 'chr-mnt-fork-2', 'chr-mnt-fork-3', 'chr-mnt-fork-4', 'chr-mnt-fork-5'],
   },
   'CHR_MNT3.0_MOD': {
     descripcion: 'Extiende y ajusta la posición de cualquier montaje existente.',
-    // Sin foto subida a Cloudinary todavía — se agrega el publicId cuando exista.
+    // Sin fotos subidas a Cloudinary todavía — se agregan los publicIds cuando existan.
   },
   'CHR_MNT3.0_M2_M1ADAPTER': {
     descripcion: 'Usa tu montaje Moto I con el nuevo Moto II. Sin comprar uno nuevo.',
     esAdaptador: true,
-    publicId: 'chr-mnt-m2-m1adapter-1',
+    publicIds: ['chr-mnt-m2-m1adapter-1', 'chr-mnt-m2-m1adapter-2', 'chr-mnt-m2-m1adapter-3'],
   },
 };
 
@@ -75,20 +75,33 @@ interface AccesoriosMotoIIProps {
 
 function AccesorioCard({ producto }: { producto: Product }) {
   const [agregado, setAgregado] = useState(false);
+  const [fotoIndex, setFotoIndex] = useState(0);
   const meta = ACCESORIO_META[producto.sku_padre] ?? { descripcion: '' };
+  const fotos = meta.publicIds ?? [];
   const precio = producto.variants?.[0]?.precio ?? producto.precio_base;
   const stock = producto.variants?.[0]?.stock_actual ?? 0;
   const disponible = stock > 0;
+
+  const irAnterior = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setFotoIndex(i => (i === 0 ? fotos.length - 1 : i - 1));
+  };
+  const irSiguiente = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setFotoIndex(i => (i === fotos.length - 1 ? 0 : i + 1));
+  };
 
   return (
     <div className="flex flex-col bg-[rgba(244,241,236,0.02)] border border-[rgba(244,241,236,0.08)] hover:border-[rgba(244,241,236,0.18)] transition-colors duration-200">
 
       {/* Foto */}
-      <div className="relative aspect-square bg-[#111] overflow-hidden">
-        {meta.publicId ? (
+      <div className="relative aspect-square bg-[#111] overflow-hidden group">
+        {fotos.length > 0 ? (
           <Image
-            src={cloudUrl(meta.publicId)}
-            alt={producto.nombre}
+            src={cloudUrl(fotos[fotoIndex])}
+            alt={`${producto.nombre} — foto ${fotoIndex + 1}`}
             fill
             className="object-contain p-6"
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
@@ -100,6 +113,38 @@ function AccesorioCard({ producto }: { producto: Product }) {
               Foto próximamente
             </span>
           </div>
+        )}
+
+        {/* Flechas de navegación — solo si hay más de una foto */}
+        {fotos.length > 1 && (
+          <>
+            <button
+              onClick={irAnterior}
+              className="absolute left-1.5 top-1/2 -translate-y-1/2 z-10 w-6 h-6 flex items-center justify-center bg-black/50 hover:bg-black/80 transition text-[#F4F1EC] text-base font-light opacity-0 group-hover:opacity-100"
+              aria-label="Foto anterior"
+            >
+              ‹
+            </button>
+            <button
+              onClick={irSiguiente}
+              className="absolute right-1.5 top-1/2 -translate-y-1/2 z-10 w-6 h-6 flex items-center justify-center bg-black/50 hover:bg-black/80 transition text-[#F4F1EC] text-base font-light opacity-0 group-hover:opacity-100"
+              aria-label="Foto siguiente"
+            >
+              ›
+            </button>
+
+            {/* Puntitos */}
+            <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1 z-10">
+              {fotos.map((_, idx) => (
+                <span
+                  key={idx}
+                  className={`h-1 rounded-full transition-all duration-300 ${
+                    idx === fotoIndex ? 'bg-[#C9A961] w-3' : 'bg-[#F4F1EC]/35 w-1'
+                  }`}
+                />
+              ))}
+            </div>
+          </>
         )}
 
         {/* Badge adaptador V1 */}
