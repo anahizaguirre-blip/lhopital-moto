@@ -322,7 +322,7 @@ async function syncHedonAccesorios(wb: XLSX.WorkBook): Promise<SyncResult> {
     let imagen_principal: string | null = variantes[0]?._foto ?? null;
     let imagenes: string[] = [];
     if (FAMILIAS_CON_ACABADO.includes(productoBase.familia) && variantes.some((v: any) => v.acabado_tornillo)) {
-      const porAcabado = new Map(variantes.map((v: any) => [v.acabado_tornillo, v._foto]));
+      const porAcabado = new Map<string, string | null>(variantes.map((v: any) => [v.acabado_tornillo, v._foto]));
       imagen_principal = porAcabado.get('Copper') ?? imagen_principal;
       imagenes = ['Steel', 'Gunmetal', 'Brass']
         .map((a) => porAcabado.get(a) ?? null)
