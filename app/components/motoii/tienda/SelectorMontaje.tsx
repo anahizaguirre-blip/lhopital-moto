@@ -18,7 +18,9 @@
  */
 
 import { useState } from 'react';
+import Image from 'next/image';
 import type { Product } from '@/lib/types';
+import { cloudinaryAccesorioUrl } from '@/lib/cloudinary';
 
 // ─── Constantes ────────────────────────────────────────────────────────────────
 
@@ -36,12 +38,15 @@ const MONTAJE_META: Record<string, {
   titulo: string;
   descripcion: string;
   icono: React.ReactNode;
+  // Fotos del montaje: ángulos de catálogo primero, "en uso" al final.
+  fotos: string[];
   esPowered?: boolean;
 }> = {
   universal: {
     numero: '/ 01',
     titulo: 'Ya incluido',
     descripcion: 'Manubrio estándar con correa elástica. Funciona en cualquier moto.',
+    fotos: ['motoii-soporte-universal-uso'],
     icono: (
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -52,6 +57,7 @@ const MONTAJE_META: Record<string, {
     numero: '/ 02',
     titulo: 'Manubrio fijo',
     descripcion: 'Aluminio anodizado. Inserto rotable 360°. El más vendido.',
+    fotos: ['chr-mnt-bar-1', 'chr-mnt-bar-2', 'chr-mnt-bar-3', 'chr-mnt-bar-4', 'chr-mnt-bar-uso'],
     icono: (
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
@@ -62,6 +68,7 @@ const MONTAJE_META: Record<string, {
     numero: '/ 03',
     titulo: 'Retrovisor / cruzado',
     descripcion: 'Metal anodizado. 4 espaciadores incluidos. Ideal para naked y adventure.',
+    fotos: ['chr-mnt-mirrorxbar-1', 'chr-mnt-mirrorxbar-2', 'chr-mnt-mirrorxbar-3', 'chr-mnt-mirrorxbar-4', 'chr-mnt-mirrorxbar-uso'],
     icono: (
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
@@ -72,6 +79,7 @@ const MONTAJE_META: Record<string, {
     numero: '/ 04',
     titulo: 'Carga mientras ruedas',
     descripcion: 'Se conecta a batería 12V. Para viajes largos sin pausa.',
+    fotos: ['chr-mnt-pwr-1', 'chr-mnt-pwr-2', 'chr-mnt-pwr-3', 'chr-mnt-pwr-4', 'chr-mnt-pwr-uso'],
     icono: (
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
@@ -85,6 +93,124 @@ const MONTAJE_META: Record<string, {
 
 function formatMXN(n: number) {
   return n.toLocaleString('es-MX', { style: 'currency', currency: 'MXN', maximumFractionDigits: 0 });
+}
+
+// ─── Tarjeta de montaje (con carousel propio) ───────────────────────────────────
+
+interface MontajeCardProps {
+  sku: string;
+  meta: (typeof MONTAJE_META)[string];
+  precio: number;
+  activo: boolean;
+  onSeleccionar: () => void;
+}
+
+function MontajeCard({ sku, meta, precio, activo, onSeleccionar }: MontajeCardProps) {
+  const [fotoIndex, setFotoIndex] = useState(0);
+  const fotos = meta.fotos;
+
+  const irAnterior = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setFotoIndex(i => (i === 0 ? fotos.length - 1 : i - 1));
+  };
+  const irSiguiente = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setFotoIndex(i => (i === fotos.length - 1 ? 0 : i + 1));
+  };
+
+  return (
+    <div
+      id={sku}
+      role="button"
+      tabIndex={0}
+      onClick={onSeleccionar}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onSeleccionar();
+        }
+      }}
+      className={`
+        text-left flex flex-col cursor-pointer transition-all duration-200 border relative overflow-hidden
+        ${activo
+          ? 'border-[#C9A961] bg-[rgba(201,169,97,0.05)]'
+          : 'border-[rgba(244,241,236,0.10)] hover:border-[rgba(244,241,236,0.28)]'
+        }
+      `}
+    >
+      {/* Foto */}
+      <div className="relative aspect-square bg-[#111] overflow-hidden group">
+        <Image
+          src={cloudinaryAccesorioUrl(fotos[fotoIndex])}
+          alt={`${meta.titulo} — foto ${fotoIndex + 1}`}
+          fill
+          className="object-contain p-6"
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 25vw"
+        />
+
+        {/* Flechas de navegación — solo si hay más de una foto */}
+        {fotos.length > 1 && (
+          <>
+            <button
+              onClick={irAnterior}
+              className="absolute left-1.5 top-1/2 -translate-y-1/2 z-10 w-6 h-6 flex items-center justify-center bg-black/50 hover:bg-black/80 transition text-[#F4F1EC] text-base font-light opacity-0 group-hover:opacity-100"
+              aria-label="Foto anterior"
+            >
+              ‹
+            </button>
+            <button
+              onClick={irSiguiente}
+              className="absolute right-1.5 top-1/2 -translate-y-1/2 z-10 w-6 h-6 flex items-center justify-center bg-black/50 hover:bg-black/80 transition text-[#F4F1EC] text-base font-light opacity-0 group-hover:opacity-100"
+              aria-label="Foto siguiente"
+            >
+              ›
+            </button>
+
+            {/* Puntitos */}
+            <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1 z-10">
+              {fotos.map((_, idx) => (
+                <span
+                  key={idx}
+                  className={`h-1 rounded-full transition-all duration-300 ${
+                    idx === fotoIndex ? 'bg-[#C9A961] w-3' : 'bg-[#F4F1EC]/35 w-1'
+                  }`}
+                />
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+
+      <div className="p-4">
+        {/* Número */}
+        <div className={`font-mono text-[10px] tracking-[0.15em] mb-3 ${activo ? 'text-[#C9A961]' : 'text-[#F4F1EC]/35'}`}>
+          {meta.numero}{activo ? ' ✓' : ''}
+        </div>
+
+        {/* Ícono */}
+        <div className={`mb-3 ${activo ? 'text-[#C9A961]' : 'text-[#F4F1EC]/40'}`}>
+          {meta.icono}
+        </div>
+
+        {/* Título */}
+        <div className="font-sora font-bold text-[13px] text-[#F4F1EC] mb-1.5">
+          {meta.titulo}
+        </div>
+
+        {/* Descripción */}
+        <div className="text-[11px] text-[#F4F1EC]/50 leading-relaxed mb-3">
+          {meta.descripcion}
+        </div>
+
+        {/* Precio */}
+        <div className={`font-sora text-[12px] font-medium ${activo ? 'text-[#C9A961]' : 'text-[#F4F1EC]/50'}`}>
+          {precio === 0 ? 'Sin costo extra' : `+ ${formatMXN(precio)}`}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 // ─── Tipos ─────────────────────────────────────────────────────────────────────
@@ -168,48 +294,20 @@ export function SelectorMontaje({
 
         {/* Grid de montajes */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5">
-          {tarjetas.map(({ sku, precio}) => {
+          {tarjetas.map(({ sku, precio }) => {
             const meta = MONTAJE_META[sku];
             if (!meta) return null;
             const activo = skuSeleccionado === sku;
 
             return (
-              <button
+              <MontajeCard
                 key={sku}
-                onClick={() => handleSeleccion(sku)}
-                className={`
-                  text-left p-4 transition-all duration-200 border relative
-                  ${activo
-                    ? 'border-[#C9A961] bg-[rgba(201,169,97,0.05)]'
-                    : 'border-[rgba(244,241,236,0.10)] hover:border-[rgba(244,241,236,0.28)]'
-                  }
-                `}
-              >
-                {/* Número */}
-                <div className={`font-mono text-[10px] tracking-[0.15em] mb-3 ${activo ? 'text-[#C9A961]' : 'text-[#F4F1EC]/35'}`}>
-                  {meta.numero}{activo ? ' ✓' : ''}
-                </div>
-
-                {/* Ícono */}
-                <div className={`mb-3 ${activo ? 'text-[#C9A961]' : 'text-[#F4F1EC]/40'}`}>
-                  {meta.icono}
-                </div>
-
-                {/* Título */}
-                <div className="font-sora font-bold text-[13px] text-[#F4F1EC] mb-1.5">
-                  {meta.titulo}
-                </div>
-
-                {/* Descripción */}
-                <div className="text-[11px] text-[#F4F1EC]/50 leading-relaxed mb-3">
-                  {meta.descripcion}
-                </div>
-
-                {/* Precio */}
-                <div className={`font-sora text-[12px] font-medium ${activo ? 'text-[#C9A961]' : 'text-[#F4F1EC]/50'}`}>
-                  {precio === 0 ? 'Sin costo extra' : `+ ${formatMXN(precio)}`}
-                </div>
-              </button>
+                sku={sku}
+                meta={meta}
+                precio={precio}
+                activo={activo}
+                onSeleccionar={() => handleSeleccion(sku)}
+              />
             );
           })}
         </div>
@@ -254,7 +352,7 @@ export function SelectorMontaje({
           <span className="text-[11px] text-[#F4F1EC]/40">
             ¿No sabes cuál es para ti?{' '}
             <a
-              href="/moto-ii#montajes"
+              href="/guias/montajes-moto-ii"
               className="text-[#C9A961] underline underline-offset-2 hover:text-[#F4F1EC] transition-colors"
             >
               Lee la guía completa de montajes

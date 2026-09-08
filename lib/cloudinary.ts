@@ -73,6 +73,18 @@ export function extractBasePath(imagenPrincipal: string | null): string | null {
 }
 
 /**
+ * URL editorial para imágenes de /guias — respeta el aspect ratio original
+ * (c_limit, no crop) en vez de forzar el cuadrado de las tarjetas de producto.
+ */
+export function cloudinaryEditorialUrl(
+  publicId: string | null | undefined,
+  w = 1600
+): string {
+  if (!publicId) return placeholderImage();
+  return `${BASE_URL}/f_auto,q_auto,w_${w},c_limit/${publicId}`;
+}
+
+/**
  * Placeholder visual cuando no hay foto disponible.
  */
 export function placeholderImage(): string {

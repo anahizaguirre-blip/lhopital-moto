@@ -119,3 +119,70 @@ export interface HedonCrossSell {
   orden: number;
   accesorio?: HedonCrossSellAccesorio;
 }
+
+// ────────────────────────────────────────────────────────────────────────────
+// CONTENIDO — artículos de marca en /guias/[slug]
+// ────────────────────────────────────────────────────────────────────────────
+
+export type ContenidoMarca = 'hedon' | 'moto_ii' | 'tees';
+
+export interface ContenidoBloqueTexto {
+  tipo: 'texto';
+  contenido: {
+    titulo?: string;
+    texto: string;
+  };
+}
+
+export interface ContenidoBloqueImagen {
+  tipo: 'imagen';
+  contenido: {
+    public_id: string;
+    alt: string;
+  };
+}
+
+export interface ContenidoBloqueSkuCard {
+  tipo: 'sku_card';
+  contenido: {
+    // Con sku: la página hace join contra products/product_variants para
+    // traer imagen_principal, precio y link en vivo.
+    // Sin sku: tarjeta manual (ej. accesorio incluido, sin SKU propio).
+    sku?: string | null;
+    numero?: string;
+    titulo: string;
+    texto?: string;
+    imagen_public_id?: string;
+    precio_label?: string;
+  };
+}
+
+export type ContenidoBloque =
+  | ContenidoBloqueTexto
+  | ContenidoBloqueImagen
+  | ContenidoBloqueSkuCard;
+
+export interface Contenido {
+  id: string;
+  slug: string;
+  marca: ContenidoMarca;
+  tipo: string;
+  titulo: string;
+  cuerpo: ContenidoBloque[];
+  sku_relacionado: string[] | null;
+  imagen_portada: string | null;
+  fecha_publicacion: string | null;
+  donde_se_muestra: string | null;
+  visible_publico: boolean;
+}
+
+// Producto resuelto por el join de un bloque sku_card contra `products`.
+export interface ContenidoSkuCardProducto {
+  sku_padre: string;
+  nombre: string;
+  slug: string;
+  marca: ContenidoMarca;
+  precio_base: number;
+  imagen_principal: string | null;
+  precio?: number | null;
+}

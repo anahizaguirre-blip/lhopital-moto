@@ -40,28 +40,28 @@ const ACCESORIO_META: Record<string, {
 }> = {
   'CHR_CSE_3.0': {
     descripcion: 'Estuche rígido EVA con mosquetón. Para llevarlo cuando no ruedas.',
-    publicIds: ['chr-cse-front', 'chr-cse-open'],
+    publicIds: ['chr-cse-front', 'chr-cse-open', 'chr-cse-uso'],
   },
   'CHR_MNT3.0_AMPS': {
     descripcion: 'Compatible con sistemas RAM y estándar AMPS de 4 orificios.',
-    publicIds: ['chr-mnt-amps-1', 'chr-mnt-amps-2', 'chr-mnt-amps-3', 'chr-mnt-amps-4'],
+    publicIds: ['chr-mnt-amps-1', 'chr-mnt-amps-2', 'chr-mnt-amps-3', 'chr-mnt-amps-4', 'chr-mnt-amps-uso'],
   },
   'CHR_MNT3.0_BALL': {
     descripcion: 'Adaptador de 1 pulgada para sistemas de bola universales.',
-    publicIds: ['chr-mnt-ball-1', 'chr-mnt-ball-2', 'chr-mnt-ball-3', 'chr-mnt-ball-4'],
+    publicIds: ['chr-mnt-ball-1', 'chr-mnt-ball-2', 'chr-mnt-ball-3', 'chr-mnt-ball-4', 'chr-mnt-ball-uso'],
   },
   'CHR_MNT3.0_FORK': {
     descripcion: 'Montaje en horquilla delantera. Ideal para motos deportivas.',
-    publicIds: ['chr-mnt-fork-1', 'chr-mnt-fork-2', 'chr-mnt-fork-3', 'chr-mnt-fork-4', 'chr-mnt-fork-5'],
+    publicIds: ['chr-mnt-fork-1', 'chr-mnt-fork-2', 'chr-mnt-fork-3', 'chr-mnt-fork-4', 'chr-mnt-fork-5', 'chr-mnt-fork-uso'],
   },
   'CHR_MNT3.0_MOD': {
     descripcion: 'Extiende y ajusta la posición de cualquier montaje existente.',
-    // Sin fotos subidas a Cloudinary todavía — se agregan los publicIds cuando existan.
+    publicIds: ['chr-mnt-mod-1', 'chr-mnt-mod-2', 'chr-mnt-mod-3', 'chr-mnt-mod-4', 'chr-mnt-mod-5', 'chr-mnt-mod-uso'],
   },
   'CHR_MNT3.0_M2_M1ADAPTER': {
     descripcion: 'Usa tu montaje Moto I con el nuevo Moto II. Sin comprar uno nuevo.',
     esAdaptador: true,
-    publicIds: ['chr-mnt-m2-m1adapter-1', 'chr-mnt-m2-m1adapter-2', 'chr-mnt-m2-m1adapter-3'],
+    publicIds: ['chr-mnt-m2-m1adapter-1', 'chr-mnt-m2-m1adapter-2', 'chr-mnt-m2-m1adapter-3', 'chr-mnt-m2-m1adapter-uso'],
   },
 };
 
@@ -94,7 +94,10 @@ function AccesorioCard({ producto }: { producto: Product }) {
   };
 
   return (
-    <div className="flex flex-col bg-[rgba(244,241,236,0.02)] border border-[rgba(244,241,236,0.08)] hover:border-[rgba(244,241,236,0.18)] transition-colors duration-200">
+    <div
+      id={producto.sku_padre}
+      className="flex flex-col bg-[rgba(244,241,236,0.02)] border border-[rgba(244,241,236,0.08)] hover:border-[rgba(244,241,236,0.18)] transition-colors duration-200"
+    >
 
       {/* Foto */}
       <div className="relative aspect-square bg-[#111] overflow-hidden group">

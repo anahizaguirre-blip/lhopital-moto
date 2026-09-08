@@ -76,7 +76,7 @@ export function EditorialMotoII() {
             {/* Link a comparativa */}
             <div className="mt-8">
               <Link
-                href="/moto-ii#comparativa"
+                href="/guias/moto-ii-vs-celular"
                 className="text-[11px] tracking-[0.1em] uppercase text-[#C9A961] border-b border-[#C9A961]/40 pb-1 hover:border-[#C9A961] transition-colors duration-200"
               >
                 Lee la comparativa Moto II vs celular →
