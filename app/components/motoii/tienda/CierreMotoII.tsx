@@ -216,7 +216,7 @@ export function CierreMotoII() {
                 El navegador que más kilómetros<br className="hidden md:block" />
                 ha recorrido en el mundo.
               </p>
-              <p className="text-[12px] text-[#F4F1EC]/40 mt-3">
+              <p className="font-sora font-bold text-[26px] md:text-[32px] text-[#F4F1EC] leading-tight tracking-[-0.01em] mt-4">
                 +100 millones de km registrados. +2.5 millones de viajes.
               </p>
             </div>
@@ -227,12 +227,6 @@ export function CierreMotoII() {
                 className="w-full text-center bg-[#F4F1EC] text-[#0A0A0A] font-sora font-bold text-[12px] tracking-[0.1em] uppercase py-4 hover:bg-[#C9A961] transition-colors duration-200"
               >
                 Comprar Moto II
-              </Link>
-              <Link
-                href="/moto-ii"
-                className="w-full text-center border border-[rgba(244,241,236,0.2)] text-[#F4F1EC]/60 font-sora text-[11px] tracking-[0.1em] uppercase py-3.5 hover:border-[rgba(244,241,236,0.4)] hover:text-[#F4F1EC]/90 transition-all duration-200"
-              >
-                Conoce la marca →
               </Link>
             </div>
 
