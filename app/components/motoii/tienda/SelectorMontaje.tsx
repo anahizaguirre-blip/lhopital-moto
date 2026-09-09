@@ -17,11 +17,23 @@
  *   onMontajeChange — callback con el accesorio seleccionado (o null si Universal)
  */
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Image from 'next/image';
 import type { Product } from '@/lib/types';
 import { cloudinaryAccesorioUrl } from '@/lib/cloudinary';
 import Link from 'next/link';
+import { useCart } from '@/lib/cart-context';
+
+// public_id de la foto frontal por color — mismo patrón que usa el resto
+// de la tienda (motoii-<color>-front-map). No se puede usar
+// producto.imagen_principal aquí: ese campo viene corrupto en Supabase
+// para los 3 SKU de dispositivo (guarda la lista completa de fotos
+// separada por comas en vez de un solo public_id).
+const IMAGEN_FRONTAL_POR_SKU: Record<string, string> = {
+  'CHR_BLD3.0_BLK': 'motoii-blk-front-map',
+  'CHR_BLD3.0_GMG': 'motoii-gmg-front-map',
+  'CHR_BLD3.0_SVR': 'motoii-svr-front-map',
+};
 
 // ─── Constantes ────────────────────────────────────────────────────────────────
 
@@ -220,6 +232,8 @@ interface SelectorMontajeProps {
   accesorios: Product[];
   precioBase: number;
   colorLabel: string;
+  deviceSku: string;
+  carryCase?: Product;
   onMontajeChange?: (accesorio: Product | null) => void;
 }
 
@@ -229,9 +243,15 @@ export function SelectorMontaje({
   accesorios,
   precioBase,
   colorLabel,
+  deviceSku,
+  carryCase,
   onMontajeChange,
 }: SelectorMontajeProps) {
-  const [skuSeleccionado, setSkuSeleccionado] = useState<string>('universal');
+  // Default del configurador: Bar Clamp (antes Universal)
+  const [skuSeleccionado, setSkuSeleccionado] = useState<string>('CHR_MNT3.0_BAR');
+  const { addItem } = useCart();
+  const [toastVisible, setToastVisible] = useState(false);
+  const toastTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Filtrar solo los montajes clásicos del array de accesorios
   const montajesClasicos = SKUS_CLASICOS
@@ -246,9 +266,18 @@ export function SelectorMontaje({
     ?? accesorioSeleccionado?.precio_base
     ?? 0;
 
-  const totalCombo = precioBase + precioMontaje;
+  const precioCarryCase = carryCase?.variants?.[0]?.precio ?? carryCase?.precio_base ?? 0;
+
+  const totalCombo = precioBase + precioMontaje + precioCarryCase;
   const metaSeleccionado = MONTAJE_META[skuSeleccionado];
   const esPowered = metaSeleccionado?.esPowered ?? false;
+
+  // Texto de "Tu combinación" construido a partir de la selección real
+  // (antes era un string fijo "Moto II Black · solo dispositivo").
+  const nombreMontajeCombo = skuSeleccionado === 'universal'
+    ? 'Universal'
+    : metaSeleccionado?.titulo ?? '';
+  const textoCombo = `Moto II ${colorLabel} · ${nombreMontajeCombo}${carryCase ? ' + Carry Case' : ''}`;
 
   function handleSeleccion(sku: string) {
     setSkuSeleccionado(sku);
@@ -258,6 +287,44 @@ export function SelectorMontaje({
       const acc = montajesClasicos.find(m => m.sku_padre === sku) ?? null;
       onMontajeChange?.(acc);
     }
+  }
+
+  // Clic en la caja completa de "Tu combinación" agrega los artículos
+  // reales al carrito: dispositivo + montaje (si no es Universal, que no
+  // tiene SKU propio) + Carry Case (siempre, sin selector dedicado todavía).
+  function handleAgregarCombo() {
+    addItem({
+      sku: deviceSku,
+      nombre: `Moto II ${colorLabel}`,
+      marca: 'Beeline',
+      color: colorLabel,
+      precio: precioBase,
+      imagen: IMAGEN_FRONTAL_POR_SKU[deviceSku],
+    });
+
+    if (accesorioSeleccionado) {
+      addItem({
+        sku: accesorioSeleccionado.sku_padre,
+        nombre: metaSeleccionado?.titulo ?? accesorioSeleccionado.nombre,
+        marca: 'Beeline',
+        precio: precioMontaje,
+        imagen: metaSeleccionado?.fotos[0],
+      });
+    }
+
+    if (carryCase) {
+      addItem({
+        sku: carryCase.sku_padre,
+        nombre: carryCase.nombre,
+        marca: 'Beeline',
+        precio: precioCarryCase,
+        imagen: 'chr-cse-front',
+      });
+    }
+
+    setToastVisible(true);
+    if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current);
+    toastTimeoutRef.current = setTimeout(() => setToastVisible(false), 2400);
   }
 
   // Construir array de tarjetas: Universal (sin costo) + 3 clásicos
@@ -329,24 +396,44 @@ export function SelectorMontaje({
           </div>
         )}
 
-        {/* Resumen del combo */}
-        <div className="flex justify-between items-center bg-[rgba(201,169,97,0.05)] border border-[rgba(201,169,97,0.25)] p-4 mb-4">
+        {/* Resumen del combo — clic en toda la caja agrega al carrito */}
+        <div
+          role="button"
+          tabIndex={0}
+          onClick={handleAgregarCombo}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleAgregarCombo();
+            }
+          }}
+          className="flex justify-between items-center bg-[rgba(201,169,97,0.05)] border border-[rgba(201,169,97,0.25)] p-4 mb-4 cursor-pointer hover:border-[#C9A961]/60 hover:bg-[rgba(201,169,97,0.08)] transition-colors duration-200"
+        >
           <div>
             <div className="text-[10px] tracking-[0.1em] uppercase text-[#F4F1EC]/45 mb-1">
               Tu combinación
             </div>
             <div className="font-sora font-bold text-[13px] text-[#F4F1EC]">
-              Moto II {colorLabel}
-              {skuSeleccionado !== 'universal' && accesorioSeleccionado
-                ? ` + ${MONTAJE_META[skuSeleccionado]?.titulo}`
-                : ' · solo dispositivo'
-              }
+              {textoCombo}
+            </div>
+            <div className="text-[10px] tracking-[0.05em] text-[#F4F1EC]/35 mt-1">
+              Toca para agregar al carrito
             </div>
           </div>
           <div className="font-sora font-bold text-[20px] text-[#C9A961]">
             {formatMXN(totalCombo)}
           </div>
         </div>
+
+        {/* Toast de confirmación */}
+        {toastVisible && (
+          <div
+            key="toast"
+            className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-[#0A0A0A] border border-[#C9A961] text-[#F4F1EC] text-[12px] tracking-[0.05em] px-5 py-3 shadow-lg animate-fade-in-up"
+          >
+            Agregado al carrito ✓
+          </div>
+        )}
 
         {/* Link guía de montajes */}
         <div className="text-center pb-2">

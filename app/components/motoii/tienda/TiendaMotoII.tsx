@@ -46,17 +46,20 @@ interface TiendaMotoIIProps {
 // ─── Componente ────────────────────────────────────────────────────────────────
 
 export function TiendaMotoII({ dispositivos, accesorios }: TiendaMotoIIProps) {
-  // Dispositivo por defecto: el más barato (Black, $4,700)
-  const dispositivoDefault = [...dispositivos].sort((a, b) => a.precio_base - b.precio_base)[0];
+  // Dispositivo por defecto: Silver (combo default del configurador,
+  // no el más barato — antes era Black por ser el más económico)
+  const dispositivoDefault =
+    dispositivos.find(d => d.sku_padre === 'CHR_BLD3.0_SVR') ??
+    [...dispositivos].sort((a, b) => a.precio_base - b.precio_base)[0];
 
   const [skuActivo, setSkuActivo] = useState<string>(
-    dispositivoDefault?.sku_padre ?? 'CHR_BLD3.0_BLK'
+    dispositivoDefault?.sku_padre ?? 'CHR_BLD3.0_SVR'
   );
   const [precioBase, setPrecioBase] = useState<number>(
     dispositivoDefault?.variants?.[0]?.precio ?? dispositivoDefault?.precio_base ?? 4700
   );
   const [colorLabel, setColorLabel] = useState<string>(
-    LABEL_POR_SKU[dispositivoDefault?.sku_padre] ?? 'Black'
+    LABEL_POR_SKU[dispositivoDefault?.sku_padre] ?? 'Silver Metal'
   );
   const [, setMontajeActivo] = useState<Product | null>(null);
 
@@ -83,6 +86,11 @@ export function TiendaMotoII({ dispositivos, accesorios }: TiendaMotoIIProps) {
     !['CHR_MNT3.0_BAR', 'CHR_MNT3.0_MIRRORXBAR', 'CHR_MNT3.0_PWR'].includes(a.sku_padre)
   );
 
+  // Carry Case — sin selector propio todavía (fuera de alcance), se
+  // agrega siempre por default a "Tu combinación" además de aparecer
+  // como tarjeta independiente en el grid de accesorios de arriba.
+  const carryCase = accesorios.find(a => a.sku_padre === 'CHR_CSE_3.0');
+
   return (
     <>
       {/* 01 · Hero — selector de color + galería + CTA */}
@@ -99,6 +107,8 @@ export function TiendaMotoII({ dispositivos, accesorios }: TiendaMotoIIProps) {
         accesorios={montajesClasicos}
         precioBase={precioBase}
         colorLabel={colorLabel}
+        deviceSku={skuActivo}
+        carryCase={carryCase}
         onMontajeChange={handleMontajeChange}
       />
 

@@ -108,8 +108,11 @@ export function HeroTiendaMotoII({ dispositivos, onColorChange }: HeroMotoIIProp
   // Ordenar: BLK primero (más barato), luego GMG y SVR
   const ordenados = [...dispositivos].sort((a, b) => a.precio_base - b.precio_base);
 
+  // Silver es el default del configurador (antes era el más barato / Black)
   const [skuActivo, setSkuActivo] = useState<string>(
-    ordenados[0]?.sku_padre ?? 'CHR_BLD3.0_GMG'
+    ordenados.find(d => d.sku_padre === 'CHR_BLD3.0_SVR')?.sku_padre
+      ?? ordenados[0]?.sku_padre
+      ?? 'CHR_BLD3.0_SVR'
   );
   const [fotoIndex, setFotoIndex] = useState(0);
 
