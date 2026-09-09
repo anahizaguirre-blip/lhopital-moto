@@ -89,6 +89,27 @@ function BloqueImagen({ bloque }: { bloque: Extract<ContenidoBloque, { tipo: 'im
   );
 }
 
+function BloqueImagenPar({ bloque }: { bloque: Extract<ContenidoBloque, { tipo: 'imagen_par' }> }) {
+  const { imagenes } = bloque.contenido;
+  return (
+    <div className="max-w-3xl mx-auto mb-12">
+      <div className="grid grid-cols-2 gap-4">
+        {imagenes.map((img, i) => (
+          <div key={i} className="relative aspect-[3/4] bg-[#111] border border-[rgba(244,241,236,0.08)] overflow-hidden">
+            <Image
+              src={cloudinaryEditorialUrl(img.public_id)}
+              alt={img.alt}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 50vw, 384px"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function BloqueSkuCard({
   bloque,
   marca,
@@ -169,6 +190,8 @@ export function GuiaBody({ cuerpo, marca, productosPorSku }: GuiaBodyProps) {
             return <BloqueTexto key={i} bloque={bloque} />;
           case 'imagen':
             return <BloqueImagen key={i} bloque={bloque} />;
+          case 'imagen_par':
+            return <BloqueImagenPar key={i} bloque={bloque} />;
           case 'sku_card': {
             const sku = bloque.contenido.sku;
             const producto = sku ? productosPorSku[sku] : undefined;

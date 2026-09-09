@@ -142,6 +142,19 @@ export interface ContenidoBloqueImagen {
   };
 }
 
+// Dos imágenes lado a lado como un solo par visual (ej. dos capturas de
+// pantalla que se comparan entre sí) — en vez de apiladas como dos
+// bloques 'imagen' consecutivos.
+export interface ContenidoBloqueImagenPar {
+  tipo: 'imagen_par';
+  contenido: {
+    imagenes: [
+      { public_id: string; alt: string },
+      { public_id: string; alt: string },
+    ];
+  };
+}
+
 export interface ContenidoBloqueSkuCard {
   tipo: 'sku_card';
   contenido: {
@@ -160,6 +173,7 @@ export interface ContenidoBloqueSkuCard {
 export type ContenidoBloque =
   | ContenidoBloqueTexto
   | ContenidoBloqueImagen
+  | ContenidoBloqueImagenPar
   | ContenidoBloqueSkuCard;
 
 export interface Contenido {
