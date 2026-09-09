@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Inter, JetBrains_Mono, Sora } from "next/font/googl
 import localFont from "next/font/local";
 import "./globals.css";
 import NavbarSub from '@/app/components/NavbarSub'
+import { CartProvider } from '@/lib/cart-context'
 
 // ─── IDENTIDAD LHOPITAL (display de marca, todas las subpáginas) ───
 const rider = localFont({
@@ -63,8 +64,12 @@ export default function RootLayout({
       lang="es"
       className={`${rider.variable} ${almaq.variable} ${cormorant.variable} ${inter.variable} ${jetbrainsMono.variable} ${sora.variable} antialiased`}
     >
-      <body className="font-body">  <NavbarSub />
-{children}</body>
+      <body className="font-body">
+        <CartProvider>
+          <NavbarSub />
+          {children}
+        </CartProvider>
+      </body>
     </html>
   );
 }
