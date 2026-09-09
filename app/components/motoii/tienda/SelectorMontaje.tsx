@@ -45,8 +45,8 @@ const MONTAJE_META: Record<string, {
 }> = {
   universal: {
     numero: '/ 01',
-    titulo: 'Ya incluido',
-    descripcion: 'Manubrio estándar con correa elástica. Funciona en cualquier moto.',
+    titulo: 'Montaje Universal',
+    descripcion: 'Ya incluído. Correa elástica para un manubrio estándar. Funciona en cualquier moto.',
     fotos: ['motoii-soporte-universal-uso'],
     icono: (
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -56,8 +56,8 @@ const MONTAJE_META: Record<string, {
   },
   'CHR_MNT3.0_BAR': {
     numero: '/ 02',
-    titulo: 'Manubrio fijo',
-    descripcion: 'Aluminio anodizado. Inserto rotable 360°. El más vendido.',
+    titulo: 'Bar Clamp',
+    descripcion: 'Fijo al manubrio. De aluminio anodizado. Inserto rotable 360°. El más vendido.',
     fotos: ['chr-mnt-bar-1', 'chr-mnt-bar-2', 'chr-mnt-bar-3', 'chr-mnt-bar-4', 'chr-mnt-bar-uso'],
     icono: (
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -67,8 +67,8 @@ const MONTAJE_META: Record<string, {
   },
   'CHR_MNT3.0_MIRRORXBAR': {
     numero: '/ 03',
-    titulo: 'Retrovisor / cruzado',
-    descripcion: 'Metal anodizado. 4 espaciadores incluidos. Ideal para naked y adventure.',
+    titulo: 'Mirror & Crossbar',
+    descripcion: 'Para el retrovisor o cruzado. De metal anodizado. 4 espaciadores incluidos. Ideal para naked y adventure.',
     fotos: ['chr-mnt-mirrorxbar-1', 'chr-mnt-mirrorxbar-2', 'chr-mnt-mirrorxbar-3', 'chr-mnt-mirrorxbar-4', 'chr-mnt-mirrorxbar-uso'],
     icono: (
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
