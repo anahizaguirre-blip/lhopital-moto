@@ -47,7 +47,7 @@ function BloqueTexto({ bloque }: { bloque: Extract<ContenidoBloque, { tipo: 'tex
   const numerado = titulo ? parseNumeroTitulo(titulo) : null;
 
   return (
-    <div className="max-w-[65ch] mx-auto mb-12">
+    <div className="max-w-3xl mx-auto mb-12">
       {titulo && (
         numerado ? (
           <div className="mb-4">
