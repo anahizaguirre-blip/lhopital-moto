@@ -17,11 +17,11 @@ import Image from 'next/image';
 const CAJA_ITEMS = [
   {
     label: 'Dispositivo Moto II',
-    icono: (
-      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
-      </svg>
-    ),
+    // Símbolo "Compass" de marca — imagen (no vector), a diferencia de
+    // los otros 3 íconos que son SVG heredando currentColor. Su color
+    // ámbar viene fijo en el PNG a propósito (badge de marca, no un
+    // ícono de línea genérico como sus vecinos).
+    imagen: '/products/MOTOII/icons/icon-compass.png',
   },
   {
     label: 'Soporte universal',
@@ -33,11 +33,7 @@ const CAJA_ITEMS = [
   },
   {
     label: 'Cable USB-C',
-    icono: (
-      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
-      </svg>
-    ),
+    imagen: '/products/MOTOII/icons/icon-usb.png',
   },
   {
     label: 'Guía rápida',
@@ -114,16 +110,28 @@ export function EspecificacionesMotoII({ skuActivo }: EspecificacionesMotoIIProp
           </p>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            {CAJA_ITEMS.map(({ label, icono }) => (
+            {CAJA_ITEMS.map((item) => (
               <div
-                key={label}
+                key={item.label}
                 className="flex flex-col items-center text-center p-6 bg-[rgba(244,241,236,0.02)]"
               >
                 <div className="text-[#C9A961] mb-4">
-                  {icono}
+                  {'imagen' in item ? (
+                    <div className="relative w-6 h-6">
+                      <Image
+                        src={item.imagen}
+                        alt=""
+                        fill
+                        className="object-contain"
+                        sizes="24px"
+                      />
+                    </div>
+                  ) : (
+                    item.icono
+                  )}
                 </div>
                 <div className="text-[12px] text-[#F4F1EC]/75 leading-snug">
-                  {label}
+                  {item.label}
                 </div>
               </div>
             ))}
