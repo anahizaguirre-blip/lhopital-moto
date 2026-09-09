@@ -128,18 +128,7 @@ export function EditorialMotoII() {
             ))}
           </div>
 
-          {/* Link a usuarios V1 */}
-          <div className="mt-8 flex items-center gap-2">
-            <span className="text-[11px] text-[#F4F1EC]/40">
-              ¿Tienes el Moto V1?{' '}
-            </span>
-            <Link
-              href="/moto-ii#adaptador"
-              className="text-[11px] tracking-[0.05em] text-[#C9A961] hover:text-[#F4F1EC] transition-colors duration-200"
-            >
-              Ve cómo actualizar con el adaptador →
-            </Link>
-          </div>
+         
 
         </div>
       </section>
