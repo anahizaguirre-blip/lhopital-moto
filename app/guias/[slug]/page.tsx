@@ -110,13 +110,12 @@ export default async function GuiaPage({ params }: PageProps) {
           </div>
           {contenido.imagen_portada && (
             <div className="max-w-3xl mx-auto">
-              <div className="relative w-full bg-[#111] border border-[rgba(244,241,236,0.08)]">
+              <div className="relative w-full aspect-[3/2] bg-[#111] border border-[rgba(244,241,236,0.08)] overflow-hidden">
                 <Image
                   src={cloudinaryEditorialUrl(contenido.imagen_portada)}
                   alt={contenido.titulo}
-                  width={1600}
-                  height={1067}
-                  className="w-full h-auto"
+                  fill
+                  className="object-cover"
                   priority
                   sizes="(max-width: 768px) 100vw, 768px"
                 />

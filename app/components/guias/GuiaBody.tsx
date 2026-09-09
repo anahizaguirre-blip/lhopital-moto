@@ -76,13 +76,12 @@ function BloqueImagen({ bloque }: { bloque: Extract<ContenidoBloque, { tipo: 'im
   const { public_id, alt } = bloque.contenido;
   return (
     <div className="max-w-3xl mx-auto mb-12">
-      <div className="relative w-full bg-[#111] border border-[rgba(244,241,236,0.08)]">
+      <div className="relative w-full aspect-[3/2] bg-[#111] border border-[rgba(244,241,236,0.08)] overflow-hidden">
         <Image
           src={cloudinaryEditorialUrl(public_id)}
           alt={alt}
-          width={1600}
-          height={1067}
-          className="w-full h-auto"
+          fill
+          className="object-cover"
           sizes="(max-width: 768px) 100vw, 768px"
         />
       </div>
