@@ -103,9 +103,13 @@ export function EspecificacionesMotoII({ skuActivo }: EspecificacionesMotoIIProp
             </span>
           </div>
 
-          <h2 className="font-sora font-bold text-[24px] md:text-[28px] text-[#F4F1EC] tracking-[-0.02em] mb-8">
+          <h2 className="font-sora font-bold text-[24px] md:text-[28px] text-[#F4F1EC] tracking-[-0.02em] mb-4">
             En la caja.
           </h2>
+
+          <p className="text-[14px] md:text-[15px] text-[#F4F1EC]/65 leading-relaxed mb-8 max-w-2xl">
+            Moto II requiere un teléfono inteligente con Bluetooth para funcionar.
+          </p>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {CAJA_ITEMS.map(({ label, icono }) => (
@@ -122,10 +126,6 @@ export function EspecificacionesMotoII({ skuActivo }: EspecificacionesMotoIIProp
               </div>
             ))}
           </div>
-
-          <p className="text-[11px] text-[#F4F1EC]/35 text-center mt-5 leading-relaxed">
-            Moto II requiere un teléfono inteligente con Bluetooth para funcionar.
-          </p>
 
         </div>
       </section>

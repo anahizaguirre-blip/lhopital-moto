@@ -255,7 +255,7 @@ export function HeroTiendaMotoII({ dispositivos, onColorChange }: HeroMotoIIProp
                 <span className="text-[10px] tracking-[0.3em] uppercase text-[#F4F1EC]/50">
                   Elige tu acabado
                 </span>
-                <span className="font-mono text-[10px] text-[#F4F1EC]/40 tracking-[0.15em]">
+                <span className="font-mono text-[13px] text-[#F4F1EC]/70 tracking-[0.15em]">
                   3 acabados · 1 promesa
                 </span>
               </div>

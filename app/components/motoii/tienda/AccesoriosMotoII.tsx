@@ -175,7 +175,7 @@ function AccesorioCard({ producto }: { producto: Product }) {
             {formatMXN(precio)}
           </span>
           {disponible ? (
-            <span className="text-[10px] tracking-[0.1em] uppercase text-[#F4F1EC]/35">
+            <span className="text-[13px] tracking-[0.1em] uppercase text-[#F4F1EC]/70">
               {stock} en stock
             </span>
           ) : (
