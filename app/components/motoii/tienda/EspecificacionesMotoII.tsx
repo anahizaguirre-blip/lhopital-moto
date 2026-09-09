@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 /**
  * EspecificacionesMotoII.tsx
  * Ficha técnica + contenido de la caja del Moto II.
@@ -148,19 +150,41 @@ export function EspecificacionesMotoII({ skuActivo }: EspecificacionesMotoIIProp
             Las especificaciones.
           </h2>
 
-          <div className="max-w-2xl">
-            {specsCompletas.map(({ label, valor }, i) => (
-              <div
-                key={label}
-                className={`
-                  flex justify-between items-baseline py-4 text-[13px]
-                  ${i < specsCompletas.length - 1 ? 'border-b border-[rgba(244,241,236,0.07)]' : ''}
-                `}
-              >
-                <span className="text-[#F4F1EC]/50 min-w-[120px]">{label}</span>
-                <span className="text-[#F4F1EC] text-right">{valor}</span>
+          <div className="flex flex-col gap-8 lg:grid lg:grid-cols-2 lg:gap-16">
+
+            {/* Imagen — espejo + velocímetro con mapa (mismo asset del storytelling, layout espejado) */}
+            <div className="lg:order-2">
+              <div className="relative w-full aspect-[3662/4424] overflow-hidden">
+                <Image
+                  src="/products/motoii/Anatomia.jpg"
+                  alt="Moto II montado en espejo retrovisor, pantalla mostrando ruta de navegación"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover"
+                />
               </div>
-            ))}
+            </div>
+
+            {/* Specs */}
+            <div className="lg:order-1 flex flex-col">
+              {specsCompletas.map(({ label, valor }, i) => (
+                <div
+                  key={label}
+                  className={`
+                    flex flex-col gap-1 py-5
+                    ${i < specsCompletas.length - 1 ? 'border-b border-[rgba(244,241,236,0.07)]' : ''}
+                  `}
+                >
+                  <span className="font-sora font-bold text-2xl md:text-3xl text-[#F4F1EC] tracking-[-0.01em]">
+                    {label}
+                  </span>
+                  <span className="font-sora font-normal text-lg md:text-xl text-[#F4F1EC]/50">
+                    {valor}
+                  </span>
+                </div>
+              ))}
+            </div>
+
           </div>
 
         </div>
