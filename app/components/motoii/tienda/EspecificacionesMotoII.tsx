@@ -57,14 +57,16 @@ const SPECS_POR_SKU: Record<string, { peso: string; material: string }> = {
 };
 
 // Specs fijas (iguales en los 3 colores)
+// Cada bloque cuenta una experiencia primero; el dato técnico va debajo,
+// con menor jerarquía visual.
 const SPECS_FIJAS = [
-  { label: 'Pantalla', valor: '1.45″ · TFT color IPS antireflectivo' },
-  { label: 'Batería', valor: '600 mAh · hasta 14 horas' },
-  { label: 'Resistencia', valor: 'IP67 · agua y polvo' },
-  { label: 'Modos', valor: 'Ruta (mapa) · Brújula' },
-  { label: 'Conectividad', valor: 'Bluetooth · App iOS / Android' },
-  { label: 'Carga', valor: 'USB-C' },
-  { label: 'Garantía', valor: '30 días por defecto de fabricación' },
+  { label: 'Se lee bajo el sol del mediodía.', valor: '1.45″ TFT antireflectivo' },
+  { label: 'Un día completo de ruta, sin pensar en cargarlo.', valor: 'hasta 14 horas' },
+  { label: 'Lluvia, polvo, terracería. No se detiene.', valor: 'IP67' },
+  { label: 'Mapa cuando lo necesitas. Brújula cuando solo quieres rodar.', valor: 'Ruta y Brújula' },
+  { label: 'Se sincroniza y se olvida.', valor: 'Bluetooth, app iOS/Android' },
+  { label: 'El mismo cable que ya usas.', valor: 'USB-C' },
+  { label: 'Respaldado desde el primer kilómetro.', valor: '30 días' },
 ] as const;
 
 // ─── Tipos ─────────────────────────────────────────────────────────────────────
@@ -80,8 +82,8 @@ export function EspecificacionesMotoII({ skuActivo }: EspecificacionesMotoIIProp
 
   const specsCompletas = [
     ...SPECS_FIJAS,
-    { label: 'Peso', valor: specsVariante.peso },
-    { label: 'Material', valor: specsVariante.material },
+    { label: 'No lo notas hasta que lo necesitas.', valor: specsVariante.peso },
+    { label: 'Hecho para el manubrio, no para el escritorio.', valor: specsVariante.material },
   ];
 
   return (
