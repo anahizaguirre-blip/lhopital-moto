@@ -21,6 +21,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import type { Product } from '@/lib/types';
 import { cloudinaryAccesorioUrl } from '@/lib/cloudinary';
+import Link from 'next/link';
 
 // ─── Constantes ────────────────────────────────────────────────────────────────
 
@@ -351,12 +352,12 @@ export function SelectorMontaje({
         <div className="text-center pb-2">
           <span className="text-[11px] text-[#F4F1EC]/40">
             ¿No sabes cuál es para ti?{' '}
-            <a
+            <Link
               href="/guias/montajes-moto-ii"
               className="text-[#C9A961] underline underline-offset-2 hover:text-[#F4F1EC] transition-colors"
             >
               Lee la guía completa de montajes
-            </a>
+            </Link>
           </span>
         </div>
 
