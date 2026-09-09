@@ -4,6 +4,7 @@ import { ProductDetail } from '@/app/components/tienda/ProductDetail';
 import { ProductDetailAccesorio } from '@/app/components/tienda/ProductDetailAccesorio';
 import type { Product, HedonCrossSell } from '@/lib/types';
 import Link from 'next/link';
+import Footer from '@/app/components/Footer';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -91,9 +92,7 @@ export default async function ProductPage({ params }: PageProps) {
         <ProductDetail product={productData} hedonCrossSells={hedonCrossSellsData} />
       )}
 
-      <footer className="py-12 px-6 text-center text-[10px] tracking-[0.2em] uppercase text-[#F4F1EC]/35 border-t border-[#F4F1EC]/8 mt-24">
-        Lhopital-moto · We are the standard
-      </footer>
+      <Footer bg="dark" />
 
     </main>
   );

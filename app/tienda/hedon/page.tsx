@@ -11,6 +11,7 @@ import { createSupabaseServer } from '@/lib/supabase/server';
 import type { Product, Collection } from '@/lib/types';
 import { ProductGrid } from '@/app/components/tienda/ProductGrid';
 import Link from 'next/link';
+import Footer from '@/app/components/Footer';
 
 export const metadata = {
   title: 'Tienda Hedon · Lhopital-moto',
@@ -94,10 +95,7 @@ export default async function TiendaHedonPage() {
         <ProductGrid products={productList} collections={collectionList} />
       </Suspense>
 
-      {/* Footer mínimo */}
-      <footer className="py-12 px-6 text-center text-[10px] tracking-[0.2em] uppercase text-[#F4F1EC]/35 border-t border-[#F4F1EC]/8">
-        Lhopital-moto · We are the standard
-      </footer>
+      <Footer bg="dark" />
 
     </main>
   );

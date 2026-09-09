@@ -3,6 +3,7 @@ import { createSupabaseServer } from '@/lib/supabase/server';
 import type { Product } from '@/lib/types';
 import { PersonalizaGrid } from '@/app/components/tienda/PersonalizaGrid';
 import Link from 'next/link';
+import Footer from '@/app/components/Footer';
 
 export const metadata = {
   title: 'Personaliza tu Hedon · Lhopital-moto',
@@ -61,9 +62,7 @@ export default async function PersonalizaPage() {
         <PersonalizaGrid products={productList} />
       </Suspense>
 
-      <footer className="py-12 px-6 text-center text-[10px] tracking-[0.2em] uppercase text-[#F4F1EC]/35 border-t border-[#F4F1EC]/8">
-        Lhopital-moto · We are the standard
-      </footer>
+      <Footer bg="dark" />
 
     </main>
   );

@@ -10,6 +10,7 @@
 import { createSupabaseServer } from '@/lib/supabase/server';
 import type { Product } from '@/lib/types';
 import { TiendaMotoII } from '@/app/components/motoii/tienda/TiendaMotoII';
+import Footer from '@/app/components/Footer';
 
 export const metadata = {
   title: 'Tienda Moto II · Lhopital-moto',
@@ -63,6 +64,7 @@ export default async function TiendaMotoIIPage() {
         dispositivos={dispositivoList}
         accesorios={accesorioList}
       />
+      <Footer bg="dark" />
     </main>
   );
 }

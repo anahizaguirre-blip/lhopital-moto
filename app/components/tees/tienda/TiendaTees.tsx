@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { useState } from 'react'
 import type { TeeProducto } from '@/app/tienda/tees/page'
+import Footer from '@/app/components/Footer'
 
 const CLD_BASE = 'https://res.cloudinary.com/lhopital-moto/image/upload'
 const TALLAS_ORDEN = ['S', 'M', 'L', 'XL']
@@ -286,6 +287,8 @@ export default function TiendaTees({ productos }: { productos: TeeProducto[] }) 
           ))}
         </div>
       </section>
+
+      <Footer bg="dark" />
 
     </div>
   )

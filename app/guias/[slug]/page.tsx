@@ -14,6 +14,7 @@ import type { Contenido, ContenidoSkuCardProducto, Product } from '@/lib/types';
 import { GuiaBody } from '@/app/components/guias/GuiaBody';
 import { cloudinaryEditorialUrl } from '@/lib/cloudinary';
 import Image from 'next/image';
+import Footer from '@/app/components/Footer';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -134,9 +135,7 @@ export default async function GuiaPage({ params }: PageProps) {
         />
       </div>
 
-      <footer className="py-12 px-6 text-center text-[10px] tracking-[0.2em] uppercase text-[#F4F1EC]/35 border-t border-[#F4F1EC]/8">
-        Lhopital-moto · We are the standard
-      </footer>
+      <Footer bg="dark" />
 
     </main>
   );
