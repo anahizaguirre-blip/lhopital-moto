@@ -24,7 +24,7 @@ function Parrafos({ texto }: { texto: string }) {
   return (
     <>
       {texto.split('\n\n').filter(Boolean).map((parrafo, i) => (
-        <p key={i} className="text-[14px] text-[#F4F1EC]/75 leading-[1.8] mb-4 last:mb-0">
+        <p key={i} className="text-[14px] text-[#F4F1EC]/85 leading-[1.8] mb-4 last:mb-0">
           {parrafo}
         </p>
       ))}
@@ -32,14 +32,40 @@ function Parrafos({ texto }: { texto: string }) {
   );
 }
 
+// Detecta el patrón "1. Las vibraciones del camino" para separar el
+// número del título — mismo patrón visual (eyebrow dorado + título) que
+// ya usa /tienda/moto-ii. Los títulos sin número (ej. "¿Dónde consigo mi
+// Moto II?") se quedan como heading simple.
+function parseNumeroTitulo(titulo: string): { numero: string; texto: string } | null {
+  const match = titulo.match(/^(\d+)\.\s*(.+)$/);
+  if (!match) return null;
+  return { numero: match[1].padStart(2, '0'), texto: match[2] };
+}
+
 function BloqueTexto({ bloque }: { bloque: Extract<ContenidoBloque, { tipo: 'texto' }> }) {
   const { titulo, texto } = bloque.contenido;
+  const numerado = titulo ? parseNumeroTitulo(titulo) : null;
+
   return (
-    <div className="max-w-2xl mx-auto mb-12">
+    <div className="max-w-[65ch] mx-auto mb-12">
       {titulo && (
-        <h2 className="font-sora font-bold text-[22px] md:text-[26px] text-[#F4F1EC] tracking-[-0.01em] mb-4">
-          {titulo}
-        </h2>
+        numerado ? (
+          <div className="mb-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="inline-block w-6 h-px bg-[#C9A961]" />
+              <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-[#C9A961]">
+                / {numerado.numero}
+              </span>
+            </div>
+            <h2 className="font-sora font-bold text-[22px] md:text-[26px] text-[#F4F1EC] tracking-[-0.01em]">
+              {numerado.texto}
+            </h2>
+          </div>
+        ) : (
+          <h2 className="font-sora font-bold text-[22px] md:text-[26px] text-[#F4F1EC] tracking-[-0.01em] mb-4">
+            {titulo}
+          </h2>
+        )
       )}
       <Parrafos texto={texto} />
     </div>
