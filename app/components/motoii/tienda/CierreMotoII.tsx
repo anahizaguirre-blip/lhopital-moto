@@ -11,10 +11,32 @@
  * No recibe props — contenido estático editorial.
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 // ─── Datos ─────────────────────────────────────────────────────────────────────
+
+// TODO: reemplazar por los 3 testimonios reales cuando lleguen.
+const TESTIMONIOS = [
+  {
+    quote: 'Dejé el celular en la mochila. Volví a mirar la calle.',
+    autor: 'Diego R.',
+    rol: 'Rider CDMX',
+    moto: 'Bonneville T120',
+  },
+  {
+    quote: 'No volteo a ver mensajes. Volteo a ver la carretera.',
+    autor: 'Renata O.',
+    rol: 'Rider Guadalajara',
+    moto: 'Vitpilen 401',
+  },
+  {
+    quote: 'El sol pega directo y la pantalla se sigue leyendo. Eso ya me vendió.',
+    autor: 'Mauricio T.',
+    rol: 'Rider Querétaro',
+    moto: 'Scrambler Icon',
+  },
+] as const;
 
 const FAQ_ITEMS = [
   {
@@ -90,6 +112,17 @@ function FaqItem({
 // ─── Componente principal ──────────────────────────────────────────────────────
 
 export function CierreMotoII() {
+  const [testimonioIndex, setTestimonioIndex] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setTestimonioIndex(i => (i + 1) % TESTIMONIOS.length);
+    }, 6000);
+    return () => clearInterval(id);
+  }, []);
+
+  const testimonioActivo = TESTIMONIOS[testimonioIndex];
+
   return (
     <>
 
@@ -111,14 +144,15 @@ export function CierreMotoII() {
               <span className="inline-block w-6 h-px bg-[#C9A961]" />
             </div>
 
-            <blockquote className="font-cormorant italic text-[24px] md:text-[28px] text-[#F4F1EC] leading-[1.45] mb-6">
-              &ldquo;Dejé el celular en la mochila.<br className="hidden md:block" />
-              Volví a mirar la calle.&rdquo;
-            </blockquote>
+            <div key={testimonioIndex} className="animate-fade-in-up">
+              <blockquote className="font-cormorant italic text-[24px] md:text-[28px] text-[#F4F1EC] leading-[1.45] mb-6">
+                &ldquo;{testimonioActivo.quote}&rdquo;
+              </blockquote>
 
-            <cite className="not-italic text-[10px] tracking-[0.2em] uppercase text-[#F4F1EC]/40">
-              Diego R. · Rider CDMX · Bonneville T120
-            </cite>
+              <cite className="not-italic text-[10px] tracking-[0.2em] uppercase text-[#F4F1EC]/40">
+                {testimonioActivo.autor} · {testimonioActivo.rol} · {testimonioActivo.moto}
+              </cite>
+            </div>
 
           </div>
         </div>
