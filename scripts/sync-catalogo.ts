@@ -522,6 +522,70 @@ async function syncTees(wb: XLSX.WorkBook): Promise<SyncResult> {
 }
 
 // ============================================================================
+// TABLA "tees" — la que realmente lee /tienda/tees (independiente de
+// products/product_variants). Cada SKU Padre trae 4 filas de variante en el
+// Excel y cada una apunta a una sola foto (back/front/lifestyle); aquí se
+// agrupan por SKU Padre para resolver las 3 vistas sin importar en qué talla
+// esté cada una.
+// ============================================================================
+function claveFoto(publicId: string): 'back' | 'front' | 'lifestyle' | null {
+  if (publicId === 'shirt-front' || publicId.endsWith('-front')) return 'front';
+  if (publicId.endsWith('-back')) return 'back';
+  if (publicId.endsWith('-lifestyle')) return 'lifestyle';
+  return null;
+}
+
+async function syncTeesTabla(wb: XLSX.WorkBook) {
+  logStep('Sincronizando tabla "tees" (fuente real de /tienda/tees)');
+  const sheet = wb.Sheets['Tees'];
+  const rows: any[] = XLSX.utils.sheet_to_json(sheet, { defval: null });
+
+  const fotosPorPadre = new Map<string, Partial<Record<'back' | 'front' | 'lifestyle', string>>>();
+  for (const row of rows) {
+    const skuPadre = row['SKU Padre'];
+    const foto = clean(row['Foto Cloudinary'])?.toString().trim();
+    if (!skuPadre || !foto) continue;
+    const clave = claveFoto(foto);
+    if (!clave) {
+      console.warn(`    ⚠ No reconozco el tipo de foto "${foto}" (SKU Padre ${skuPadre}) — se ignora.`);
+      continue;
+    }
+    const entry = fotosPorPadre.get(skuPadre) ?? {};
+    entry[clave] = foto;
+    fotosPorPadre.set(skuPadre, entry);
+  }
+
+  let sincronizadas = 0;
+  for (const row of rows) {
+    const skuVariante = row['SKU Variante'];
+    const skuPadre = row['SKU Padre'];
+    if (!skuVariante || !skuPadre) continue;
+    const fotos = fotosPorPadre.get(skuPadre) ?? {};
+
+    const tee = {
+      sku_variante: skuVariante,
+      sku_padre: skuPadre,
+      diseno: row['Diseño'],
+      color: row['Color'],
+      talla: clean(row['Talla']),
+      precio_mxn: parseFloat(row['Precio MXN']) || 850,
+      stock: parseInt(row['Stock']) || 0,
+      estado: normalizarEstado(row['Estado']),
+      material: clean(row['Material']),
+      foto_back: fotos.back ?? null,
+      foto_front: fotos.front ?? null,
+      foto_lifestyle: fotos.lifestyle ?? null,
+    };
+
+    const { error } = await supabase.from('tees').upsert(tee, { onConflict: 'sku_variante' });
+    if (error) logErr(`Error tabla tees ${skuVariante}`, error);
+    else sincronizadas++;
+  }
+
+  logOk(`${sincronizadas} filas sincronizadas en tabla "tees"`);
+}
+
+// ============================================================================
 // ALTA/BAJA — oculta productos y variantes que ya no están en el Excel
 // ============================================================================
 async function aplicarBajasProductos(marca: string, skusActivos: Set<string>): Promise<number> {
@@ -736,6 +800,7 @@ async function main() {
     const hedonAcc = await syncHedonAccesorios(wb);
     const motoII = await syncMotoII(wb);
     const tees = await syncTees(wb);
+    await syncTeesTabla(wb);
 
     logStep('Aplicando alta/baja de productos');
     const hedonSkus = new Set([...hedonCascos.skusPadre, ...hedonAcc.skusPadre]);
