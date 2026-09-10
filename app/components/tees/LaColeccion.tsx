@@ -20,7 +20,7 @@ const playeras = [
     numero: '03',
     nombre: "Good Times, Good Rides",
     copy: "No hay manera de tener una sin la otra. El nombre no necesita más.",
-    imagen: '/products/lhopitaltees/GoodTimes.jpg',
+    imagen: '/products/lhopitaltees/GoodTimes.png',
     rojo: false,
   },
   {

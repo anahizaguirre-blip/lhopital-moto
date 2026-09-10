@@ -17,7 +17,7 @@ const productos = [
   {
     nombre: 'Good Times, Good Rides',
     precio: 400,
-    imagen: '/products/lhopitaltees/GoodTimes.jpg',
+    imagen: '/products/lhopitaltees/GoodTimes.png',
     url: '#',
   },
   {
