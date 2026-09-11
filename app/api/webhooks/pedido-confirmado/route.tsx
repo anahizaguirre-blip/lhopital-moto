@@ -49,7 +49,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: 'orden sin email de cliente' }, { status: 200 });
   }
 
-  await getResend().emails.send({
+  const { data, error } = await getResend().emails.send({
     from: EMAIL_FROM,
     to: order.email_cliente,
     cc: EMAIL_COPIA_INTERNA,
@@ -57,5 +57,13 @@ export async function POST(request: Request) {
     react: <PedidoConfirmadoEmail order={order} />,
   });
 
-  return NextResponse.json({ ok: true });
+  if (error) {
+    // El SDK de Resend no truena en fallos de la API (dominio sin
+    // verificar, límite de la cuenta, etc.) — devuelve { error } — así
+    // que hay que revisarlo explícitamente en vez de asumir éxito.
+    console.error('[webhooks/pedido-confirmado] Resend:', error);
+    return NextResponse.json({ ok: false, error: error.message }, { status: 200 });
+  }
+
+  return NextResponse.json({ ok: true, id: data?.id });
 }

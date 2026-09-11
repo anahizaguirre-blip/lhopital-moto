@@ -49,12 +49,19 @@ export async function capturarEnvio(
 
   if (order?.email_cliente) {
     try {
-      await getResend().emails.send({
+      // El SDK de Resend no truena en fallos de la API (dominio sin
+      // verificar, límite de la cuenta, etc.) — devuelve { error } — así
+      // que hay que revisarlo explícitamente en vez de asumir éxito.
+      const { error: resendError } = await getResend().emails.send({
         from: EMAIL_FROM,
         to: order.email_cliente,
         subject: `Tu pedido ${order.numero_orden} va en camino`,
         react: <PedidoEnviadoEmail order={order} />,
       });
+      if (resendError) {
+        console.error('[admin/pedidos/[id]] Resend:', resendError);
+        avisoCorreo = 'Se guardó la guía, pero no se pudo enviar el correo de rastreo.';
+      }
     } catch (err) {
       // La guía ya se guardó — que Resend no esté configurado (o falle)
       // todavía no debe tirar la captura del admin.
