@@ -15,7 +15,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         }}
       >
         <Link href="/admin/pedidos" style={{ color: '#F5EFE0', fontSize: '15px', textDecoration: 'none' }}>
-          L&rsquo;Hopital Moto · Admin
+          Lhopital Moto · Admin
         </Link>
         <form action={cerrarSesion}>
           <button

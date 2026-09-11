@@ -13,7 +13,7 @@ export default function AdminLoginPage() {
     >
       <div style={{ width: '100%', maxWidth: '360px', padding: '24px' }}>
         <h1 style={{ color: '#F5EFE0', fontSize: '20px', marginBottom: '24px', textAlign: 'center' }}>
-          Admin · L&rsquo;Hopital Moto
+          Admin · Lhopital Moto
         </h1>
         <LoginForm />
       </div>

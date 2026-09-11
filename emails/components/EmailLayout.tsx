@@ -25,7 +25,7 @@ export function EmailLayout({
           <Img
             src={cloudinaryEditorialUrl('frase_horizontal_invertido', 400)}
             width="200"
-            alt="L'Hopital Moto"
+            alt="Lhopital Moto"
             style={{ margin: '0 auto' }}
           />
         </Section>
@@ -45,7 +45,7 @@ export function EmailLayout({
               fontFamily: FONT_FAMILY,
             }}
           >
-            L&rsquo;Hopital Moto · ordenes@lhopital.mx
+            Lhopital Moto · ordenes@lhopital.mx
           </Text>
           <Text
             style={{

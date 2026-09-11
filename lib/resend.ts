@@ -10,5 +10,5 @@ export function getResend() {
   return new Resend(process.env.RESEND_API_KEY);
 }
 
-export const EMAIL_FROM = "L'Hopital Moto <ordenes@lhopital.mx>";
+export const EMAIL_FROM = 'Lhopital Moto <ordenes@lhopital.mx>';
 export const EMAIL_COPIA_INTERNA = ['ordenes@lhopital.mx'];
