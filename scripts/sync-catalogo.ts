@@ -118,6 +118,23 @@ function esSkuValido(sku: any): boolean {
   return s.length > 0 && /[A-Z0-9]/.test(s);
 }
 
+// La columna "Foto Cloudinary" de MOTO II guarda TODAS las vistas de un
+// producto separadas por comas en una sola celda (a diferencia de Hedon/Tees,
+// que usan una fila por vista). Guardar esa celda entera en imagen_principal
+// rompe cualquier lugar que la use como public_id único de Cloudinary (panel
+// de admin de pedidos, correo de confirmación) — ver HeroTiendaMotoII.tsx y
+// SelectorMontaje.tsx, que ya traían listas de fotos hardcodeadas para
+// evitar ese campo. Aquí se separa la celda: la primera foto (por
+// convención, siempre la vista "hero") va a imagen_principal y el resto a
+// imagenes[].
+function parsearFotosMotoII(raw: any): string[] {
+  return (raw ?? '')
+    .toString()
+    .split(',')
+    .map((s: string) => s.trim())
+    .filter(Boolean);
+}
+
 interface SyncResult {
   skusPadre: Set<string>;
   variantesPorPadre: Map<string, Set<string>>;
@@ -395,6 +412,8 @@ async function syncMotoII(wb: XLSX.WorkBook): Promise<SyncResult> {
     else if (sku === 'CHR_MNT3.0_M2_M1ADAPTER') categoria = 'rescate_transicion';
     else categoria = 'add_on_simple';
 
+    const fotos = parsearFotosMotoII(row['Foto Cloudinary']);
+
     const producto = {
       sku_padre: sku,
       slug: makeSlug(row['Modelo']),
@@ -405,7 +424,8 @@ async function syncMotoII(wb: XLSX.WorkBook): Promise<SyncResult> {
       categoria,
       precio_base: precio,
       moneda: 'MXN',
-      imagen_principal: clean(row['Foto Cloudinary']),
+      imagen_principal: fotos[0] ?? null,
+      imagenes: fotos.slice(1),
       certificacion: categoriaExcel === 'Dispositivo' ? 'IP67' : null,
       numero_fotos_esperadas: categoriaExcel === 'Dispositivo' ? 9 : 4,
       visible_publico: true,

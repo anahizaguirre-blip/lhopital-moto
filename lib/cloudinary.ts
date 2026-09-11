@@ -25,9 +25,16 @@ type CloudinaryPreset =
   | 'thumbnail'   // 200x200 — miniaturas del carrito
   | 'hero';       // 1920x1080 — hero banners
 
+// g_center reparte el recorte del cuadrado mitad arriba, mitad abajo del
+// encuadre (en vez de quitarlo todo de arriba, como hacía g_south). Llena
+// el cuadro completo — sin franjas de fondo a los lados, el casco se ve
+// grande — y como el podio ocupa toda la mitad inferior de cada foto,
+// perder un poco de su base no se nota. A cambio, deja más aire arriba del
+// casco de forma pareja en las 25 fotos hero de Hedon, incluida "Bauhaus"
+// (la única que con g_south quedaba con la punta pegada al borde).
 const PRESETS: Record<CloudinaryPreset, string> = {
-  card: 'w_600,h_600,c_fill,g_auto,f_auto,q_auto',
-  detail: 'w_1200,h_1200,c_fill,g_auto,f_auto,q_auto',
+  card: 'w_600,h_600,c_fill,g_center,f_auto,q_auto',
+  detail: 'w_1200,h_1200,c_fill,g_center,f_auto,q_auto',
   thumbnail: 'w_200,h_200,c_fill,g_auto,f_auto,q_auto',
   hero: 'w_1920,h_1080,c_fill,g_auto,f_auto,q_auto',
 };
