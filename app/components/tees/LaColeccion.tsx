@@ -34,7 +34,7 @@ const playeras = [
     numero: '05',
     nombre: "Tiny Movement",
     copy: "Dos centímetros de muñeca. Eso es la diferencia entre estar parado y ser libre.",
-    imagen: '/products/lhopitaltees/Tiny.jpg',
+    imagen: '/products/lhopitaltees/Tiny.png',
     posicion: 'right',   // ← esta foto se pega a la derecha
     rojo: false,
   },

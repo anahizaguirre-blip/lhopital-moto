@@ -29,7 +29,7 @@ const productos = [
   {
     nombre: 'Tiny Movement of Your Wrist',
     precio: 400,
-    imagen: '/products/lhopitaltees/Tiny.jpg',
+    imagen: '/products/lhopitaltees/Tiny.png',
     posicion: 'right',   // ← a la derecha
     url: '#',
   },
