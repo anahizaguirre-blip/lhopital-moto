@@ -17,7 +17,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <Link href="/admin/pedidos" style={{ color: '#F5EFE0', fontSize: '15px', textDecoration: 'none' }}>
           Lhopital Moto · Admin
         </Link>
-        <form action={cerrarSesion}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+          <Link href="/admin/pedidos" style={{ color: '#F5EFE0', fontSize: '13px', textDecoration: 'none', opacity: 0.8 }}>
+            Pedidos
+          </Link>
+          <Link href="/admin/citas" style={{ color: '#F5EFE0', fontSize: '13px', textDecoration: 'none', opacity: 0.8 }}>
+            Citas
+          </Link>
+          <form action={cerrarSesion}>
           <button
             type="submit"
             style={{
@@ -32,7 +39,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           >
             Cerrar sesión
           </button>
-        </form>
+          </form>
+        </div>
       </nav>
       <main style={{ padding: '24px', color: '#020202' }}>{children}</main>
     </div>

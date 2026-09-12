@@ -12,3 +12,8 @@ export function getResend() {
 
 export const EMAIL_FROM = 'Lhopital Moto <ordenes@lhopital.mx>';
 export const EMAIL_COPIA_INTERNA = ['ordenes@lhopital.mx'];
+
+// Correos del showroom (citas) usan un remitente y bandeja interna distintos
+// a los de pedidos — no cruzar con EMAIL_COPIA_INTERNA (ordenes@).
+export const EMAIL_FROM_CONTACTO = 'Lhopital Moto <contacto@lhopital.mx>';
+export const EMAIL_COPIA_INTERNA_CONTACTO = ['contacto@lhopital.mx'];

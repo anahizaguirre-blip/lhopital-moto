@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 
 // Banners 940x400. El diseño y los datos (nombre, año) ya viven dentro de cada imagen.
 // Cada evento tiene su URL y tipo (youtube/instagram) para el microfeedback al hover.
@@ -81,9 +82,12 @@ export default function Eventos() {
               eventos
             </span>
           </h2>
-          <p className="font-almaq text-moto-bone/45 text-[11px] md:text-xs tracking-[0.15em] uppercase mt-4">
-            Showroom por al sur de la CDMX. Haz una cita.
-          </p>
+          <Link
+            href="/citas"
+            className="font-almaq text-moto-bone/45 text-[11px] md:text-xs tracking-[0.15em] uppercase mt-4 block hover:text-brass transition-colors w-fit"
+          >
+            Showroom al sur de la CDMX. Haz una cita.
+          </Link>
         </div>
 
         {/* PRÓXIMO — bloque "Próximamente" digno */}

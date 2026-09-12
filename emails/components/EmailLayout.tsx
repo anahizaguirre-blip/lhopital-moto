@@ -11,9 +11,11 @@ export const FONT_FAMILY = "Georgia, 'Times New Roman', serif";
 
 export function EmailLayout({
   preview,
+  contactoEmail = 'ordenes@lhopital.mx',
   children,
 }: {
   preview: string;
+  contactoEmail?: string;
   children: React.ReactNode;
 }) {
   return (
@@ -45,7 +47,7 @@ export function EmailLayout({
               fontFamily: FONT_FAMILY,
             }}
           >
-            Lhopital Moto · ordenes@lhopital.mx
+            Lhopital Moto · {contactoEmail}
           </Text>
           <Text
             style={{
