@@ -9,7 +9,7 @@ const navLinks = [
   { href: '/motoii', label: 'Moto II' },
   { href: '/hedon', label: 'Hedon' },
   { href: '/tees', label: 'Tees' },
-  { href: '/contacto', label: 'Contacto' },
+  { href: 'mailto:contacto@lhopital.mx', label: 'Contacto' },
 ]
 
 // Variantes de fondo disponibles
@@ -101,16 +101,20 @@ export default function Footer({ bg = 'dark' }: { bg?: 'dark' | 'hedon' }) {
           <nav className="flex flex-wrap items-center justify-center gap-6 md:gap-8">
             {navLinks.map((link) => {
               const isActive = pathname === link.href
+              const className = isActive
+                ? 'font-almaq text-brass text-xs tracking-[0.2em] uppercase'
+                : 'font-almaq text-hedon-cream/70 hover:text-brass text-xs tracking-[0.2em] uppercase transition-colors'
+
+              if (link.href.startsWith('mailto:')) {
+                return (
+                  <a key={link.href} href={link.href} className={className}>
+                    {link.label}
+                  </a>
+                )
+              }
+
               return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={
-                    isActive
-                      ? 'font-almaq text-brass text-xs tracking-[0.2em] uppercase'
-                      : 'font-almaq text-hedon-cream/70 hover:text-brass text-xs tracking-[0.2em] uppercase transition-colors'
-                  }
-                >
+                <Link key={link.href} href={link.href} className={className}>
                   {link.label}
                 </Link>
               )
