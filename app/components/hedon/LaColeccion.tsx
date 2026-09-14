@@ -9,7 +9,7 @@ type Modelo = {
 
 const modelos: Modelo[] = [
   {
-    nombre: "Heroine Racer 2.0",  
+    nombre: "Heroine Racer 2.0",
     imagen: "/products/hedon/heroine.jpg",
     alt: "Casco Heroine Racer de Hedon",
   },
@@ -67,8 +67,8 @@ export default function LaColeccion() {
               alt={modelo.alt}
               fill
               className={
-  modelo.nombre === "Heroine Racer"
-    ? "object-cover object-[center_10%] scale-100"
+  modelo.nombre === "Heroine Racer 2.0"
+    ? "object-cover object-[center_15%]"
     : modelo.nombre === "Hedonist"
     ? "object-cover object-[center_5%]"
     : modelo.nombre === "Epicurist 2.0"
