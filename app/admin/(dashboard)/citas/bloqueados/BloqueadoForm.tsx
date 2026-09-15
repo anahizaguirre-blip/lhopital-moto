@@ -11,8 +11,12 @@ export function BloqueadoForm() {
   return (
     <form action={formAction} style={{ display: 'flex', gap: '10px', alignItems: 'flex-end', flexWrap: 'wrap', marginBottom: '20px' }}>
       <label style={labelStyle}>
-        Fecha
-        <input type="date" name="fecha" required style={inputStyle} />
+        Desde
+        <input type="date" name="desde" required style={inputStyle} />
+      </label>
+      <label style={labelStyle}>
+        Hasta (opcional, si es un solo día déjalo vacío)
+        <input type="date" name="hasta" style={inputStyle} />
       </label>
       <label style={{ ...labelStyle, flex: 1, minWidth: '200px' }}>
         Motivo (opcional, interno)
@@ -32,7 +36,7 @@ export function BloqueadoForm() {
           opacity: pending ? 0.7 : 1,
         }}
       >
-        {pending ? 'Agregando…' : 'Bloquear fecha'}
+        {pending ? 'Agregando…' : 'Bloquear fecha(s)'}
       </button>
       {state.error && <p style={{ color: '#c0392b', fontSize: '13px', margin: 0, width: '100%' }}>{state.error}</p>}
     </form>
