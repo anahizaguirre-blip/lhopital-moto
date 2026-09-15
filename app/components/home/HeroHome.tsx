@@ -1,5 +1,7 @@
 'use client'
 
+import { cloudinaryEditorialUrl } from '@/lib/cloudinary'
+
 export default function HeroHome() {
   const scrollToMarcas = () => {
     const el = document.getElementById('marcas')
@@ -14,7 +16,7 @@ export default function HeroHome() {
       {/* Video de fondo full bleed */}
       <video
         src="/LhopitalVideo.mp4"
-        poster="/products/motoii/hero_moto_ii.jpg"
+        poster={cloudinaryEditorialUrl('hero_moto_ii', 1920)}
         autoPlay
         muted
         loop

@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { cloudinaryEditorialUrl } from '@/lib/cloudinary'
 
 export default function EnLaRuta() {
   return (
@@ -40,7 +41,7 @@ export default function EnLaRuta() {
           {/* Foto 1 — Grande, ocupa 2 columnas */}
           <div className="relative aspect-[4/3] sm:col-span-2 lg:row-span-2 lg:aspect-auto lg:min-h-[500px]">
             <Image
-              src="/products/lhopitaltees/ruta-01.jpg"
+              src={cloudinaryEditorialUrl('ruta-01', 1920)}
               alt="Rodada en Sayula — momento principal"
               fill
               quality={85}
@@ -52,7 +53,7 @@ export default function EnLaRuta() {
           {/* Foto 2 — Cuadrada */}
           <div className="relative aspect-[3/2]">
             <Image
-              src="/products/lhopitaltees/ruta-02.jpg"
+              src={cloudinaryEditorialUrl('ruta-02')}
               alt="Motos en parada de gasolina, Sayula"
               fill
               quality={85}
@@ -64,7 +65,7 @@ export default function EnLaRuta() {
           {/* Foto 3 — Cuadrada */}
           <div className="relative aspect-[3/2]">
             <Image
-              src="/products/lhopitaltees/ruta-03.jpg"
+              src={cloudinaryEditorialUrl('ruta-03')}
               alt="Carretera hacia Sayula, Jalisco"
               fill
               quality={85}
@@ -76,7 +77,7 @@ export default function EnLaRuta() {
           {/* Foto 4 — Vertical */}
           <div className="relative aspect-[3/4] sm:col-span-1">
             <Image
-              src="/products/lhopitaltees/ruta-04.jpg"
+              src={cloudinaryEditorialUrl('ruta-04')}
               alt="Detalle de moto y playera Tees"
               fill
               quality={85}
@@ -88,7 +89,7 @@ export default function EnLaRuta() {
           {/* Foto 5 — Horizontal, ocupa 2 columnas */}
           <div className="relative aspect-[16/9] sm:col-span-2">
             <Image
-              src="/products/lhopitaltees/ruta-05.jpg"
+              src={cloudinaryEditorialUrl('ruta-05')}
               alt="Grupo en ruta, Sayula"
               fill
               quality={85}

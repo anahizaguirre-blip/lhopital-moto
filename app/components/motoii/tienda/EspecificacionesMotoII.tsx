@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { cloudinaryEditorialUrl } from '@/lib/cloudinary';
 
 /**
  * EspecificacionesMotoII.tsx
@@ -166,7 +167,7 @@ export function EspecificacionesMotoII({ skuActivo }: EspecificacionesMotoIIProp
             <div className="lg:order-2">
               <div className="relative w-full aspect-[3662/4424] overflow-hidden">
                 <Image
-                  src="/products/motoii/Anatomia.jpg"
+                  src={cloudinaryEditorialUrl('Anatomia')}
                   alt="Moto II montado en espejo retrovisor, pantalla mostrando ruta de navegación"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"

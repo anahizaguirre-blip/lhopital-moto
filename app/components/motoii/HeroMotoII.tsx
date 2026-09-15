@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import { cloudinaryEditorialUrl } from '@/lib/cloudinary'
 
 export default function HeroMotoII() {
   const scrollToInicio = () => {
@@ -15,7 +16,7 @@ export default function HeroMotoII() {
     >
       {/* Imagen de fondo full bleed */}
       <Image
-        src="/products/motoii/hero_moto_ii.jpg"
+        src={cloudinaryEditorialUrl('hero_moto_ii', 1920)}
         alt="Beeline Moto II montado en manillar, carretera mexicana"
         fill
         priority

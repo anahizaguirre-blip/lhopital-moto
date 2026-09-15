@@ -1,10 +1,11 @@
 import Image from 'next/image'
+import { cloudinaryEditorialUrl } from '@/lib/cloudinary'
 
 export default function LaColeccion() {
   const modelos = [
-    { nombre: 'Black',     archivo: 'ModeloBlack.jpg',  codigo: 'MTII_BLK' },
-    { nombre: 'Gun Metal', archivo: 'ModeloGun.jpg',    codigo: 'MTII_GMG' },
-    { nombre: 'Silver',    archivo: 'ModeloSilver.jpg', codigo: 'MTII_SVR' },
+    { nombre: 'Black',     archivo: 'ModeloBlack',  codigo: 'MTII_BLK' },
+    { nombre: 'Gun Metal', archivo: 'ModeloGun',    codigo: 'MTII_GMG' },
+    { nombre: 'Silver',    archivo: 'ModeloSilver', codigo: 'MTII_SVR' },
   ]
 
   return (
@@ -46,7 +47,7 @@ export default function LaColeccion() {
               {/* Foto del modelo — ya viene encuadrada, solo object-cover */}
               <div className="relative w-full aspect-[3/2] overflow-hidden mb-6 bg-moto-line">
                 <Image
-                  src={`/products/motoii/${modelo.archivo}`}
+                  src={cloudinaryEditorialUrl(modelo.archivo)}
                   alt={`Beeline Moto II acabado ${modelo.nombre}`}
                   fill
                   quality={90}

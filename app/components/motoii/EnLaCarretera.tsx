@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { cloudinaryEditorialUrl } from '@/lib/cloudinary'
 
 export default function EnLaCarretera() {
   return (
@@ -36,7 +37,7 @@ export default function EnLaCarretera() {
       {/* Foto principal full-bleed (sale del max-w para mayor impacto) */}
       <div className="relative w-full aspect-[3/2] mb-6 md:mb-8 overflow-hidden">
         <Image
-          src="/products/motoii/EnLaCarretera_h1.jpg"
+          src={cloudinaryEditorialUrl('EnLaCarretera_h1', 1920)}
           alt="Motociclistas en la carretera del Ajusco al amanecer"
           fill
           quality={90}
@@ -53,7 +54,7 @@ export default function EnLaCarretera() {
           <div className="lg:col-span-7">
             <div className="relative w-full aspect-[3/2] overflow-hidden">
               <Image
-                src="/products/motoii/EnLaCarretera_h2.jpg"
+                src={cloudinaryEditorialUrl('EnLaCarretera_h2')}
                 alt="Vista frontal de motociclistas en ruta de montaña"
                 fill
                 quality={90}

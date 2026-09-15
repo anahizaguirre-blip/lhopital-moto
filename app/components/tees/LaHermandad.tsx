@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { cloudinaryEditorialUrl } from '@/lib/cloudinary'
 
 export default function LaHermandad() {
   return (
@@ -39,7 +40,7 @@ export default function LaHermandad() {
         {/* Foto protagonista — empujar la moto */}
         <div className="relative w-full aspect-[16/9] mb-6 lg:mb-8">
           <Image
-            src="/products/lhopitaltees/hermandad5.jpg"
+            src={cloudinaryEditorialUrl('hermandad5', 1920)}
             alt="Riders empujando una moto descompuesta — la hermandad en acción"
             fill
             quality={90}
@@ -53,7 +54,7 @@ export default function LaHermandad() {
 
           <div className="relative aspect-[4/3]">
             <Image
-              src="/products/lhopitaltees/hermandad3.jpg"
+              src={cloudinaryEditorialUrl('hermandad3')}
               alt="Grupo de riders Lhopital"
               fill
               quality={85}
@@ -64,7 +65,7 @@ export default function LaHermandad() {
 
           <div className="relative aspect-[4/3]">
             <Image
-              src="/products/lhopitaltees/hermandad1.jpg"
+              src={cloudinaryEditorialUrl('hermandad1')}
               alt="Riders Lhopital en ruta"
               fill
               quality={85}

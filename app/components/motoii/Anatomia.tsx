@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { cloudinaryEditorialUrl } from '@/lib/cloudinary'
 
 export default function Anatomia() {
   const specs = [
@@ -62,7 +63,7 @@ export default function Anatomia() {
           <div className="lg:col-span-5">
             <div className="relative w-full aspect-[3662/4424] overflow-hidden">
               <Image
-                src="/products/motoii/Anatomia.jpg"
+                src={cloudinaryEditorialUrl('Anatomia')}
                 alt="Moto II por Beeline, vista de producto sobre fondo negro"
                 fill
                 quality={90}

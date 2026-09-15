@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { cloudinaryEditorialUrl } from '@/lib/cloudinary'
 
 export default function TiendaCTA() {
   return (
@@ -38,7 +39,7 @@ export default function TiendaCTA() {
           <div className="relative w-full max-w-[480px] mx-auto md:mx-0 md:ml-auto">
             <div className="relative aspect-[3/4] w-full">
               <Image
-                src="/products/motoii/cta.jpg"
+                src={cloudinaryEditorialUrl('cta')}
                 alt="Beeline Moto II — el navegador minimalista para motociclistas"
                 fill
                 priority={false}

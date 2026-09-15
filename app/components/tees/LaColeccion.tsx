@@ -1,11 +1,12 @@
 import Image from 'next/image'
+import { cloudinaryEditorialUrl } from '@/lib/cloudinary'
 
 const playeras = [
   {
     numero: '01',
     nombre: "It's a Biker Thing",
     copy: "El saludo. La mano abajo, dedos abiertos, paz al cruzarse en la ruta. No se explica. Se entiende rodando.",
-    imagen: '/products/lhopitaltees/BikerThing.jpg',
+    imagen: cloudinaryEditorialUrl('its-a-biker-thing-back'),
     posicion: 'right',   // ← esta foto se pega a la derecha
     rojo: false,
   },
@@ -13,28 +14,28 @@ const playeras = [
     numero: '02',
     nombre: "Death Doesn't Die",
     copy: "La calaca al manubrio. Porque en México, se hace sátira de la muerte — y luego se acelera.",
-    imagen: '/products/lhopitaltees/Death.jpg',
+    imagen: cloudinaryEditorialUrl('death-doesnt-die-back'),
     rojo: false,
   },
   {
     numero: '03',
     nombre: "Good Times, Good Rides",
     copy: "No hay manera de tener una sin la otra. El nombre no necesita más.",
-    imagen: '/products/lhopitaltees/GoodTimes.png',
+    imagen: cloudinaryEditorialUrl('good-times-good-rides-back'),
     rojo: false,
   },
   {
     numero: '04',
     nombre: "Let's Ride",
     copy: "El personaje de Lhopital con casco. La invitación de la casa. Si hay duda, la respuesta siempre es la misma: ¡salir a rodar!",
-    imagen: '/products/lhopitaltees/LhopitalPersonaje.jpg',
+    imagen: cloudinaryEditorialUrl('lets-ride-back'),
     rojo: false,
   },
   {
     numero: '05',
     nombre: "Tiny Movement",
     copy: "Dos centímetros de muñeca. Eso es la diferencia entre estar parado y ser libre.",
-    imagen: '/products/lhopitaltees/Tiny.png',
+    imagen: cloudinaryEditorialUrl('tiny-movement-back'),
     posicion: 'right',   // ← esta foto se pega a la derecha
     rojo: false,
   },
@@ -43,7 +44,7 @@ const playeras = [
     nombre: 'Brotherhood',
     nombreCompleto: 'Beers, Bikes & Bros',
     copy: "Las tres cosas que llegan después de la rodada. En ese orden o en cualquiera.",
-    imagen: '/products/lhopitaltees/BBB.jpg',
+    imagen: cloudinaryEditorialUrl('brotherhood-back'),
     rojo: true, // Único modelo con acento rojo en el nombre
   },
 ]

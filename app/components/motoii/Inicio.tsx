@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { cloudinaryEditorialUrl } from '@/lib/cloudinary'
 
 export default function Inicio() {
   const pasos = [
@@ -58,7 +59,7 @@ export default function Inicio() {
           <div className="md:col-span-4 md:mt-12">
             <div className="relative w-full aspect-[2/3] overflow-hidden">
               <Image
-                src="/products/motoii/inicio2.jpg"
+                src={cloudinaryEditorialUrl('inicio2')}
                 alt="Manos colocando el Moto II en el manillar de la moto"
                 fill
                 quality={85}
@@ -72,7 +73,7 @@ export default function Inicio() {
           <div className="md:col-span-4">
             <div className="relative w-full aspect-[2/3] overflow-hidden">
               <Image
-                src="/products/motoii/inicio3.jpg"
+                src={cloudinaryEditorialUrl('inicio3')}
                 alt="Moto II encendido en el manillar, conectándose al celular"
                 fill
                 quality={85}
@@ -86,7 +87,7 @@ export default function Inicio() {
           <div className="md:col-span-4 md:mt-12">
             <div className="relative w-full aspect-[2/3] overflow-hidden">
               <Image
-                src="/products/motoii/EnLaCarretera_v2.jpg"
+                src={cloudinaryEditorialUrl('heroine-racer-stable-black-people-visor-cfh')}
                 alt="Mano enguantada lista para arrancar"
                 fill
                 quality={85}

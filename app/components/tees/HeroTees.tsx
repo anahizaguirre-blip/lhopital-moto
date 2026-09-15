@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { cloudinaryEditorialUrl } from '@/lib/cloudinary'
 
 export default function HeroTees() {
   return (
@@ -11,7 +12,7 @@ export default function HeroTees() {
         {/* Columna de imagen — orden 1 en desktop, orden 1 también en mobile */}
         <div className="relative w-full h-[50svh] lg:h-full order-1">
           <Image
-            src="/products/lhopitaltees/hero-sayula.jpg"
+            src={cloudinaryEditorialUrl('hero-sayula', 1920)}
             alt="Rodada en Sayula, Jalisco — el origen de Tees"
             fill
             priority

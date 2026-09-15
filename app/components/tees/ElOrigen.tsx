@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { cloudinaryEditorialUrl } from '@/lib/cloudinary'
 
 export default function ElOrigen() {
   return (
@@ -47,7 +48,7 @@ export default function ElOrigen() {
         {/* Columna de imagen */}
         <div className="relative w-full aspect-[4/5] lg:aspect-[3/4] order-1 lg:order-2">
           <Image
-            src="/products/lhopitaltees/ElOrigen.jpg"
+            src={cloudinaryEditorialUrl('ElOrigen')}
             alt="Playera Good Times, Good Rides"
             fill
             quality={90}

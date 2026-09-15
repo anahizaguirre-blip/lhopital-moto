@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { cloudinaryEditorialUrl } from '@/lib/cloudinary'
 
 const estilos = [
   'Adventure', 'Scrambler', 'Custom', 'Scooter',
@@ -62,7 +63,7 @@ export default function EnLaCarretera() {
 
           <div className="relative aspect-[4/3] overflow-hidden">
             <Image
-              src="/products/lhopitaltees/HarleyFatBob.jpg"
+              src={cloudinaryEditorialUrl('HarleyFatBob')}
               alt="Harley-Davidson — comunidad Lhopital"
               fill
               quality={85}
@@ -73,7 +74,7 @@ export default function EnLaCarretera() {
 
           <div className="relative aspect-[4/3]">
             <Image
-              src="/products/lhopitaltees/YamahaR1.jpg"
+              src={cloudinaryEditorialUrl('YamahaR1')}
               alt="Yamaha R1 en ruta— comunidad Lhopital"
               fill
               quality={85}
@@ -84,7 +85,7 @@ export default function EnLaCarretera() {
 
           <div className="relative aspect-[4/3] object-right">
             <Image
-              src="/products/lhopitaltees/HarleySportster.jpg"
+              src={cloudinaryEditorialUrl('HarleySportster')}
               alt="Harley en ruta — comunidad Lhopital"
               fill
               quality={85}

@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import { cloudinaryEditorialUrl } from '@/lib/cloudinary'
 
 export default function LaHermandad() {
   return (
@@ -34,7 +35,7 @@ export default function LaHermandad() {
       <div className="relative w-full overflow-hidden">
         <div className="relative aspect-[3/2] md:aspect-[21/9] w-full">
           <Image
-            src="/products/motoii/amigos_moto_ii.jpg"
+            src={cloudinaryEditorialUrl('amigos_moto_ii', 1920)}
             alt="Dos amigos rodando con Moto II, sin señal, solo el camino"
             fill
             priority={false}

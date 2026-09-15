@@ -1,42 +1,43 @@
 import Image from 'next/image'
+import { cloudinaryEditorialUrl } from '@/lib/cloudinary'
 
 const productos = [
   {
     nombre: "It's a Biker Thing",
     precio: 400,
-    imagen: '/products/lhopitaltees/BikerThing.jpg',
+    imagen: cloudinaryEditorialUrl('its-a-biker-thing-back'),
     posicion: 'right',   // ← a la derecha
     url: '#',
   },
   {
     nombre: "Death Doesn't Die",
     precio: 400,
-    imagen: '/products/lhopitaltees/Death.jpg',
+    imagen: cloudinaryEditorialUrl('death-doesnt-die-back'),
     url: '#',
   },
   {
     nombre: 'Good Times, Good Rides',
     precio: 400,
-    imagen: '/products/lhopitaltees/GoodTimes.png',
+    imagen: cloudinaryEditorialUrl('good-times-good-rides-back'),
     url: '#',
   },
   {
     nombre: "Let's Ride",
     precio: 400,
-    imagen: '/products/lhopitaltees/LhopitalPersonaje.jpg',
+    imagen: cloudinaryEditorialUrl('lets-ride-back'),
     url: '#',
   },
   {
     nombre: 'Tiny Movement of Your Wrist',
     precio: 400,
-    imagen: '/products/lhopitaltees/Tiny.png',
+    imagen: cloudinaryEditorialUrl('tiny-movement-back'),
     posicion: 'right',   // ← a la derecha
     url: '#',
   },
   {
     nombre: 'Brotherhood',
     precio: 400,
-    imagen: '/products/lhopitaltees/BBB.jpg',
+    imagen: cloudinaryEditorialUrl('brotherhood-back'),
     url: '#',
   },
 ]
