@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import { usePathname } from 'next/navigation'
 import { useCart } from '@/lib/cart-context'
 import { cloudinaryEditorialUrl } from '@/lib/cloudinary'
 
@@ -39,12 +40,20 @@ function CartIcon() {
 
 export default function NavbarSub() {
   const [scrolled, setScrolled] = useState(false)
+  const pathname = usePathname()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  // El panel /admin tiene su propio nav (logo, Pedidos, Citas, Cerrar
+  // sesión) — este header fijo de todo el sitio quedaba encima (z-50,
+  // fixed, ancho completo) e interceptaba los clics de esos links aunque
+  // fueran invisibles ahí, porque su bloque ocupa todo el ancho aunque el
+  // fondo sea transparente.
+  if (pathname?.startsWith('/admin')) return null
 
   return (
     <header
