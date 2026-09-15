@@ -22,7 +22,7 @@ const CAJA_ITEMS = [
     // los otros 3 íconos que son SVG heredando currentColor. Su color
     // ámbar viene fijo en el PNG a propósito (badge de marca, no un
     // ícono de línea genérico como sus vecinos).
-    imagen: '/products/MOTOII/icons/icon-compass.png',
+    imagen: cloudinaryEditorialUrl('icon-compass', 96),
   },
   {
     label: 'Soporte universal',
@@ -34,7 +34,7 @@ const CAJA_ITEMS = [
   },
   {
     label: 'Cable USB-C',
-    imagen: '/products/MOTOII/icons/icon-usb.png',
+    imagen: cloudinaryEditorialUrl('icon-usb', 96),
   },
   {
     label: 'Guía rápida',

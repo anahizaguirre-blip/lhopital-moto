@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { cloudinaryEditorialUrl } from '@/lib/cloudinary'
 
 const links = [
   { href: '#marcas', label: 'Marcas' },
@@ -18,7 +19,7 @@ export default function NavbarHome() {
         {/* Logo Lhopital — circular invertido, sobre el video */}
         <Link href="/" aria-label="Lhopital — inicio" className="flex items-center">
           <Image
-            src="/logo/LHOPITAL/frase_circular_invertido.png"
+            src={cloudinaryEditorialUrl('frase_circular_invertido')}
             alt="Lhopital"
             width={300}
             height={300}

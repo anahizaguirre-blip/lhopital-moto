@@ -6,37 +6,35 @@ const playeras = [
     numero: '01',
     nombre: "It's a Biker Thing",
     copy: "El saludo. La mano abajo, dedos abiertos, paz al cruzarse en la ruta. No se explica. Se entiende rodando.",
-    imagen: cloudinaryEditorialUrl('its-a-biker-thing-back'),
-    posicion: 'right',   // ← esta foto se pega a la derecha
+    imagen: cloudinaryEditorialUrl('its-a-biker-thing-lifestyle'),
     rojo: false,
   },
   {
     numero: '02',
     nombre: "Death Doesn't Die",
     copy: "La calaca al manubrio. Porque en México, se hace sátira de la muerte — y luego se acelera.",
-    imagen: cloudinaryEditorialUrl('death-doesnt-die-back'),
+    imagen: cloudinaryEditorialUrl('death-doesnt-die-lifestyle'),
     rojo: false,
   },
   {
     numero: '03',
     nombre: "Good Times, Good Rides",
     copy: "No hay manera de tener una sin la otra. El nombre no necesita más.",
-    imagen: cloudinaryEditorialUrl('good-times-good-rides-back'),
+    imagen: cloudinaryEditorialUrl('good-times-good-rides-lifestyle'),
     rojo: false,
   },
   {
     numero: '04',
     nombre: "Let's Ride",
     copy: "El personaje de Lhopital con casco. La invitación de la casa. Si hay duda, la respuesta siempre es la misma: ¡salir a rodar!",
-    imagen: cloudinaryEditorialUrl('lets-ride-back'),
+    imagen: cloudinaryEditorialUrl('lets-ride-lifestyle'),
     rojo: false,
   },
   {
     numero: '05',
     nombre: "Tiny Movement",
     copy: "Dos centímetros de muñeca. Eso es la diferencia entre estar parado y ser libre.",
-    imagen: cloudinaryEditorialUrl('tiny-movement-back'),
-    posicion: 'right',   // ← esta foto se pega a la derecha
+    imagen: cloudinaryEditorialUrl('tiny-movement-lifestyle'),
     rojo: false,
   },
   {
@@ -44,7 +42,7 @@ const playeras = [
     nombre: 'Brotherhood',
     nombreCompleto: 'Beers, Bikes & Bros',
     copy: "Las tres cosas que llegan después de la rodada. En ese orden o en cualquiera.",
-    imagen: cloudinaryEditorialUrl('brotherhood-back'),
+    imagen: cloudinaryEditorialUrl('brotherhood-lifestyle'),
     rojo: true, // Único modelo con acento rojo en el nombre
   },
 ]
@@ -97,7 +95,7 @@ export default function LaColeccion() {
                     fill
                     quality={90}
                     sizes="(max-width: 1024px) 100vw, 50vw"
-                    className={`object-cover ${playera.posicion === 'right' ? 'object-right' : ''}`}
+                    className="object-cover"
                   />
                 </div>
 

@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { cloudinaryEditorialUrl } from '@/lib/cloudinary'
 
 type Modelo = {
   nombre: string
@@ -17,7 +18,7 @@ const modelos: Modelo[] = [
   {
     nombre: 'Heroine Racer',
     precio: 'Desde $22,900 MXN',
-    imagen: '/products/hedon/heroine.jpg',
+    imagen: cloudinaryEditorialUrl('heroine'),
     alt: 'Casco Hedon Heroine Racer',
     objectPosition: 'center -25%',
     scale: 'scale-[1.2]'
@@ -25,7 +26,7 @@ const modelos: Modelo[] = [
   {
     nombre: 'Hedonist',
     precio: 'Desde $12,600 MXN',
-    imagen: '/products/hedon/hedonist.jpg',
+    imagen: cloudinaryEditorialUrl('hedonist'),
     alt: 'Casco Hedon Hedonist',
     objectPosition: 'center -60%',
     scale: 'scale-[1.3]',
@@ -33,7 +34,7 @@ const modelos: Modelo[] = [
   {
     nombre: 'Epicurist 2.0',
     precio: '$17,000 MXN',
-    imagen: '/products/hedon/epicurist-1.jpg',
+    imagen: cloudinaryEditorialUrl('epicurist-1'),
     alt: 'Casco Hedon Epicurist 2.0',
     objectPosition: 'center -10%',
     scale: 'scale-[1.10]',
@@ -41,7 +42,7 @@ const modelos: Modelo[] = [
   {
     nombre: 'Psilo Explores',
     precio: 'Desde $31,000 MXN',
-    imagen: '/products/hedon/psilo-1.jpg',
+    imagen: cloudinaryEditorialUrl('psilo-1'),
     alt: 'Casco Hedon Psilo Explores',
     objectPosition: 'center 99%',
     scale: 'scale-[1.15]',    

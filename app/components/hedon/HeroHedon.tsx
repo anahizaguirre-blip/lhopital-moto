@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { cloudinaryEditorialUrl } from '@/lib/cloudinary'
 
 export default function HeroHedon() {
   return (
@@ -62,7 +63,7 @@ export default function HeroHedon() {
 
         <div className="relative w-full h-[50svh] lg:h-full order-1 lg:order-2">
           <Image
-            src="/products/hedon/hedonist-hero.jpeg"
+            src={cloudinaryEditorialUrl('hedonist-hero', 1920)}
             alt="Casco Hedonist sobre barra, con flores"
             fill
             priority

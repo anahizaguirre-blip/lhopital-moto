@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
+import { cloudinaryEditorialUrl } from '@/lib/cloudinary'
 
 const navLinks = [
   { href: '/', label: 'Inicio' },
@@ -88,7 +89,7 @@ export default function Footer({ bg = 'dark' }: { bg?: 'dark' | 'hedon' }) {
           {/* Logo Lhopital */}
           <Link href="/" className="flex items-center">
             <Image
-              src="/logo/LHOPITAL/frase_horizontal_invertido.png"
+              src={cloudinaryEditorialUrl('frase_horizontal_invertido')}
               alt="Lhopital"
               width={2250}
               height={527}

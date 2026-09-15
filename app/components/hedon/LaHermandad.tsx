@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { cloudinaryEditorialUrl } from '@/lib/cloudinary'
 
 export default function LaHermandad() {
   return (
@@ -25,7 +26,7 @@ export default function LaHermandad() {
           {/* Foto grande dominante - izquierda, span 2 rows */}
            <div className="md:col-span-7 md:row-span-2 relative aspect-[3/4] md:aspect-auto overflow-hidden bg-hedon-brown/40">
             <Image
-              src="/products/hedon/Hermandad1.jpeg"
+              src={cloudinaryEditorialUrl('Hermandad-1', 1920)}
               alt="La hermandad Hedon — primer retrato"
               fill
               className="object-cover"
@@ -41,7 +42,7 @@ export default function LaHermandad() {
           {/* Foto arriba derecha */}
           <div className="md:col-span-5 md:row-span-1 relative aspect-[4/3] md:aspect-auto overflow-hidden bg-hedon-brown/40">
             <Image
-              src="/products/hedon/Hermandad3.jpeg"
+              src={cloudinaryEditorialUrl('Hermandad-3')}
               alt="La hermandad Hedon — segundo retrato"
               fill
               className="object-cover"
@@ -52,7 +53,7 @@ export default function LaHermandad() {
           {/* Abajo derecha — dos fotos chicas */}
           <div className="md:col-span-3 md:row-span-1 relative aspect-square md:aspect-auto overflow-hidden bg-hedon-brown/40">
             <Image
-              src="/products/hedon/motos.jpeg"
+              src={cloudinaryEditorialUrl('motos')}
               alt="La hermandad Hedon — tercer retrato"
               fill
               className="object-cover"
@@ -62,7 +63,7 @@ export default function LaHermandad() {
 
           <div className="md:col-span-2 md:row-span-1 relative aspect-square md:aspect-auto overflow-hidden bg-hedon-brown/40">
             <Image
-              src="/products/hedon/heroine-en-mesa.jpg"
+              src={cloudinaryEditorialUrl('heroine-en-mesa')}
               alt="Heroine sobre la mesa — detalle de objeto"
               fill
               className="object-cover"

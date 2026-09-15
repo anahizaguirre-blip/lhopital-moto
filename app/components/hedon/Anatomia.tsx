@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { cloudinaryEditorialUrl } from '@/lib/cloudinary'
 
 const bloques = [
   {
@@ -54,7 +55,7 @@ export default function Anatomia() {
           <div className="lg:col-span-7">
             <div className="relative w-full h-[600px] md:h-[750px] lg:h-[600px] overflow-hidden bg-hedon-brown/40">
               <Image
-                src="/products/hedon/heroine-eastwood-1.jpg"
+                src={cloudinaryEditorialUrl('heroine-eastwood-1', 1920)}
                 alt="Casco Hedon Heroine Eastwood — detalle artesanal"
                 fill
                 className="object-cover scale-[1.0]"

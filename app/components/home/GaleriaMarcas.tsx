@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { cloudinaryEditorialUrl } from '@/lib/cloudinary'
 
 type Marca = {
   num: string
@@ -20,8 +21,8 @@ const marcas: Marca[] = [
   {
     num: '01',
     href: '/motoii',
-    foto: '/products/brand-Moto2.jpg',
-    logo: '/logo/motoii/motoii.png',
+    foto: cloudinaryEditorialUrl('brand-Moto2'),
+    logo: cloudinaryEditorialUrl('motoii'),
     logoW: 4000,
     logoH: 1411,
     // Moto II: bloque pesado y ancho (2.83:1). Altura media — ya domina solo.
@@ -33,8 +34,8 @@ const marcas: Marca[] = [
   {
     num: '02',
     href: '/hedon',
-    foto: '/products/brand-Hedon.jpg',
-    logo: '/logo/HEDON/hedon-black.png',
+    foto: cloudinaryEditorialUrl('brand-Hedon'),
+    logo: cloudinaryEditorialUrl('hedon-black'),
     logoW: 1177,
     logoH: 396,
     // Hedon: insignia de líneas finas (2.97:1). El más alto — necesita tamaño para pesar igual.
@@ -46,8 +47,8 @@ const marcas: Marca[] = [
   {
     num: '03',
     href: '/tees',
-    foto: '/products/brand-Lhopital.jpg',
-    logo: '/logo/LHOPITAL/horizontal_invertido.png',
+    foto: cloudinaryEditorialUrl('brand-Lhopital'),
+    logo: cloudinaryEditorialUrl('horizontal_invertido'),
     logoW: 2250,
     logoH: 527,
     // Lhopital: muy alargado (4.27:1). Altura media-alta; el ancho lo compensa.

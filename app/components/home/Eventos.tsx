@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { cloudinaryEditorialUrl } from '@/lib/cloudinary'
 
 // Banners 940x400. El diseño y los datos (nombre, año) ya viven dentro de cada imagen.
 // Cada evento tiene su URL y tipo (youtube/instagram) para el microfeedback al hover.
@@ -13,43 +14,43 @@ const eventosPasados: {
   tipo: 'youtube' | 'instagram'
 }[] = [
   {
-    foto: '/eventos/dgr-2026.png',
+    foto: cloudinaryEditorialUrl('dgr-2026'),
     alt: 'DGR 2026 CDMX',
     url: 'https://www.instagram.com/p/DYoIHuvDoN1/?img_index=1',
     tipo: 'instagram',
   },
   {
-    foto: '/eventos/autocinema-coyote.png',
+    foto: cloudinaryEditorialUrl('autocinema-coyote'),
     alt: 'Autocinema Coyote, Polanco 2026',
     url: 'https://www.instagram.com/reel/DWjk8Ibg2Oe/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==',
     tipo: 'instagram',
   },
   {
-    foto: '/eventos/simm-2025.png',
+    foto: cloudinaryEditorialUrl('simm-2025'),
     alt: 'SIMM 2025, Ciudad de México',
     url: 'https://www.instagram.com/simm_mexico/',
     tipo: 'instagram',
   },
   {
-    foto: '/eventos/dgr-2025.png',
+    foto: cloudinaryEditorialUrl('dgr-2025'),
     alt: 'DGR 2025 CDMX',
     url: 'https://www.instagram.com/p/DJzuPUaSOKT/',
     tipo: 'instagram',
   },
   {
-    foto: '/eventos/la-grande.png',
+    foto: cloudinaryEditorialUrl('la-grande'),
     alt: 'La Grande 2025',
     url: 'https://www.instagram.com/p/DJ5cfIatELY/',
     tipo: 'instagram',
   },
   {
-    foto: '/eventos/simm-2024.png',
+    foto: cloudinaryEditorialUrl('simm-2024'),
     alt: 'SIMM 2024, Ciudad de México',
     url: 'https://www.instagram.com/simm_mexico/',
     tipo: 'instagram',
   },
   {
-    foto: '/eventos/vespa-festival-2024.png',
+    foto: cloudinaryEditorialUrl('vespa-festival-2024'),
     alt: 'Vespa Festival 2024',
     url: 'https://www.youtube.com/watch?v=mpY1UY5XRl4',
     tipo: 'youtube',

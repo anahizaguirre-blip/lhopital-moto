@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { cloudinaryEditorialUrl } from '@/lib/cloudinary'
 
 type Modelo = {
   nombre: string;
@@ -10,23 +11,23 @@ type Modelo = {
 const modelos: Modelo[] = [
   {
     nombre: "Heroine Racer 2.0",
-    imagen: "/products/hedon/heroine.jpg",
+    imagen: cloudinaryEditorialUrl('heroine'),
     alt: "Casco Heroine Racer de Hedon",
   },
   {
     nombre: "Hedonist",
-    imagen: "/products/hedon/hedonist.jpg",
+    imagen: cloudinaryEditorialUrl('hedonist'),
     alt: "Casco Hedonist de Hedon",
   },
   {
     nombre: "Epicurist 2.0",
-    imagen: "/products/hedon/epicurist-1.jpg",
+    imagen: cloudinaryEditorialUrl('epicurist-1'),
     alt: "Casco Epicurist 2.0 de Hedon",
     badge: "Foto oficial Hedon UK",
   },
   {
     nombre: "Psilo Explorer",
-    imagen: "/products/hedon/psilo-1.jpg",
+    imagen: cloudinaryEditorialUrl('psilo-1'),
     alt: "Casco Psilo Explorer de Hedon",
     badge: "Colección 2026",
   },

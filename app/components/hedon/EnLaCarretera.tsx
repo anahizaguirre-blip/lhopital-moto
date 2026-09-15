@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { cloudinaryEditorialUrl } from '@/lib/cloudinary'
 
 export default function EnLaCarretera() {
   return (
@@ -22,7 +23,7 @@ export default function EnLaCarretera() {
         {/* Foto izquierda - Hedonist en Tlatelolco */}
         <figure className="relative aspect-[2/3] overflow-hidden animate-fade-in-scale">
           <Image
-            src="/products/hedon/hedonist-en-moto.jpg"
+            src={cloudinaryEditorialUrl('hedonist-en-moto')}
             alt="Casco Hedonist en Av. Guerrero, Tlatelolco, CDMX"
             fill
             className="object-cover"
@@ -51,7 +52,7 @@ export default function EnLaCarretera() {
           style={{ animationDelay: "200ms", animationFillMode: "backwards" }}
         >
           <Image
-            src="/products/hedon/heroine-en-moto.jpg"
+            src={cloudinaryEditorialUrl('heroine-en-moto')}
             alt="Casco Heroine Racer en Av. Juárez, frente a Bellas Artes, CDMX"
             fill
             className="object-cover"

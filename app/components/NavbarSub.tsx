@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { useCart } from '@/lib/cart-context'
+import { cloudinaryEditorialUrl } from '@/lib/cloudinary'
 
 const links = [
   { href: '/',         label: 'Home' },
@@ -57,7 +58,7 @@ export default function NavbarSub() {
 
         <Link href="/" aria-label="Lhopital — inicio" className="flex items-center">
           <Image
-            src="/logo/LHOPITAL/frase_circular_invertido.png"
+            src={cloudinaryEditorialUrl('frase_circular_invertido')}
             alt="Lhopital"
             width={300}
             height={300}

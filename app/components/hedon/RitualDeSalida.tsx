@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { cloudinaryEditorialUrl } from '@/lib/cloudinary'
 
 export default function RitualDeSalida() {
   return (
@@ -9,7 +10,7 @@ export default function RitualDeSalida() {
           >
       {/* Foto full-bleed de fondo */}
       <Image
-        src="/products/hedon/hedonist-2.jpg"
+        src={cloudinaryEditorialUrl('hedonist-2', 1920)}
         alt="Motociclista abrochando el barbiquejo de su casco Hedonist, con chamarra camel"
         fill
         priority={false}
