@@ -4,6 +4,10 @@ import { formatFechaSolo } from '@/lib/citas';
 import { BloqueadoForm } from './BloqueadoForm';
 import { quitarDiasBloqueados } from './actions';
 
+// Ver nota en app/admin/(dashboard)/citas/page.tsx — sin esto, Next.js
+// puede servir una foto congelada del build en vez de la data real.
+export const dynamic = 'force-dynamic';
+
 interface DiaBloqueado {
   id: string;
   fecha: string;

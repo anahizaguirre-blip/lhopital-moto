@@ -4,6 +4,12 @@ import { formatFecha } from '@/lib/orders-format';
 import { BLOQUES, formatFechaSolo, type Bloque } from '@/lib/citas';
 import { confirmarCita, rechazarCita } from './actions';
 
+// Sin esto, Next.js puede prerenderizar esta página como estática en el
+// build (no usa cookies()/headers()/searchParams) y servir esa foto
+// congelada en vez de consultar Supabase en cada visita — justo lo que no
+// queremos en un panel admin que cambia todo el tiempo.
+export const dynamic = 'force-dynamic';
+
 interface CitaPendiente {
   id: string;
   nombre: string;

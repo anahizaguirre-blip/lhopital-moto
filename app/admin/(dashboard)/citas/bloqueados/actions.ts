@@ -14,7 +14,8 @@ export async function agregarDiaBloqueado(
   formData: FormData
 ): Promise<DiaBloqueadoState> {
   const desde = String(formData.get('desde') ?? '').trim();
-  const hasta = String(formData.get('hasta') ?? desde).trim();
+  const hastaInput = String(formData.get('hasta') ?? '').trim();
+  const hasta = hastaInput || desde;
   const motivo = String(formData.get('motivo') ?? '').trim() || null;
 
   if (!desde) {
