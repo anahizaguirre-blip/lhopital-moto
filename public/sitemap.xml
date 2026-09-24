@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-<url><loc>https://www.lhopital-fr.mx</loc><lastmod>2026-05-14T18:49:52.992Z</lastmod><changefreq>weekly</changefreq><priority>1</priority></url>
-<url><loc>https://www.lhopital-fr.mx/hedon</loc><lastmod>2026-05-14T18:49:52.993Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.lhopital-fr.mx/admin/actualizar-password</loc><lastmod>2026-09-24T02:23:03.047Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.lhopital-fr.mx/tees</loc><lastmod>2026-09-24T02:23:03.048Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.lhopital-fr.mx</loc><lastmod>2026-09-24T02:23:03.048Z</lastmod><changefreq>weekly</changefreq><priority>1</priority></url>
+<url><loc>https://www.lhopital-fr.mx/hedon</loc><lastmod>2026-09-24T02:23:03.048Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.lhopital-fr.mx/legal/aviso-de-privacidad</loc><lastmod>2026-09-24T02:23:03.048Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.lhopital-fr.mx/legal/politica-de-devoluciones</loc><lastmod>2026-09-24T02:23:03.048Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.lhopital-fr.mx/legal/politicas-de-entrega</loc><lastmod>2026-09-24T02:23:03.048Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.lhopital-fr.mx/legal/terminos-y-condiciones</loc><lastmod>2026-09-24T02:23:03.048Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.lhopital-fr.mx/tienda</loc><lastmod>2026-09-24T02:23:03.048Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.lhopital-fr.mx/tienda/moto-ii</loc><lastmod>2026-09-24T02:23:03.048Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.lhopital-fr.mx/tienda/hedon</loc><lastmod>2026-09-24T02:23:03.048Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.lhopital-fr.mx/admin/login</loc><lastmod>2026-09-24T02:23:03.048Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.lhopital-fr.mx/motoii</loc><lastmod>2026-09-24T02:23:03.048Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.lhopital-fr.mx/tienda/tees</loc><lastmod>2026-09-24T02:23:03.048Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+<url><loc>https://www.lhopital-fr.mx/tienda/hedon/personaliza</loc><lastmod>2026-09-24T02:23:03.048Z</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
 </urlset>
