@@ -3,7 +3,7 @@
 import { headers } from 'next/headers';
 import { createSupabaseAdmin } from '@/lib/supabase/admin';
 import { getResend, EMAIL_FROM_CONTACTO, EMAIL_COPIA_INTERNA_CONTACTO } from '@/lib/resend';
-import { BLOQUES, MARCAS_INTERES, formatFechaSolo, type Bloque } from '@/lib/citas';
+import { BLOQUES, MARCAS_INTERES, esSabado, formatFechaSolo, type Bloque } from '@/lib/citas';
 import { CitaSolicitudInternaEmail } from '@/emails/cita-solicitud-interna';
 
 export interface EnviarSolicitudCitaState {
@@ -39,6 +39,9 @@ export async function enviarSolicitudCita(
   }
   if (!fecha || (bloque !== 'manana' && bloque !== 'tarde')) {
     return { error: 'Elige una fecha y un horario.' };
+  }
+  if (bloque === 'tarde' && esSabado(new Date(`${fecha}T00:00:00Z`))) {
+    return { error: 'Los sábados solo atendemos en la mañana.' };
   }
 
   const supabase = createSupabaseAdmin();

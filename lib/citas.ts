@@ -30,6 +30,11 @@ export function esDomingo(fecha: Date): boolean {
   return fecha.getUTCDay() === 0;
 }
 
+// Sábado solo atiende en la mañana — la tarde no se ofrece ese día.
+export function esSabado(fecha: Date): boolean {
+  return fecha.getUTCDay() === 6;
+}
+
 export function toISODate(fecha: Date): string {
   return fecha.toISOString().slice(0, 10);
 }
@@ -87,7 +92,7 @@ export async function getDisponibilidad(
   for (let d = new Date(desde); d <= hasta; d.setUTCDate(d.getUTCDate() + 1)) {
     const iso = toISODate(d);
     if (esDomingo(d) || bloqueadas.has(iso)) continue;
-    disponibilidad[iso] = { manana: true, tarde: true };
+    disponibilidad[iso] = { manana: true, tarde: !esSabado(d) };
   }
 
   for (const cita of citasActivas ?? []) {
