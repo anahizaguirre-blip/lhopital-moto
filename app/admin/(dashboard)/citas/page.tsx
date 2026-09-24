@@ -10,7 +10,9 @@ import { confirmarCita, rechazarCita } from './actions';
 // queremos en un panel admin que cambia todo el tiempo.
 export const dynamic = 'force-dynamic';
 
-interface CitaPendiente {
+const ESTADOS = ['pendiente', 'confirmada', 'cancelada'] as const;
+
+interface Cita {
   id: string;
   nombre: string;
   correo: string;
@@ -20,26 +22,46 @@ interface CitaPendiente {
   talla_aprox: string | null;
   fecha: string;
   bloque: Bloque;
+  estado: (typeof ESTADOS)[number];
   created_at: string;
 }
 
-export default async function CitasAdminPage() {
+export default async function CitasAdminPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ estado?: string }>;
+}) {
+  const { estado } = await searchParams;
   const supabase = createSupabaseAdmin();
-  const { data } = await supabase
-    .from('citas_showroom')
-    .select('id, nombre, correo, telefono, marcas_interes, modelo_interes, talla_aprox, fecha, bloque, created_at')
-    .eq('estado', 'pendiente')
-    .order('created_at', { ascending: true });
 
-  const citas = (data ?? []) as CitaPendiente[];
+  let query = supabase
+    .from('citas_showroom')
+    .select('id, nombre, correo, telefono, marcas_interes, modelo_interes, talla_aprox, fecha, bloque, estado, created_at')
+    .order('created_at', { ascending: false });
+
+  if (estado) query = query.eq('estado', estado);
+
+  const { data } = await query;
+  const citas = (data ?? []) as Cita[];
 
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-        <h1 style={{ fontSize: '22px' }}>Citas · Solicitudes pendientes</h1>
+        <h1 style={{ fontSize: '22px' }}>Citas</h1>
         <Link href="/admin/citas/bloqueados" style={{ fontSize: '13px', color: '#020202' }}>
           Días bloqueados →
         </Link>
+      </div>
+
+      <div style={{ display: 'flex', gap: '8px', marginBottom: '20px', flexWrap: 'wrap' }}>
+        <FiltroLink href="/admin/citas" activo={!estado}>
+          Todas
+        </FiltroLink>
+        {ESTADOS.map((e) => (
+          <FiltroLink key={e} href={`/admin/citas?estado=${e}`} activo={estado === e}>
+            {e}
+          </FiltroLink>
+        ))}
       </div>
 
       <div style={{ backgroundColor: 'white', borderRadius: '6px', overflow: 'hidden' }}>
@@ -50,14 +72,15 @@ export default async function CitasAdminPage() {
               <th style={thStyle}>Cliente</th>
               <th style={thStyle}>Interés</th>
               <th style={thStyle}>Fecha pedida</th>
+              <th style={thStyle}>Estado</th>
               <th style={{ ...thStyle, textAlign: 'right' }}>Acciones</th>
             </tr>
           </thead>
           <tbody>
             {citas.length === 0 && (
               <tr>
-                <td colSpan={5} style={{ ...tdStyle, textAlign: 'center', color: '#888' }}>
-                  No hay solicitudes pendientes.
+                <td colSpan={6} style={{ ...tdStyle, textAlign: 'center', color: '#888' }}>
+                  No hay citas que mostrar.
                 </td>
               </tr>
             )}
@@ -77,19 +100,24 @@ export default async function CitasAdminPage() {
                   {formatFechaSolo(cita.fecha)}
                   <div style={{ color: '#888', fontSize: '12px' }}>{BLOQUES[cita.bloque].label}</div>
                 </td>
+                <td style={tdStyle}>{cita.estado}</td>
                 <td style={{ ...tdStyle, textAlign: 'right' }}>
-                  <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
-                    <form action={confirmarCita.bind(null, cita.id)}>
-                      <button type="submit" style={botonConfirmar}>
-                        Confirmar
-                      </button>
-                    </form>
-                    <form action={rechazarCita.bind(null, cita.id)}>
-                      <button type="submit" style={botonRechazar}>
-                        Rechazar
-                      </button>
-                    </form>
-                  </div>
+                  {cita.estado === 'pendiente' ? (
+                    <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
+                      <form action={confirmarCita.bind(null, cita.id)}>
+                        <button type="submit" style={botonConfirmar}>
+                          Confirmar
+                        </button>
+                      </form>
+                      <form action={rechazarCita.bind(null, cita.id)}>
+                        <button type="submit" style={botonRechazar}>
+                          Rechazar
+                        </button>
+                      </form>
+                    </div>
+                  ) : (
+                    <span style={{ color: '#888' }}>—</span>
+                  )}
                 </td>
               </tr>
             ))}
@@ -97,6 +125,24 @@ export default async function CitasAdminPage() {
         </table>
       </div>
     </div>
+  );
+}
+
+function FiltroLink({ href, activo, children }: { href: string; activo: boolean; children: React.ReactNode }) {
+  return (
+    <Link
+      href={href}
+      style={{
+        padding: '6px 14px',
+        borderRadius: '999px',
+        fontSize: '13px',
+        textDecoration: 'none',
+        backgroundColor: activo ? '#020202' : '#e8e0cc',
+        color: activo ? '#F5EFE0' : '#020202',
+      }}
+    >
+      {children}
+    </Link>
   );
 }
 
