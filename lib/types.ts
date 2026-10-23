@@ -19,6 +19,8 @@ export type TipoColeccion =
   | 'clasico_permanente'
   | 'sin_coleccion';
 
+export type MotivoUnico = 'dot' | 'electrico' | 'edicion_limitada';
+
 export type CategoriaProducto =
   | 'estrella'
   | 'add_on_dual'
@@ -65,6 +67,9 @@ export interface Product {
   visible_publico: boolean;
   destacado_home: boolean;
   fecha_lanzamiento: string | null;
+  // Fuera de Serie: pieza física única (stock 1). Ver lib/fuera-de-serie.ts
+  pieza_unica: boolean;
+  motivo_unico: MotivoUnico | null;
   created_at: string;
   updated_at: string;
   // Relaciones (cuando se hacen joins)

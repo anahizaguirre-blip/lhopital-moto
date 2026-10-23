@@ -8,6 +8,10 @@ import Anatomia from '@/app/components/hedon/Anatomia'
 import FranjaConfianza from '@/app/components/hedon/FranjaConfianza'
 import LaHermandad from '@/app/components/hedon/LaHermandad'
 import Footer from "@/app/components/Footer";
+import FranjaFueraDeSerie from '@/app/components/hedon/FranjaFueraDeSerie'
+
+// La franja Fuera de Serie depende del stock en vivo
+export const revalidate = 60;
 
 export const metadata = {
   title: 'Hedon — Cascos sin compromiso | Lhopital-moto',
@@ -22,6 +26,7 @@ export default function HedonPage() {
       <RitualDeSalida />
         <EnLaCarretera />
         <LaColeccion />
+        <FranjaFueraDeSerie />
         <Anatomia />
         <FranjaConfianza />
         <LaHermandad />

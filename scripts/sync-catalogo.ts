@@ -269,6 +269,161 @@ async function syncHedonCascos(wb: XLSX.WorkBook): Promise<SyncResult> {
 }
 
 // ============================================================================
+// HEDON ÚNICOS — piezas "Fuera de Serie" (stock 1, sin bajo pedido)
+// ============================================================================
+// Cada pieza es su propio producto (SKU padre propio) con una sola variante,
+// marcado pieza_unica = true. Reglas distintas a Hedon Cascos:
+//   - El stock SOLO se escribe al crear la variante. Una vez en la BD, el
+//     stock lo mueve la venta: si el sync lo sobrescribiera desde el Excel,
+//     una pieza vendida volvería a aparecer con stock 1 y se vendería dos veces.
+//   - motivo_unico sale de la columna "Motivo" si existe; si no, se deduce de
+//     la certificación (DOT → dot, NTA → electrico, otra → edicion_limitada).
+//   - Las piezas DOT sin foto propia reusan las fotos de su versión ECE
+//     (mismo SKU padre con -ECE), que se ven idénticas.
+const MOTIVOS_UNICO = ['dot', 'electrico', 'edicion_limitada'] as const;
+
+const sinAcentos = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '');
+
+function deducirMotivo(row: any): string {
+  const explicito = clean(row['Motivo']);
+  if (explicito) {
+    const v = sinAcentos(explicito.toString().trim().toLowerCase());
+    if ((MOTIVOS_UNICO as readonly string[]).includes(v)) return v;
+    console.warn(`    ⚠ Motivo "${explicito}" no reconocido (${row['SKU Variante']}) — se deduce de la certificación.`);
+  }
+  const cert = (row['Certificación'] ?? '').toString().toUpperCase();
+  if (cert.includes('DOT')) return 'dot';
+  if (cert.includes('NTA')) return 'electrico';
+  return 'edicion_limitada';
+}
+
+async function syncHedonUnicos(wb: XLSX.WorkBook): Promise<SyncResult> {
+  logStep('Sincronizando Hedon Únicos (Fuera de Serie)');
+  const vacio: SyncResult = { skusPadre: new Set(), variantesPorPadre: new Map() };
+  const sheet = wb.Sheets['Hedon_Unicos'];
+  if (!sheet) {
+    logErr('No se encontró pestaña "Hedon_Unicos"');
+    return vacio;
+  }
+  const rows: any[] = XLSX.utils.sheet_to_json(sheet, { defval: null });
+
+  const { data: cols } = await supabase.from('collections').select('id');
+  const coleccionesValidas = new Set((cols || []).map((c) => c.id));
+
+  const skusPadre = new Set<string>();
+  const variantesPorPadre = new Map<string, Set<string>>();
+  let creados = 0;
+
+  for (const row of rows) {
+    const skuPadre = row['SKU Padre'];
+    const skuVariante = row['SKU Variante'];
+    if (!esSkuValido(skuPadre) || !esSkuValido(skuVariante)) continue;
+
+    const motivo = deducirMotivo(row);
+
+    // Tipo Colección = colección del COLOR (no el motivo). Se quitan acentos
+    // ("edición_limitada" → "edicion_limitada") y se valida contra la BD.
+    let coleccion: string | null = clean(row['Tipo Colección']);
+    if (coleccion) coleccion = sinAcentos(coleccion.toString().trim().toLowerCase());
+    if (coleccion && !coleccionesValidas.has(coleccion)) {
+      console.warn(`    ⚠ Tipo Colección "${row['Tipo Colección']}" no existe (${skuVariante}) — se usará "clasico_permanente". Corrígelo en el Excel.`);
+      coleccion = 'clasico_permanente';
+    }
+
+    let certificacion: string | null = clean(row['Certificación'])?.toString().trim() ?? null;
+    if (certificacion === 'NTA') certificacion = 'NTA 8776';
+
+    const precio = parseFloat(row['Precio MXN']);
+    const precioValido = Number.isFinite(precio) && precio > 0 ? precio : null;
+
+    let imagen_principal: string | null = clean(row['Foto Cloudinary']);
+    let imagenes: string[] = [];
+    let foto_interior: string | null = clean(row['Foto Interior Cloudinary']);
+    let foto_headmost: string | null = clean(row['Foto Headmost Cloudinary']);
+    if (/-DOT$/.test(skuPadre)) {
+      const { data: ece } = await supabase
+        .from('products')
+        .select('imagen_principal, imagenes, foto_interior, foto_headmost')
+        .eq('sku_padre', skuPadre.replace(/-DOT$/, '-ECE'))
+        .maybeSingle();
+      if (ece?.imagen_principal) {
+        imagen_principal = ece.imagen_principal;
+        imagenes = ece.imagenes ?? [];
+        foto_interior = foto_interior ?? ece.foto_interior;
+        foto_headmost = foto_headmost ?? ece.foto_headmost;
+      }
+    }
+
+    const producto = {
+      sku_padre: skuPadre,
+      slug: makeSlug(`${row['Familia']} ${row['Color']} fuera de serie`),
+      nombre: `${row['Familia']} ${row['Color']}`,
+      marca: 'hedon',
+      familia: row['Familia'],
+      color: row['Color'],
+      categoria: 'estrella',
+      coleccion_id: coleccion,
+      precio_base: precioValido ?? 0, // NOT NULL en BD; el "por definir" se lee de variante.precio
+      moneda: 'MXN',
+      frase_corta: clean(row['Frase corta']),
+      certificacion,
+      imagen_principal,
+      imagenes,
+      foto_interior,
+      foto_headmost,
+      numero_fotos_esperadas: 4,
+      visible_publico: true,
+      destacado_home: false,
+      pieza_unica: true,
+      motivo_unico: motivo,
+    };
+
+    const { data: prod, error: errP } = await supabase
+      .from('products')
+      .upsert(producto, { onConflict: 'sku_padre' })
+      .select()
+      .single();
+    if (errP) {
+      logErr(`Error pieza única ${skuPadre}`, errP);
+      continue;
+    }
+
+    const { data: existente } = await supabase
+      .from('product_variants')
+      .select('id')
+      .eq('sku_variante', skuVariante)
+      .maybeSingle();
+
+    const variante: Record<string, any> = {
+      product_id: prod.id,
+      sku_variante: skuVariante,
+      talla: clean(row['Talla']),
+      precio: precioValido,
+      estado: 'disponible', // nunca bajo pedido; el stock decide si está vendida
+      codigo_barras: clean(row['Código de Barras'])?.toString() ?? null,
+      visible_publico: true,
+    };
+    if (!existente) variante.stock_actual = Math.min(parseInt(row['Stock']) || 0, 1);
+
+    const { error: errV } = await supabase
+      .from('product_variants')
+      .upsert(variante, { onConflict: 'sku_variante' });
+    if (errV) {
+      logErr(`Error variante pieza única ${skuVariante}`, errV);
+      continue;
+    }
+
+    creados++;
+    skusPadre.add(skuPadre);
+    variantesPorPadre.set(prod.id, new Set([skuVariante]));
+    console.log(`    · ${skuVariante} — ${producto.nombre} · ${motivo}${existente ? ' (stock sin tocar)' : ''}`);
+  }
+
+  logOk(`${creados} piezas Fuera de Serie`);
+  return { skusPadre, variantesPorPadre };
+}
+
+// ============================================================================
 // HEDON ACCESORIOS
 // ============================================================================
 const TORNILLO_CNC = (tipo: string) => tipo === 'Tornillo CNC';
@@ -813,17 +968,26 @@ async function main() {
   mostrarLeeme(wb);
   console.log(`\nPestañas encontradas: ${wb.SheetNames.join(', ')}`);
 
+  // `npm run sync-catalogo -- --solo-unicos` solo carga la pestaña
+  // Hedon_Unicos, sin tocar el resto del catálogo ni aplicar bajas.
+  if (process.argv.includes('--solo-unicos')) {
+    await syncHedonUnicos(wb);
+    console.log('\n✓ Solo Hedon_Unicos sincronizado.\n');
+    return;
+  }
+
   try {
     await syncColecciones(wb);
 
     const hedonCascos = await syncHedonCascos(wb);
+    const hedonUnicos = await syncHedonUnicos(wb);
     const hedonAcc = await syncHedonAccesorios(wb);
     const motoII = await syncMotoII(wb);
     const tees = await syncTees(wb);
     await syncTeesTabla(wb);
 
     logStep('Aplicando alta/baja de productos');
-    const hedonSkus = new Set([...hedonCascos.skusPadre, ...hedonAcc.skusPadre]);
+    const hedonSkus = new Set([...hedonCascos.skusPadre, ...hedonUnicos.skusPadre, ...hedonAcc.skusPadre]);
     const bajasHedon = await aplicarBajasProductos('hedon', hedonSkus);
     const bajasMotoII = await aplicarBajasProductos('moto_ii', motoII.skusPadre);
     const bajasTees = await aplicarBajasProductos('tees', tees.skusPadre);
@@ -833,6 +997,7 @@ async function main() {
 
     const variantesPorPadre = new Map([
       ...hedonCascos.variantesPorPadre,
+      ...hedonUnicos.variantesPorPadre,
       ...hedonAcc.variantesPorPadre,
       ...motoII.variantesPorPadre,
       ...tees.variantesPorPadre,

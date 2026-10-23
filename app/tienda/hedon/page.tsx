@@ -34,6 +34,8 @@ export default async function TiendaHedonPage() {
     `)
     .eq('marca', 'hedon')
     .eq('visible_publico', true)
+    // Las piezas Fuera de Serie viven solo en /tienda/hedon/fuera-de-serie
+    .eq('pieza_unica', false)
     //.in('familia', ['Hedonist', 'Epicurist 2.0', 'Heroine Racer 2.0', 'Psilo Explorer'])
     .in('categoria', ['estrella'])
     .order('categoria', { ascending: true })

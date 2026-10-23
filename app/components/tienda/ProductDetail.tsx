@@ -6,10 +6,23 @@ import Link from 'next/link';
 import type { Product, HedonCrossSell, ProductVariant } from '@/lib/types';
 import { cloudinaryUrl, hedonGallery, extractBasePath } from '@/lib/cloudinary';
 import { CrossSellHedon } from './CrossSellHedon';
+import { SelloMotivo, SelloVendida, AvisoElectrico, TextoDGR } from './fuera-de-serie/Sellos';
+import {
+  FUERA_DE_SERIE_HREF,
+  estadoPieza,
+  precioPieza,
+  variantePieza,
+  notaExtra,
+  formatMXN,
+} from '@/lib/fuera-de-serie';
 
 interface ProductDetailProps {
   product: Product;
   hedonCrossSells: HedonCrossSell[];
+  /** Solo pieza única: vistas que sí existen en Cloudinary. */
+  vistasDisponibles?: string[];
+  /** PDP normal: hay una pieza Fuera de Serie disponible del mismo modelo. */
+  hayPiezaFueraDeSerie?: boolean;
 }
 
 const TALLA_ORDEN = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
@@ -19,6 +32,7 @@ const COLECCION_LABELS: Record<string, string> = {
   coleccion_2026_psilo_debut:     'Coleccion debut Psilo Explorer 2026',
   coleccion_lejano_oeste:         'Coleccion Lejano Oeste',
   clasico_permanente:             'Clasico Hedon',
+  edicion_limitada:               'DGR 2026',
 };
 
 const CLOUDINARY_BASE = 'https://res.cloudinary.com/lhopital-moto/image/upload';
@@ -27,7 +41,15 @@ const TALLAS_GUIDE_URL = `${CLOUDINARY_BASE}/hedon-tallas`;
 // Cuantos thumbnails mostrar a la vez
 const THUMB_VISIBLE = 4;
 
-export function ProductDetail({ product, hedonCrossSells }: ProductDetailProps) {
+export function ProductDetail({
+  product,
+  hedonCrossSells,
+  vistasDisponibles,
+  hayPiezaFueraDeSerie = false,
+}: ProductDetailProps) {
+  const esPiezaUnica = product.pieza_unica === true;
+  const estadoUnica  = esPiezaUnica ? estadoPieza(product) : null;
+  const vendida      = estadoUnica === 'vendida';
   const basePath    = extractBasePath(product.imagen_principal);
   const gallery     = basePath ? hedonGallery(basePath) : null;
   const interiorUrl = product.foto_interior
@@ -37,7 +59,7 @@ export function ProductDetail({ product, hedonCrossSells }: ProductDetailProps) 
     ? cloudinaryUrl(product.foto_headmost, 'detail')
     : null;
 
-  const vistas = gallery
+  const vistas = (gallery
     ? [
         { key: 'front',        label: 'Frente',       url: gallery.front },
         { key: 'threeQuarter', label: 'Tres cuartos', url: gallery.threeQuarter },
@@ -50,7 +72,14 @@ export function ProductDetail({ product, hedonCrossSells }: ProductDetailProps) 
           ? [{ key: 'interior', label: 'Interior', url: interiorUrl }]
           : []),
       ]
-    : [];
+    : []
+  ).filter(
+    (v) =>
+      !vistasDisponibles ||
+      v.key === 'interior' ||
+      v.key === 'headmost' ||
+      vistasDisponibles.includes(v.key)
+  );
 
   const [vistaActiva, setVistaActiva] = useState(0);
 
@@ -102,7 +131,7 @@ export function ProductDetail({ product, hedonCrossSells }: ProductDetailProps) 
   const [guiaTallasOpen, setGuiaTallasOpen] = useState(false);
 
   const etiquetaColeccion = product.coleccion_id
-    ? COLECCION_LABELS[product.coleccion_id]
+    ? COLECCION_LABELS[product.coleccion_id] ?? product.collection?.etiqueta_visible ?? null
     : null;
 
   const enStock      = varianteSel && varianteSel.stock_actual > 0;
@@ -157,7 +186,7 @@ export function ProductDetail({ product, hedonCrossSells }: ProductDetailProps) 
                   fill
                   priority
                   sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover transition-transform duration-200"
+                  className={`object-cover transition-transform duration-200 ${vendida ? 'grayscale opacity-60' : ''}`}
                   style={
                     zoom
                       ? {
@@ -275,6 +304,10 @@ export function ProductDetail({ product, hedonCrossSells }: ProductDetailProps) 
               </div>
             )}
 
+            {esPiezaUnica ? (
+              <BloquePiezaUnica product={product} />
+            ) : (
+            <>
             <div className="flex items-baseline gap-2 mb-6">
               <span className="text-3xl font-bold">
                 ${product.precio_base.toLocaleString('es-MX')}
@@ -356,6 +389,15 @@ export function ProductDetail({ product, hedonCrossSells }: ProductDetailProps) 
                     : 'Bajo pedido · llegada 3 semanas a 90 dias'}
                 </div>
               )}
+
+              {hayPiezaFueraDeSerie && (
+                <Link
+                  href={FUERA_DE_SERIE_HREF}
+                  className="mt-3 inline-block text-[11px] tracking-[0.05em] text-[#C9A961]/80 hover:text-[#C9A961] border-b border-[#C9A961]/30 hover:border-[#C9A961] pb-0.5 transition"
+                >
+                  Existe una pieza Fuera de Serie de este modelo →
+                </Link>
+              )}
             </div>
 
             {/* Cantidad */}
@@ -393,6 +435,8 @@ export function ProductDetail({ product, hedonCrossSells }: ProductDetailProps) 
             <button className="w-full bg-transparent border border-[#F4F1EC]/35 text-[#F4F1EC] py-3 text-xs font-medium tracking-[0.05em] uppercase hover:border-[#F4F1EC]/60 transition">
               Avisame de novedades
             </button>
+            </>
+            )}
 
             <div className="mt-10 pt-8 border-t border-[#F4F1EC]/8">
               <div className="text-[10px] tracking-[0.3em] uppercase text-[#C9A961] mb-4">
@@ -427,10 +471,113 @@ export function ProductDetail({ product, hedonCrossSells }: ProductDetailProps) 
         </div>
       </section>
 
-      <CrossSellHedon
-        items={hedonCrossSells}
-        nombreCasco={product.familia ?? 'Hedon'}
-      />
+      {esPiezaUnica && product.motivo_unico === 'edicion_limitada' && (
+        <section className="pt-16 border-t border-[#F4F1EC]/8">
+          <div className="w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
+            <TextoDGR />
+          </div>
+        </section>
+      )}
+
+      {!esPiezaUnica && (
+        <CrossSellHedon
+          items={hedonCrossSells}
+          nombreCasco={product.familia ?? 'Hedon'}
+        />
+      )}
     </>
+  );
+}
+
+/**
+ * Columna de compra en modo pieza única: talla fija, sin selector de color,
+ * sin personalización ni bajo pedido, cantidad fija en 1.
+ */
+function BloquePiezaUnica({ product }: { product: Product }) {
+  const variante = variantePieza(product);
+  const estado   = estadoPieza(product);
+  const precio   = precioPieza(product);
+  const nota     = notaExtra(product);
+  const esElectrico = product.motivo_unico === 'electrico';
+
+  const handleAgregar = () => {
+    if (!variante) return;
+    // TODO(fuera-de-serie): al conectar checkout + Mercado Pago, descontar el
+    // stock de forma atómica ANTES de cobrar:
+    //   UPDATE product_variants SET stock_actual = stock_actual - 1
+    //   WHERE sku_variante = $1 AND stock_actual >= 1 RETURNING id;
+    // Sin fila → no cobrar y mostrar "Esta pieza acaba de encontrar dueño."
+    // Pago fallido/cancelado → restaurar stock. Registrar en stock_movements.
+    alert(
+      `[PLACEHOLDER]\n\nProducto: ${product.nombre}\nTalla: ${variante.talla}\nCantidad: 1\nSKU: ${variante.sku_variante}\n\nEl carrito se conecta en el siguiente paso.`
+    );
+  };
+
+  return (
+    <div>
+      <div className="mb-5 space-y-3">
+        {estado === 'vendida' ? (
+          <SelloVendida />
+        ) : (
+          product.motivo_unico && <SelloMotivo motivo={product.motivo_unico} />
+        )}
+        {nota && <p className="text-[12px] text-[#F4F1EC]/60">{nota}</p>}
+      </div>
+
+      <div className="flex items-baseline gap-2 mb-6">
+        {estado === 'vendida' ? (
+          <span className="text-xl text-[#F4F1EC]/45">Pieza vendida</span>
+        ) : precio !== null ? (
+          <>
+            <span className="text-3xl font-bold">{formatMXN(precio)}</span>
+            <span className="text-[10px] tracking-[0.15em] uppercase text-[#F4F1EC]/45">MXN</span>
+          </>
+        ) : (
+          <span className="text-xl text-[#F4F1EC]/75">Precio por confirmar</span>
+        )}
+      </div>
+
+      <dl className="grid grid-cols-3 border-y border-[#F4F1EC]/10 mb-6 text-center">
+        <div className="py-4">
+          <dt className="text-[10px] tracking-[0.3em] uppercase text-[#F4F1EC]/55 mb-1">Talla</dt>
+          <dd className="text-lg font-medium">{variante?.talla ?? '—'}</dd>
+        </div>
+        <div className="py-4 border-x border-[#F4F1EC]/10">
+          <dt className="text-[10px] tracking-[0.3em] uppercase text-[#F4F1EC]/55 mb-1">Cantidad</dt>
+          <dd className="text-lg font-medium">1</dd>
+        </div>
+        <div className="py-4">
+          <dt className="text-[10px] tracking-[0.3em] uppercase text-[#F4F1EC]/55 mb-1">Piezas</dt>
+          <dd className="text-lg font-medium">Única</dd>
+        </div>
+      </dl>
+
+      {esElectrico && <AvisoElectrico className="mb-4" />}
+
+      {estado === 'disponible' && (
+        <button
+          onClick={handleAgregar}
+          className="w-full bg-[#F4F1EC] text-[#0A0A0A] py-4 text-sm font-bold tracking-[0.1em] uppercase hover:opacity-85 transition mb-3"
+        >
+          Agregar al carrito — {formatMXN(precio!)}
+        </button>
+      )}
+
+      {estado === 'precio_por_definir' && (
+        <Link
+          href="/citas"
+          className="block w-full text-center bg-[#C9A961] text-[#0A0A0A] py-4 text-sm font-bold tracking-[0.1em] uppercase hover:opacity-85 transition mb-3"
+        >
+          Agenda una cita en showroom
+        </Link>
+      )}
+
+      <Link
+        href={FUERA_DE_SERIE_HREF}
+        className="inline-block mt-2 text-xs tracking-[0.15em] uppercase text-[#C9A961] border-b border-[#C9A961]/40 pb-1 hover:border-[#C9A961] transition"
+      >
+        ← Volver a Fuera de Serie
+      </Link>
+    </div>
   );
 }
