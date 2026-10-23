@@ -4,6 +4,7 @@ import { useState, useMemo } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import type { Product, Collection } from '@/lib/types';
 import { ProductCard } from './ProductCard';
+import { FUERA_DE_SERIE_HREF } from '@/lib/fuera-de-serie';
 
 interface ProductGridProps {
   products: Product[];
@@ -124,6 +125,14 @@ export function ProductGrid({ products, collections }: ProductGridProps) {
                   {col.nombre}
                 </button>
               ))}
+              {/* Las piezas únicas no van en este grid: viven en su propia página */}
+              <span className="self-center text-[#F4F1EC]/20 text-sm">|</span>
+              <button
+                onClick={() => router.push(FUERA_DE_SERIE_HREF)}
+                className="text-xs tracking-[0.1em] uppercase px-4 py-2 border transition border-[#F4F1EC]/20 text-[#F4F1EC]/70 hover:border-[#C9A961]/50 hover:text-[#C9A961]"
+              >
+                Fuera de Serie →
+              </button>
             </div>
           </div>
         </div>
