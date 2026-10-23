@@ -3,7 +3,7 @@
 import { useState, useMemo, useRef } from 'react';
 import Image from 'next/image';
 import type { Product } from '@/lib/types';
-import { cloudinaryUrl, hedonGallery, extractBasePath } from '@/lib/cloudinary';
+import { cloudinaryUrl, hedonGallery, extractBasePath, cascoEncuadradoUrl } from '@/lib/cloudinary';
 
 type ProductoGaleria = Pick<
   Product,
@@ -17,6 +17,11 @@ interface GaleriaCascoProps {
   /** Pieza vendida: foto en escala de grises. */
   apagada?: boolean;
   priority?: boolean;
+  /**
+   * Vistas estándar con encuadre uniforme (solo el casco, centrado, mismo
+   * zoom). La vista interior y la superior se dejan con su foto original.
+   */
+  encuadreUniforme?: boolean;
 }
 
 // Cuantos thumbnails mostrar a la vez
@@ -26,9 +31,24 @@ const THUMB_VISIBLE = 4;
  * Carrusel de vistas de un casco Hedon (frente → tres cuartos → lado → atrás
  * + vista superior / interior), con flechas, puntitos, zoom y thumbnails.
  */
-export function GaleriaCasco({ product, vistasDisponibles, apagada = false, priority = true }: GaleriaCascoProps) {
+export function GaleriaCasco({
+  product,
+  vistasDisponibles,
+  apagada = false,
+  priority = true,
+  encuadreUniforme = false,
+}: GaleriaCascoProps) {
   const basePath    = extractBasePath(product.imagen_principal);
-  const gallery     = basePath ? hedonGallery(basePath) : null;
+  const gallery     = basePath
+    ? encuadreUniforme
+      ? {
+          front:        cascoEncuadradoUrl(`${basePath}-front`),
+          threeQuarter: cascoEncuadradoUrl(`${basePath}-three-quarter`),
+          side:         cascoEncuadradoUrl(`${basePath}-side`),
+          back:         cascoEncuadradoUrl(`${basePath}-back`),
+        }
+      : hedonGallery(basePath)
+    : null;
   const interiorUrl = product.foto_interior
     ? cloudinaryUrl(product.foto_interior, 'detail')
     : null;
@@ -95,6 +115,8 @@ export function GaleriaCasco({ product, vistasDisponibles, apagada = false, prio
     if (v.key === 'headmost' && product.foto_headmost) {
       return cloudinaryUrl(product.foto_headmost, 'thumbnail');
     }
+    // Con encuadre uniforme el thumbnail reusa la misma imagen (ya en caché)
+    if (encuadreUniforme) return v.url;
     const suffix =
       v.key === 'threeQuarter' ? 'three-quarter' :
       v.key === 'side'         ? 'side'          :

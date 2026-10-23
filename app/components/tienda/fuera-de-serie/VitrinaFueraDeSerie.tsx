@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { Product } from '@/lib/types';
-import { cloudinaryUrl } from '@/lib/cloudinary';
+import { cascoEncuadradoUrl } from '@/lib/cloudinary';
 import {
   estadoPieza,
   precioPieza,
@@ -62,6 +62,7 @@ export function VitrinaFueraDeSerie({ piezas, vistasPorPieza }: Props) {
             product={sel}
             vistasDisponibles={vistasPorPieza[sel.id]}
             apagada={estadoPieza(sel) === 'vendida'}
+            encuadreUniforme
           />
           <InfoPieza key={`info-${sel.id}`} product={sel} />
         </div>
@@ -76,7 +77,7 @@ export function VitrinaFueraDeSerie({ piezas, vistasPorPieza }: Props) {
               toca una para verla arriba
             </span>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-start gap-6 md:gap-8">
             {piezas.map((p) => (
               <TarjetaPieza
                 key={p.id}
@@ -200,17 +201,18 @@ function TarjetaPieza({
       type="button"
       onClick={onSelect}
       aria-pressed={activa}
-      className="group block text-left w-full"
+      className="group flex flex-col justify-start text-left w-full self-start"
     >
       <div
-        className={`relative aspect-square bg-gradient-to-b from-[#1a1a1a] to-[#0d0d0d] overflow-hidden mb-4 border transition ${
+        className={`relative w-full aspect-square bg-[#e6e6e4] overflow-hidden mb-4 border transition ${
           activa ? 'border-[#C9A961]' : 'border-transparent group-hover:border-[#F4F1EC]/20'
         }`}
       >
         <Image
-          src={cloudinaryUrl(product.imagen_principal, 'card')}
+          src={cascoEncuadradoUrl(product.imagen_principal)}
           alt={`${product.nombre}, talla ${variante?.talla ?? ''}`}
           fill
+          unoptimized
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className={`object-cover transition-opacity duration-300 ${
             vendida ? 'grayscale opacity-50' : 'group-hover:opacity-90'

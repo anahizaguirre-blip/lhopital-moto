@@ -53,6 +53,22 @@ export function cloudinaryUrl(
 }
 
 /**
+ * Foto de casco con encuadre uniforme: Cloudinary extrae solo el casco
+ * (sin fondo ni podio), lo recorta y lo centra al 80% de un cuadro de
+ * 600×600 sobre gris claro de estudio. Sirve para que fotos con distinto
+ * zoom y fondo (recortes sobre blanco vs. estudio con podio) se vean
+ * iguales en un grid.
+ *
+ * Usa transformaciones con IA de Cloudinary (consumen créditos la primera
+ * vez; después se sirven desde caché). La URL es fija a propósito: si se
+ * cambia, Cloudinary vuelve a procesar cada foto.
+ */
+export function cascoEncuadradoUrl(publicId: string | null | undefined): string {
+  if (!publicId) return placeholderImage();
+  return `${BASE_URL}/e_extract:prompt_helmet/e_trim/c_fit,w_480,h_480/c_mpad,w_600,h_600,b_rgb:e6e6e4/f_jpg,q_80/${publicId}`;
+}
+
+/**
  * Genera las 4 vistas estándar de un producto Hedon.
  * El orden simula rotar el casco: frente → tres cuartos → lado → atrás.
  */
