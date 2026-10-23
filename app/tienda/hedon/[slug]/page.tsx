@@ -5,7 +5,7 @@ import { ProductDetailAccesorio } from '@/app/components/tienda/ProductDetailAcc
 import type { Product, HedonCrossSell } from '@/lib/types';
 import Link from 'next/link';
 import Footer from '@/app/components/Footer';
-import { extractBasePath } from '@/lib/cloudinary';
+import { vistasExistentes } from '@/lib/cloudinary-vistas';
 import { FUERA_DE_SERIE_HREF } from '@/lib/fuera-de-serie';
 
 interface PageProps {
@@ -14,33 +14,6 @@ interface PageProps {
 
 export const revalidate = 60;
 const CATEGORIAS_ACCESORIO = ['add_on_dual', 'add_on_simple'];
-
-const CLOUDINARY_BASE = 'https://res.cloudinary.com/lhopital-moto/image/upload';
-const VISTAS = [
-  { key: 'front', suffix: 'front' },
-  { key: 'threeQuarter', suffix: 'three-quarter' },
-  { key: 'side', suffix: 'side' },
-  { key: 'back', suffix: 'back' },
-];
-
-async function vistasExistentes(imagenPrincipal: string | null): Promise<string[]> {
-  const base = extractBasePath(imagenPrincipal);
-  if (!base) return [];
-  const checks = await Promise.all(
-    VISTAS.map(async (v) => {
-      try {
-        const res = await fetch(`${CLOUDINARY_BASE}/${base}-${v.suffix}`, {
-          method: 'HEAD',
-          next: { revalidate: 3600 },
-        });
-        return res.ok ? v.key : null;
-      } catch {
-        return v.key; // ante un error de red, mejor intentar mostrarla
-      }
-    })
-  );
-  return checks.filter((k): k is string => k !== null);
-}
 
 export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params;
