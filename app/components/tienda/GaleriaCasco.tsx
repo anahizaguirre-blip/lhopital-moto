@@ -22,6 +22,15 @@ interface GaleriaCascoProps {
    * zoom). La vista interior y la superior se dejan con su foto original.
    */
   encuadreUniforme?: boolean;
+  /** Orden y etiquetas propios de las vistas (p.ej. el DGR). Ver lib/fuera-de-serie.ts */
+  vistasPersonalizadas?: VistasPersonalizadas;
+}
+
+export interface VistasPersonalizadas {
+  /** Claves en el orden deseado: front, threeQuarter, side, back. */
+  orden: string[];
+  /** Etiqueta visible por clave, cuando el nombre del archivo no describe la foto. */
+  etiquetas?: Record<string, string>;
 }
 
 // Cuantos thumbnails mostrar a la vez
@@ -37,6 +46,7 @@ export function GaleriaCasco({
   apagada = false,
   priority = true,
   encuadreUniforme = false,
+  vistasPersonalizadas,
 }: GaleriaCascoProps) {
   const basePath    = extractBasePath(product.imagen_principal);
   const gallery     = basePath
@@ -77,6 +87,13 @@ export function GaleriaCasco({
       v.key === 'headmost' ||
       vistasDisponibles.includes(v.key)
   );
+
+  if (vistasPersonalizadas) {
+    const { orden, etiquetas = {} } = vistasPersonalizadas;
+    const pos = (k: string) => (orden.includes(k) ? orden.indexOf(k) : orden.length);
+    vistas.sort((a, b) => pos(a.key) - pos(b.key));
+    vistas.forEach((v) => { if (etiquetas[v.key]) v.label = etiquetas[v.key]; });
+  }
 
   const [vistaActiva, setVistaActiva] = useState(0);
 

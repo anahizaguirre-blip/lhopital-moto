@@ -50,4 +50,19 @@ export function notaExtra(p: Product): string | null {
   return p.familia === 'Hedonist' && p.color === 'Ash' ? 'Color descontinuado.' : null;
 }
 
+/**
+ * Orden de la galería por pieza. DGR 2026: tres cuartos primero; el archivo
+ * "-front" en realidad es una vista trasera en tres cuartos, así que va
+ * segundo y con su etiqueta real.
+ */
+export function vistasPieza(p: Product): { orden: string[]; etiquetas?: Record<string, string> } | undefined {
+  if (p.motivo_unico === 'edicion_limitada') {
+    return {
+      orden: ['threeQuarter', 'front', 'side', 'back'],
+      etiquetas: { front: 'Tres cuartos trasera' },
+    };
+  }
+  return undefined;
+}
+
 export const formatMXN = (n: number) => `$${n.toLocaleString('es-MX')}`;

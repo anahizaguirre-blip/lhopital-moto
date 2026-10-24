@@ -14,6 +14,7 @@ import {
   variantePieza,
   notaExtra,
   formatMXN,
+  vistasPieza,
 } from '@/lib/fuera-de-serie';
 
 interface ProductDetailProps {
@@ -92,6 +93,7 @@ export function ProductDetail({
             product={product}
             vistasDisponibles={vistasDisponibles}
             apagada={vendida}
+            vistasPersonalizadas={esPiezaUnica ? vistasPieza(product) : undefined}
           />
 
           {/* COLUMNA DERECHA — Info y compra */}

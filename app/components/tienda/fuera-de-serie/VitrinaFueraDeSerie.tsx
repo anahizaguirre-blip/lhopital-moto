@@ -11,6 +11,7 @@ import {
   variantePieza,
   notaExtra,
   formatMXN,
+  vistasPieza,
 } from '@/lib/fuera-de-serie';
 import { GaleriaCasco } from '../GaleriaCasco';
 import { SelloMotivo, SelloVendida, AvisoElectrico, TextoDGR } from './Sellos';
@@ -63,6 +64,7 @@ export function VitrinaFueraDeSerie({ piezas, vistasPorPieza }: Props) {
             vistasDisponibles={vistasPorPieza[sel.id]}
             apagada={estadoPieza(sel) === 'vendida'}
             encuadreUniforme
+            vistasPersonalizadas={vistasPieza(sel)}
           />
           <InfoPieza key={`info-${sel.id}`} product={sel} />
         </div>
