@@ -18,6 +18,7 @@ import { createSupabaseAdmin } from '@/lib/supabase/admin';
 import { resolverSkus, type LineaResuelta } from '@/lib/carrito-server';
 import { costoEnvio } from '@/lib/venta';
 import { VERSION_TERMINOS } from '@/lib/legal-content';
+import { firmarOrden, nombreCookieOrden, OPCIONES_COOKIE_ORDEN } from '@/lib/orden-acceso';
 
 export const dynamic = 'force-dynamic';
 
@@ -146,7 +147,10 @@ export async function POST(req: Request) {
     return json({ error: 'No pudimos crear tu pedido. Intenta de nuevo.' }, 500);
   }
 
-  return json({ orden: orden.id, numero: orden.numero_orden });
+  // Solo este navegador podrá abrir la página de pago de la orden
+  const res = json({ orden: orden.id, numero: orden.numero_orden });
+  res.cookies.set(nombreCookieOrden(orden.id), firmarOrden(orden.id), OPCIONES_COOKIE_ORDEN);
+  return res;
 }
 
 /** Busca el cliente por correo; si existe actualiza contacto, si no lo crea. */
