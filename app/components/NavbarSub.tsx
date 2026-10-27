@@ -14,15 +14,14 @@ const links = [
   { href: '/tienda',   label: 'Tienda' },
 ]
 
-// Solo ícono + contador por ahora — sin drawer/checkout todavía, esa es
-// una entrega aparte. useCart() ya queda listo para que se conecte sin
-// refactor cuando exista.
+// Ícono + contador; lleva a /carrito.
 function CartIcon() {
   const { itemCount } = useCart()
 
   return (
-    <div
-      className="relative flex items-center text-moto-bone/70"
+    <Link
+      href="/carrito"
+      className="relative flex items-center text-moto-bone/70 hover:text-brass transition-colors"
       aria-label={`Carrito: ${itemCount} ${itemCount === 1 ? 'artículo' : 'artículos'}`}
     >
       <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -34,7 +33,7 @@ function CartIcon() {
           {itemCount}
         </span>
       )}
-    </div>
+    </Link>
   )
 }
 
