@@ -87,7 +87,7 @@ export default function Eventos() {
             href="/citas"
             className="font-almaq text-moto-bone/45 text-[11px] md:text-xs tracking-[0.15em] uppercase mt-4 block hover:text-brass transition-colors w-fit"
           >
-            Showroom al sur de la CDMX. Haz una cita.
+            Showroom al sur de la CDMX. Haz una cita a partir del 7 de diciembre 2026.
           </Link>
         </div>
 
