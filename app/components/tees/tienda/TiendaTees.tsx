@@ -2,6 +2,8 @@
 
 import Image from 'next/image'
 import { useState } from 'react'
+import Link from 'next/link'
+import { useCart } from '@/lib/cart-context'
 import type { TeeProducto } from '@/app/tienda/tees/page'
 import Footer from '@/app/components/Footer'
 
@@ -23,6 +25,7 @@ function TeeCard({ producto }: { producto: TeeProducto }) {
   const [fotoActiva, setFotoActiva] = useState<FotoTab>('back')
   const [tallaSeleccionada, setTallaSeleccionada] = useState<string | null>(null)
   const [agregado, setAgregado] = useState(false)
+  const { addItem } = useCart()
 
   const fotos: Record<FotoTab, string | null> = {
     back: producto.foto_back,
@@ -43,11 +46,12 @@ function TeeCard({ producto }: { producto: TeeProducto }) {
   const stockTotal = producto.variantes.reduce((acc, v) => acc + v.stock, 0)
   const esUltimas = stockTotal <= 10 && stockTotal > 0
 
+  // Solo existencias: el tope es el stock de la talla (no se resurte).
   function handleAgregar() {
-    if (!tallaSeleccionada) return
+    if (!varianteSeleccionada || varianteSeleccionada.stock <= 0) return
+    addItem(varianteSeleccionada.sku_variante, 1, varianteSeleccionada.stock)
     setAgregado(true)
-    setTimeout(() => setAgregado(false), 2000)
-    // TODO: integrar con contexto de carrito cuando esté disponible
+    setTimeout(() => setAgregado(false), 4000)
   }
 
   return (
@@ -186,12 +190,12 @@ function TeeCard({ producto }: { producto: TeeProducto }) {
         {/* Precio + CTA */}
         <div className="flex items-center justify-between pt-2 border-t border-white/[0.05]">
           <div className="text-[16px] font-[400] text-[#C9A961] tracking-[0.02em]">
-            $400
+            ${producto.precio_mxn.toLocaleString('es-MX')}
             <span className="text-[9px] text-[#3a3a3a] font-light ml-1">MXN</span>
           </div>
           <button
             onClick={handleAgregar}
-            disabled={!tallaSeleccionada}
+            disabled={!varianteSeleccionada || varianteSeleccionada.stock <= 0}
             className={`text-[8px] tracking-[0.2em] uppercase px-4 py-2 transition-all ${
               agregado
                 ? 'bg-[#3a7c3a] text-white'
@@ -203,6 +207,14 @@ function TeeCard({ producto }: { producto: TeeProducto }) {
             {agregado ? 'Listo ✓' : tallaSeleccionada ? 'Agregar' : 'Elige talla'}
           </button>
         </div>
+        {agregado && (
+          <Link
+            href="/carrito"
+            className="mt-3 self-end text-[11px] tracking-[0.1em] uppercase text-[#C9A961] underline underline-offset-4"
+          >
+            Ver carrito →
+          </Link>
+        )}
       </div>
     </div>
   )

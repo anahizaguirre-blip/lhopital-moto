@@ -24,17 +24,6 @@ import { cloudinaryAccesorioUrl } from '@/lib/cloudinary';
 import Link from 'next/link';
 import { useCart } from '@/lib/cart-context';
 
-// public_id de la foto frontal por color — mismo patrón que usa el resto
-// de la tienda (motoii-<color>-front-map). No se puede usar
-// producto.imagen_principal aquí: ese campo viene corrupto en Supabase
-// para los 3 SKU de dispositivo (guarda la lista completa de fotos
-// separada por comas en vez de un solo public_id).
-const IMAGEN_FRONTAL_POR_SKU: Record<string, string> = {
-  'CHR_BLD3.0_BLK': 'motoii-blk-front-map',
-  'CHR_BLD3.0_GMG': 'motoii-gmg-front-map',
-  'CHR_BLD3.0_SVR': 'motoii-svr-front-map',
-};
-
 // ─── Constantes ────────────────────────────────────────────────────────────────
 
 // Los 4 montajes clásicos que aparecen en el selector visual
@@ -233,9 +222,13 @@ interface SelectorMontajeProps {
   precioBase: number;
   colorLabel: string;
   deviceSku: string;
+  /** Stock del color activo. Moto II solo se vende con existencias. */
+  deviceStock: number;
   carryCase?: Product;
   onMontajeChange?: (accesorio: Product | null) => void;
 }
+
+const stockDe = (p?: Product | null) => Math.max(0, p?.variants?.[0]?.stock_actual ?? 0);
 
 // ─── Componente ────────────────────────────────────────────────────────────────
 
@@ -244,6 +237,7 @@ export function SelectorMontaje({
   precioBase,
   colorLabel,
   deviceSku,
+  deviceStock,
   carryCase,
   onMontajeChange,
 }: SelectorMontajeProps) {
@@ -268,7 +262,17 @@ export function SelectorMontaje({
 
   const precioCarryCase = carryCase?.variants?.[0]?.precio ?? carryCase?.precio_base ?? 0;
 
-  const totalCombo = precioBase + precioMontaje + precioCarryCase;
+  // Solo entra al combo lo que tiene existencias. Sin dispositivo, el combo
+  // se reduce al montaje (el Carry Case se compra suelto en el grid).
+  const hayDispositivo = deviceStock > 0;
+  const hayMontaje     = accesorioSeleccionado !== null && stockDe(accesorioSeleccionado) > 0;
+  const hayCarryCase   = hayDispositivo && stockDe(carryCase) > 0;
+  const comboVacio     = !hayDispositivo && !hayMontaje;
+
+  const totalCombo =
+    (hayDispositivo ? precioBase : 0) +
+    (hayMontaje ? precioMontaje : 0) +
+    (hayCarryCase ? precioCarryCase : 0);
   const metaSeleccionado = MONTAJE_META[skuSeleccionado];
   const esPowered = metaSeleccionado?.esPowered ?? false;
 
@@ -277,7 +281,11 @@ export function SelectorMontaje({
   const nombreMontajeCombo = skuSeleccionado === 'universal'
     ? 'Universal'
     : metaSeleccionado?.titulo ?? '';
-  const textoCombo = `Moto II ${colorLabel} · ${nombreMontajeCombo}${carryCase ? ' + Carry Case' : ''}`;
+  const textoCombo = hayDispositivo
+    ? `Moto II ${colorLabel} · ${nombreMontajeCombo}${hayCarryCase ? ' + Carry Case' : ''}`
+    : hayMontaje
+    ? `Solo montaje · ${nombreMontajeCombo}`
+    : `Moto II ${colorLabel} sin existencias`;
 
   function handleSeleccion(sku: string) {
     setSkuSeleccionado(sku);
@@ -293,33 +301,14 @@ export function SelectorMontaje({
   // reales al carrito: dispositivo + montaje (si no es Universal, que no
   // tiene SKU propio) + Carry Case (siempre, sin selector dedicado todavía).
   function handleAgregarCombo() {
-    addItem({
-      sku: deviceSku,
-      nombre: `Moto II ${colorLabel}`,
-      marca: 'Beeline',
-      color: colorLabel,
-      precio: precioBase,
-      imagen: IMAGEN_FRONTAL_POR_SKU[deviceSku],
-    });
-
-    if (accesorioSeleccionado) {
-      addItem({
-        sku: accesorioSeleccionado.sku_padre,
-        nombre: metaSeleccionado?.titulo ?? accesorioSeleccionado.nombre,
-        marca: 'Beeline',
-        precio: precioMontaje,
-        imagen: metaSeleccionado?.fotos[0],
-      });
+    if (comboVacio) return;
+    // SKU de variante = SKU padre en Moto II (una variante por producto).
+    if (hayDispositivo) addItem(deviceSku, 1, deviceStock);
+    if (hayMontaje && accesorioSeleccionado) {
+      addItem(accesorioSeleccionado.variants?.[0]?.sku_variante ?? accesorioSeleccionado.sku_padre, 1, stockDe(accesorioSeleccionado));
     }
-
-    if (carryCase) {
-      addItem({
-        sku: carryCase.sku_padre,
-        nombre: carryCase.nombre,
-        marca: 'Beeline',
-        precio: precioCarryCase,
-        imagen: 'chr-cse-front',
-      });
+    if (hayCarryCase && carryCase) {
+      addItem(carryCase.variants?.[0]?.sku_variante ?? carryCase.sku_padre, 1, stockDe(carryCase));
     }
 
     setToastVisible(true);
@@ -399,7 +388,8 @@ export function SelectorMontaje({
         {/* Resumen del combo — clic en toda la caja agrega al carrito */}
         <div
           role="button"
-          tabIndex={0}
+          tabIndex={comboVacio ? -1 : 0}
+          aria-disabled={comboVacio}
           onClick={handleAgregarCombo}
           onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
@@ -407,7 +397,11 @@ export function SelectorMontaje({
               handleAgregarCombo();
             }
           }}
-          className="flex justify-between items-center bg-[rgba(201,169,97,0.05)] border border-[rgba(201,169,97,0.25)] p-4 mb-4 cursor-pointer hover:border-[#C9A961]/60 hover:bg-[rgba(201,169,97,0.08)] transition-colors duration-200"
+          className={`flex justify-between items-center p-4 mb-4 transition-colors duration-200 ${
+            comboVacio
+              ? 'bg-[rgba(244,241,236,0.02)] border border-[rgba(244,241,236,0.1)] cursor-not-allowed'
+              : 'bg-[rgba(201,169,97,0.05)] border border-[rgba(201,169,97,0.25)] cursor-pointer hover:border-[#C9A961]/60 hover:bg-[rgba(201,169,97,0.08)]'
+          }`}
         >
           <div>
             <div className="text-[10px] tracking-[0.1em] uppercase text-[#F4F1EC]/45 mb-1">
@@ -416,13 +410,19 @@ export function SelectorMontaje({
             <div className="font-sora font-bold text-[13px] text-[#F4F1EC]">
               {textoCombo}
             </div>
-            <div className="text-[10px] tracking-[0.05em] text-[#F4F1EC]/35 mt-1">
-              Toca para agregar al carrito
+            <div className="text-[11px] tracking-[0.03em] text-[#F4F1EC]/45 mt-1">
+              {comboVacio
+                ? 'Elige un montaje para agregarlo por separado'
+                : !hayDispositivo
+                ? 'El Moto II está agotado; puedes llevar el montaje'
+                : 'Toca para agregar al carrito'}
             </div>
           </div>
-          <div className="font-sora font-bold text-[20px] text-[#C9A961]">
-            {formatMXN(totalCombo)}
-          </div>
+          {!comboVacio && (
+            <div className="font-sora font-bold text-[20px] text-[#C9A961]">
+              {formatMXN(totalCombo)}
+            </div>
+          )}
         </div>
 
         {/* Toast de confirmación */}
@@ -431,7 +431,10 @@ export function SelectorMontaje({
             key="toast"
             className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-[#0A0A0A] border border-[#C9A961] text-[#F4F1EC] text-[12px] tracking-[0.05em] px-5 py-3 shadow-lg animate-fade-in-up"
           >
-            Agregado al carrito ✓
+            Agregado al carrito ✓{' '}
+            <Link href="/carrito" className="text-[#C9A961] underline underline-offset-2 ml-1">
+              Ver carrito
+            </Link>
           </div>
         )}
 

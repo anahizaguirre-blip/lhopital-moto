@@ -18,6 +18,8 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
+import { useCart } from '@/lib/cart-context';
 import type { Product } from '@/lib/types';
 
 // ─── Constantes ────────────────────────────────────────────────────────────────
@@ -81,6 +83,15 @@ function AccesorioCard({ producto }: { producto: Product }) {
   const precio = producto.variants?.[0]?.precio ?? producto.precio_base;
   const stock = producto.variants?.[0]?.stock_actual ?? 0;
   const disponible = stock > 0;
+  const { addItem } = useCart();
+
+  // Solo existencias: el tope por línea es el stock actual.
+  const handleAgregar = () => {
+    if (!disponible) return;
+    addItem(producto.variants?.[0]?.sku_variante ?? producto.sku_padre, 1, stock);
+    setAgregado(true);
+    setTimeout(() => setAgregado(false), 4000);
+  };
 
   const irAnterior = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -179,15 +190,15 @@ function AccesorioCard({ producto }: { producto: Product }) {
               {stock} en stock
             </span>
           ) : (
-            <span className="text-[10px] tracking-[0.1em] uppercase text-[#9DC5F0]/70">
-              En camino
+            <span className="text-[10px] tracking-[0.1em] uppercase text-[#F4F1EC]/40">
+              Agotado
             </span>
           )}
         </div>
 
         {/* Botón */}
         <button
-          onClick={() => setAgregado(true)}
+          onClick={handleAgregar}
           disabled={!disponible || agregado}
           className={`
             w-full text-[11px] tracking-[0.1em] uppercase py-3 transition-all duration-200
@@ -201,6 +212,11 @@ function AccesorioCard({ producto }: { producto: Product }) {
         >
           {agregado ? '✓ Agregado' : disponible ? 'Agregar al carrito' : 'Sin stock'}
         </button>
+        {agregado && (
+          <Link href="/carrito" className="mt-2 text-center text-[11px] tracking-[0.1em] uppercase text-[#C9A961] underline underline-offset-4">
+            Ver carrito →
+          </Link>
+        )}
       </div>
     </div>
   );

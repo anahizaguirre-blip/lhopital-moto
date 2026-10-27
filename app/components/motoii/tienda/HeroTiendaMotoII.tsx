@@ -8,8 +8,8 @@
  * - Galería de 14 fotos por color (efecto rotación al cambiar)
  * - Selector de acabado: Black / Gun Metal / Silver
  * - Precio dinámico según color seleccionado
- * - Botón "Agregar al carrito" (emite evento hacia TiendaMotoII)
- * - Badge "En camino" si estado === 'en_camino'
+ * - Botón "Agregar al carrito" (solo con existencias; sin stock queda bloqueado)
+ * - Badge "Agotado" si el color no tiene stock
  *
  * Props:
  *   dispositivos  — array de Product con variants[] desde Supabase
@@ -18,7 +18,9 @@
 
 import { useState, useCallback } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import type { Product } from '@/lib/types';
+import { useCart } from '@/lib/cart-context';
 
 // ─── Constantes ────────────────────────────────────────────────────────────────
 
@@ -120,8 +122,19 @@ export function HeroTiendaMotoII({ dispositivos, onColorChange }: HeroMotoIIProp
   const configActivo = ACABADOS_CONFIG[skuActivo] ?? ACABADOS_CONFIG['CHR_BLD3.0_GMG'];
 
   const varianteActiva = dispositivoActivo?.variants?.[0];
-  const enCamino = varianteActiva?.estado === 'en_camino';
   const precio = varianteActiva?.precio ?? dispositivoActivo?.precio_base ?? 0;
+  // Moto II solo se vende con existencias: sin fecha de resurtido.
+  const stockActivo = Math.max(0, varianteActiva?.stock_actual ?? 0);
+  const agotado = stockActivo === 0;
+  const { addItem } = useCart();
+  const [agregado, setAgregado] = useState(false);
+
+  const handleAgregar = () => {
+    if (agotado || !varianteActiva) return;
+    addItem(varianteActiva.sku_variante, 1, stockActivo);
+    setAgregado(true);
+    setTimeout(() => setAgregado(false), 4000);
+  };
 
   // Fotos del color activo — solo las que están realmente subidas a Cloudinary
   const sufijosActivos = FOTOS_POR_SKU[skuActivo] ?? [];
@@ -171,10 +184,10 @@ export function HeroTiendaMotoII({ dispositivos, onColorChange }: HeroMotoIIProp
               />
 
               {/* Badge estado */}
-              {enCamino && (
+              {agotado && (
                 <div className="absolute top-4 left-4">
-                  <span className="text-[9px] tracking-[0.2em] uppercase px-3 py-1.5 bg-[rgba(56,113,189,0.15)] border border-[rgba(85,140,210,0.4)] text-[#9DC5F0]">
-                    Nuevo lote
+                  <span className="text-[9px] tracking-[0.2em] uppercase px-3 py-1.5 bg-[rgba(10,10,10,0.6)] border border-[rgba(244,241,236,0.25)] text-[#F4F1EC]/80">
+                    Agotado
                   </span>
                 </div>
               )}
@@ -326,25 +339,34 @@ export function HeroTiendaMotoII({ dispositivos, onColorChange }: HeroMotoIIProp
               </span>
             </div>
 
-            {/* Banner en camino */}
-            {enCamino && (
+            {/* Banner agotado */}
+            {agotado && (
               <div className="flex gap-3 items-start bg-[rgba(56,113,189,0.08)] border border-[rgba(85,140,210,0.35)] p-4 mb-6 text-[#9DC5F0]">
                 <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
                 </svg>
                 <div>
-                  <div className="font-sora font-medium text-[12px] mb-1">Se agotó por demanda</div>
-                  <div className="text-[11px] text-[#9DC5F0]/80 leading-relaxed">
-                    Nuevo lote llega en octubre. Pagas hoy, te apartamos el tuyo.
+                  <div className="font-sora font-medium text-[13px] mb-1">Agotado por ahora</div>
+                  <div className="text-[13px] text-[#9DC5F0]/80 leading-relaxed">
+                    No hay existencias de este color y aún no tenemos fecha de resurtido. Los montajes y accesorios sí están disponibles.
                   </div>
                 </div>
               </div>
             )}
 
             {/* CTA principal */}
-            <button className="w-full bg-[#F4F1EC] text-[#0A0A0A] font-sora font-bold text-[13px] tracking-[0.1em] uppercase py-5 hover:bg-[#C9A961] transition-colors duration-200 mb-3">
-              Agregar al carrito — {formatMXN(precio)}
+            <button
+              onClick={handleAgregar}
+              disabled={agotado}
+              className="w-full bg-[#F4F1EC] text-[#0A0A0A] font-sora font-bold text-[13px] tracking-[0.1em] uppercase py-5 hover:bg-[#C9A961] transition-colors duration-200 mb-3 disabled:bg-[#F4F1EC]/20 disabled:text-[#0A0A0A]/60 disabled:cursor-not-allowed"
+            >
+              {agotado ? 'Sin existencias' : agregado ? 'Agregado ✓' : `Agregar al carrito — ${formatMXN(precio)}`}
             </button>
+            {agregado && (
+              <Link href="/carrito" className="block text-center mb-3 text-[12px] tracking-[0.1em] uppercase text-[#C9A961] underline underline-offset-4">
+                Ver carrito →
+              </Link>
+            )}
 
             {/* CTA secundario: link a marca */}
             <a
@@ -359,7 +381,7 @@ export function HeroTiendaMotoII({ dispositivos, onColorChange }: HeroMotoIIProp
               {[
                 { label: 'Batería', valor: '14 horas' },
                 { label: 'Resistencia', valor: 'IP67' },
-                { label: 'Garantía', valor: '30 días' },
+                { label: 'Garantía', valor: '12 meses' },
               ].map(({ label, valor }) => (
                 <div key={label} className="text-center">
                   <div className="font-sora font-bold text-[15px] text-[#F4F1EC] mb-1">{valor}</div>

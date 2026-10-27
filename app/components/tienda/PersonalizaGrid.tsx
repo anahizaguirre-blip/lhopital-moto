@@ -118,7 +118,7 @@ function AccesorioCard({ product }: { product: Product }) {
             </span>
           ) : (
             <span className="rounded-full border-[0.5px] border-[#6B5D42] bg-transparent px-[9px] py-[3px] text-[11px] font-medium tracking-[0.02em] text-[#8B6F47]">
-              Bajo pedido
+              Sin existencias
             </span>
           )}
         </div>
@@ -135,7 +135,7 @@ function AccesorioCard({ product }: { product: Product }) {
           onClick={() => router.push(`/tienda/hedon/${product.slug}`)}
           className="w-full bg-[#F4F1EC] text-[#0A0A0A] py-2.5 text-xs font-bold tracking-[0.1em] uppercase hover:opacity-85 transition"
         >
-          {enStock ? 'Agregar al carrito' : 'Reservar'}
+          {enStock ? 'Ver y comprar' : 'Ver detalle'}
         </button>
       </div>
     </article>

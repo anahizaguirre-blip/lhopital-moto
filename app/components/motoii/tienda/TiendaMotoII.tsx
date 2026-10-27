@@ -108,6 +108,7 @@ export function TiendaMotoII({ dispositivos, accesorios }: TiendaMotoIIProps) {
         precioBase={precioBase}
         colorLabel={colorLabel}
         deviceSku={skuActivo}
+        deviceStock={dispositivos.find(d => d.sku_padre === skuActivo)?.variants?.[0]?.stock_actual ?? 0}
         carryCase={carryCase}
         onMontajeChange={handleMontajeChange}
       />

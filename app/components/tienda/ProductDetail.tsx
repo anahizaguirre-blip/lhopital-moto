@@ -16,6 +16,8 @@ import {
   formatMXN,
   vistasPieza,
 } from '@/lib/fuera-de-serie';
+import { reglaVenta, type ReglaVenta } from '@/lib/venta';
+import { useAgregarCarrito, AvisoAgregado } from './useAgregarCarrito';
 
 interface ProductDetailProps {
   product: Product;
@@ -57,30 +59,52 @@ export function ProductDetail({
     );
   }, [product.variants]);
 
+  const precioDe = (v: ProductVariant | null) => v?.precio ?? product.precio_base;
+  const reglaDe = (v: ProductVariant): ReglaVenta =>
+    reglaVenta({
+      marca: product.marca,
+      categoria: product.categoria,
+      pieza_unica: product.pieza_unica,
+      estado: v.estado,
+      stock_actual: v.stock_actual,
+      precio: precioDe(v),
+      visible: v.visible_publico !== false,
+    });
+
+  // Primero una talla en stock; si no hay, una bajo pedido.
   const [varianteSel, setVarianteSel] = useState<ProductVariant | null>(() => {
-    const conStock = variantesOrdenadas.find((v) => v.stock_actual > 0);
-    return conStock || variantesOrdenadas[0] || null;
+    const enStockV = variantesOrdenadas.find((v) => reglaDe(v).disponibilidad === 'en_stock');
+    const bajoPedidoV = variantesOrdenadas.find((v) => reglaDe(v).disponibilidad === 'bajo_pedido');
+    return enStockV || bajoPedidoV || variantesOrdenadas[0] || null;
   });
 
   const [cantidad, setCantidad]             = useState(1);
   const [guiaTallasOpen, setGuiaTallasOpen] = useState(false);
+  const { agregar, agregado }               = useAgregarCarrito();
 
   const etiquetaColeccion = product.coleccion_id
     ? COLECCION_LABELS[product.coleccion_id] ?? product.collection?.etiqueta_visible ?? null
     : null;
 
-  const enStock      = varianteSel && varianteSel.stock_actual > 0;
-  const esBajoPedido = varianteSel?.estado === 'bajo_pedido';
+  const reglaSel     = varianteSel ? reglaDe(varianteSel) : null;
+  const enStock      = reglaSel?.disponibilidad === 'en_stock';
+  const esBajoPedido = reglaSel?.disponibilidad === 'bajo_pedido';
+  const vendible     = enStock || esBajoPedido;
+  const maxCantidad  = reglaSel?.maxCantidad ?? 0;
+  const precioSel    = precioDe(varianteSel);
 
   const hedonModeloHref = product.familia
     ? `/tienda/hedon?modelo=${encodeURIComponent(product.familia)}`
     : '/tienda/hedon';
 
+  const elegirVariante = (v: ProductVariant) => {
+    setVarianteSel(v);
+    setCantidad((c) => Math.max(1, Math.min(c, reglaDe(v).maxCantidad || 1)));
+  };
+
   const handleAgregarCarrito = () => {
-    if (!varianteSel) return;
-    alert(
-      `[PLACEHOLDER]\n\nProducto: ${product.nombre}\nTalla: ${varianteSel.talla}\nCantidad: ${cantidad}\nSKU: ${varianteSel.sku_variante}\n\nEl carrito se conecta en el siguiente paso.`
-    );
+    if (!varianteSel || !vendible) return;
+    agregar(varianteSel.sku_variante, cantidad, maxCantidad);
   };
 
   return (
@@ -130,20 +154,20 @@ export function ProductDetail({
             <>
             <div className="flex items-baseline gap-2 mb-6">
               <span className="text-3xl font-bold">
-                ${product.precio_base.toLocaleString('es-MX')}
+                ${precioSel.toLocaleString('es-MX')}
               </span>
               <span className="text-[10px] tracking-[0.15em] uppercase text-[#F4F1EC]/45">
                 MXN
               </span>
             </div>
 
-            {!enStock && esBajoPedido && (
+            {esBajoPedido && (
               <div className="bg-[#3871BD]/10 border border-[#558CD2]/40 p-4 mb-6 flex gap-3 items-start">
                 <div className="text-[#9DC5F0] text-lg mt-0.5">⏳</div>
                 <div>
                   <div className="font-medium text-[#9DC5F0] mb-1">Bajo pedido</div>
-                  <p className="text-[12px] text-[#9DC5F0]/80 leading-relaxed">
-                    Lo traemos en 3 semanas a 90 dias. Pagas hoy, te apartamos uno.
+                  <p className="text-[13px] text-[#9DC5F0]/80 leading-relaxed">
+                    Entrega hasta 90 días naturales a partir de tu pago. Pagas hoy, te apartamos uno.
                   </p>
                 </div>
               </div>
@@ -180,17 +204,23 @@ export function ProductDetail({
               <div className="grid grid-cols-6 gap-2">
                 {variantesOrdenadas.map((v) => {
                   const isActive   = varianteSel?.id === v.id;
-                  const tieneStock = v.stock_actual > 0;
+                  const regla      = reglaDe(v);
+                  const tieneStock = regla.disponibilidad === 'en_stock';
+                  const agotada    = regla.disponibilidad === 'no_disponible';
                   return (
                     <button
                       key={v.id}
-                      onClick={() => setVarianteSel(v)}
+                      onClick={() => elegirVariante(v)}
+                      disabled={agotada}
+                      title={agotada ? 'Sin existencias' : undefined}
                       className={`relative py-3 text-sm font-medium border transition ${
                         isActive
                           ? 'border-[#C9A961] bg-[#C9A961]/5 text-[#C9A961]'
+                          : agotada
+                          ? 'border-[#F4F1EC]/5 text-[#F4F1EC]/25 line-through cursor-not-allowed'
                           : tieneStock
                           ? 'border-[#F4F1EC]/20 text-[#F4F1EC] hover:border-[#F4F1EC]/40'
-                          : 'border-[#F4F1EC]/10 text-[#F4F1EC]/40'
+                          : 'border-[#F4F1EC]/10 text-[#F4F1EC]/50 hover:border-[#F4F1EC]/30'
                       }`}
                     >
                       {v.talla}
@@ -203,10 +233,12 @@ export function ProductDetail({
               </div>
 
               {varianteSel && (
-                <div className="mt-3 text-[11px] tracking-[0.05em] text-[#F4F1EC]/55">
-                  {varianteSel.stock_actual > 0
-                    ? 'En stock · envio en 24-72h'
-                    : 'Bajo pedido · llegada 3 semanas a 90 dias'}
+                <div className="mt-3 text-[13px] tracking-[0.02em] text-[#F4F1EC]/60">
+                  {enStock
+                    ? 'En stock'
+                    : esBajoPedido
+                    ? 'Bajo pedido · entrega hasta 90 días'
+                    : 'Sin existencias en esta talla'}
                 </div>
               )}
 
@@ -236,8 +268,9 @@ export function ProductDetail({
                   {cantidad}
                 </div>
                 <button
-                  onClick={() => setCantidad((c) => c + 1)}
-                  className="w-10 h-10 hover:bg-[#F4F1EC]/5 transition"
+                  onClick={() => setCantidad((c) => Math.min(c + 1, Math.max(maxCantidad, 1)))}
+                  disabled={cantidad >= maxCantidad}
+                  className="w-10 h-10 hover:bg-[#F4F1EC]/5 transition disabled:opacity-30"
                 >
                   +
                 </button>
@@ -246,11 +279,14 @@ export function ProductDetail({
 
             <button
               onClick={handleAgregarCarrito}
-              disabled={!varianteSel}
+              disabled={!vendible}
               className="w-full bg-[#F4F1EC] text-[#0A0A0A] py-4 text-sm font-bold tracking-[0.1em] uppercase hover:opacity-85 transition disabled:opacity-40 mb-3"
             >
-              {enStock ? 'Agregar al carrito' : 'Reservar bajo pedido'} — ${(product.precio_base * cantidad).toLocaleString('es-MX')}
+              {!vendible
+                ? 'Sin existencias'
+                : `${enStock ? 'Agregar al carrito' : 'Reservar bajo pedido'} — $${(precioSel * cantidad).toLocaleString('es-MX')}`}
             </button>
+            <AvisoAgregado visible={agregado} className="mb-3" />
 
             <button className="w-full bg-transparent border border-[#F4F1EC]/35 text-[#F4F1EC] py-3 text-xs font-medium tracking-[0.05em] uppercase hover:border-[#F4F1EC]/60 transition">
               Avisame de novedades
@@ -319,18 +355,13 @@ function BloquePiezaUnica({ product }: { product: Product }) {
   const precio   = precioPieza(product);
   const nota     = notaExtra(product);
   const esElectrico = product.motivo_unico === 'electrico';
+  const { agregar, agregado } = useAgregarCarrito();
 
+  // Pieza única: máximo 1 en el carrito. El checkout vuelve a validar el
+  // stock; el descuento definitivo ocurre al confirmarse el pago (Fase 3).
   const handleAgregar = () => {
     if (!variante) return;
-    // TODO(fuera-de-serie): al conectar checkout + Mercado Pago, descontar el
-    // stock de forma atómica ANTES de cobrar:
-    //   UPDATE product_variants SET stock_actual = stock_actual - 1
-    //   WHERE sku_variante = $1 AND stock_actual >= 1 RETURNING id;
-    // Sin fila → no cobrar y mostrar "Esta pieza acaba de encontrar dueño."
-    // Pago fallido/cancelado → restaurar stock. Registrar en stock_movements.
-    alert(
-      `[PLACEHOLDER]\n\nProducto: ${product.nombre}\nTalla: ${variante.talla}\nCantidad: 1\nSKU: ${variante.sku_variante}\n\nEl carrito se conecta en el siguiente paso.`
-    );
+    agregar(variante.sku_variante, 1, 1);
   };
 
   return (
@@ -382,6 +413,7 @@ function BloquePiezaUnica({ product }: { product: Product }) {
           Agregar al carrito — {formatMXN(precio!)}
         </button>
       )}
+      <AvisoAgregado visible={agregado} className="mb-3" />
 
       {estado === 'precio_por_definir' && (
         <Link

@@ -6,6 +6,8 @@ import Link from 'next/link';
 import type { Product } from '@/lib/types';
 import { cloudinaryUrl } from '@/lib/cloudinary';
 import { personalizaHref } from '@/lib/personaliza';
+import { reglaVenta } from '@/lib/venta';
+import { useAgregarCarrito, AvisoAgregado } from './useAgregarCarrito';
 
 interface ProductDetailAccesorioProps {
   product: Product;
@@ -58,8 +60,22 @@ export function ProductDetailAccesorio({ product }: ProductDetailAccesorioProps)
     ? product.variants?.find((v) => v.acabado_tornillo === acabadoSeleccionado) ?? null
     : product.variants?.[0] ?? null;
 
-  const enStock      = variante ? variante.stock_actual > 0 : false;
-  const esBajoPedido = variante?.estado === 'bajo_pedido';
+  // Accesorios: solo existencias (sin bajo pedido).
+  const precio = variante?.precio ?? product.precio_base;
+  const regla = variante
+    ? reglaVenta({
+        marca: product.marca,
+        categoria: product.categoria,
+        pieza_unica: product.pieza_unica,
+        estado: variante.estado,
+        stock_actual: variante.stock_actual,
+        precio,
+        visible: variante.visible_publico !== false,
+      })
+    : null;
+  const enStock     = regla?.disponibilidad === 'en_stock';
+  const maxCantidad = regla?.maxCantidad ?? 0;
+  const { agregar, agregado } = useAgregarCarrito();
 
   const compat      = COMPAT_POR_FAMILIA[product.familia ?? ''] ?? product.descripcion_corta;
   const advertencia = ADVERTENCIA_POR_FAMILIA[product.familia ?? ''];
@@ -69,10 +85,13 @@ export function ProductDetailAccesorio({ product }: ProductDetailAccesorioProps)
     : product.imagen_principal;
 
   const handleAgregarCarrito = () => {
-    if (!variante) return;
-    alert(
-      `[PLACEHOLDER]\n\nProducto: ${product.nombre}\nCantidad: ${cantidad}\nSKU: ${variante.sku_variante}\n\nEl carrito se conecta en el siguiente paso.`
-    );
+    if (!variante || !enStock) return;
+    agregar(variante.sku_variante, cantidad, maxCantidad);
+  };
+
+  const elegirAcabado = (nombre: string) => {
+    setAcabadoSeleccionado(nombre);
+    setCantidad(1);
   };
 
   return (
@@ -149,7 +168,7 @@ export function ProductDetailAccesorio({ product }: ProductDetailAccesorioProps)
           {/* Precio */}
           <div className="flex items-baseline gap-2 mb-6">
             <span className="text-3xl font-bold">
-              ${product.precio_base.toLocaleString('es-MX')}
+              ${precio.toLocaleString('es-MX')}
             </span>
             <span className="text-[10px] tracking-[0.15em] uppercase text-[#F4F1EC]/45">
               MXN
@@ -167,7 +186,7 @@ export function ProductDetailAccesorio({ product }: ProductDetailAccesorioProps)
                   <button
                     key={a.nombre}
                     type="button"
-                    onClick={() => setAcabadoSeleccionado(a.nombre)}
+                    onClick={() => elegirAcabado(a.nombre)}
                     title={a.nombre}
                     aria-label={a.nombre}
                     aria-pressed={acabadoSeleccionado === a.nombre}
@@ -186,25 +205,10 @@ export function ProductDetailAccesorio({ product }: ProductDetailAccesorioProps)
             </div>
           )}
 
-          {/* Banner bajo pedido */}
-          {!enStock && esBajoPedido && (
-            <div className="bg-[#3871BD]/10 border border-[#558CD2]/40 p-4 mb-6 flex gap-3 items-start">
-              <div className="text-[#9DC5F0] text-lg mt-0.5">⏳</div>
-              <div>
-                <div className="font-medium text-[#9DC5F0] mb-1">Bajo pedido</div>
-                <p className="text-[12px] text-[#9DC5F0]/80 leading-relaxed">
-                  Lo traemos en 3 semanas a 90 dias. Pagas hoy, te apartamos uno.
-                </p>
-              </div>
-            </div>
-          )}
-
           {/* Estado (sin numero de stock) */}
-          {enStock && (
-            <div className="mb-6 text-[11px] tracking-[0.05em] text-[#F4F1EC]/55">
-              En stock · envio en 24-72h
-            </div>
-          )}
+          <div className="mb-6 text-[13px] tracking-[0.02em] text-[#F4F1EC]/60">
+            {enStock ? 'En stock' : 'Sin existencias por ahora'}
+          </div>
 
           {/* Cantidad */}
           <div className="flex items-center gap-4 mb-6">
@@ -222,8 +226,9 @@ export function ProductDetailAccesorio({ product }: ProductDetailAccesorioProps)
                 {cantidad}
               </div>
               <button
-                onClick={() => setCantidad((c) => c + 1)}
-                className="w-10 h-10 hover:bg-[#F4F1EC]/5 transition"
+                onClick={() => setCantidad((c) => Math.min(c + 1, Math.max(maxCantidad, 1)))}
+                disabled={cantidad >= maxCantidad}
+                className="w-10 h-10 hover:bg-[#F4F1EC]/5 transition disabled:opacity-30"
               >
                 +
               </button>
@@ -233,11 +238,14 @@ export function ProductDetailAccesorio({ product }: ProductDetailAccesorioProps)
           {/* CTA principal */}
           <button
             onClick={handleAgregarCarrito}
-            disabled={!variante}
+            disabled={!enStock}
             className="w-full bg-[#F4F1EC] text-[#0A0A0A] py-4 text-sm font-bold tracking-[0.1em] uppercase hover:opacity-85 transition disabled:opacity-40 mb-3"
           >
-            {enStock ? 'Agregar al carrito' : 'Reservar bajo pedido'} — ${(product.precio_base * cantidad).toLocaleString('es-MX')}
+            {enStock
+              ? `Agregar al carrito — $${(precio * cantidad).toLocaleString('es-MX')}`
+              : 'Sin existencias'}
           </button>
+          <AvisoAgregado visible={agregado} className="mb-3" />
 
           {/* CTA secundario */}
           <button className="w-full bg-transparent border border-[#F4F1EC]/35 text-[#F4F1EC] py-3 text-xs font-medium tracking-[0.05em] uppercase hover:border-[#F4F1EC]/60 transition">
