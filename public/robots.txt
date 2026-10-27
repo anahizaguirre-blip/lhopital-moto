@@ -6,7 +6,7 @@ Disallow: /_next/
 Disallow: /admin/
 
 # Host
-Host: https://www.lhopital-fr.mx
+Host: https://www.lhopital.mx
 
 # Sitemaps
-Sitemap: https://www.lhopital-fr.mx/sitemap.xml
+Sitemap: https://www.lhopital.mx/sitemap.xml

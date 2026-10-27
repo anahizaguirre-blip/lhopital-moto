@@ -57,7 +57,7 @@ const FAQ_ITEMS = [
   {
     pregunta: '¿Cómo activo la garantía?',
     respuesta:
-      'La garantía de 30 días cubre defectos de fabricación. Escríbenos a contacto@lhopital.mx con tu número de pedido y descripción del problema. Respondemos en menos de 24 horas.',
+      'La garantía de 12 meses cubre defectos de fabricación. Escríbenos a contacto@lhopital.mx con tu número de pedido y descripción del problema. Respondemos en menos de 24 horas.',
   },
   {
     pregunta: '¿Cuánto tarda el envío?',

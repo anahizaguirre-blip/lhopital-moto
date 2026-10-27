@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: process.env.SITE_URL || 'https://www.lhopital-fr.mx',
+  siteUrl: process.env.SITE_URL || 'https://www.lhopital.mx',
   generateRobotsTxt: true,
   exclude: ['/api/*', '/admin', '/admin/*', '/carrito', '/checkout', '/checkout/*'],
   robotsTxtOptions: {
@@ -12,7 +12,7 @@ module.exports = {
       },
     ],
     additionalSitemaps: [
-      'https://www.lhopital-fr.mx/sitemap.xml',
+      'https://www.lhopital.mx/sitemap.xml',
     ],
   },
   changefreq: 'weekly',
