@@ -31,19 +31,32 @@ export async function generateMetadata({ params }: PageProps) {
   };
 }
 
-// Soporta **negritas** inline con la misma sintaxis ligera que el resto
-// del sitio usa para bloques de texto estático.
+// Soporta **negritas** y [enlaces](/ruta) inline.
 function renderInline(texto: string) {
-  const partes = texto.split(/\*\*(.+?)\*\*/g);
-  return partes.map((parte, i) =>
-    i % 2 === 1 ? (
-      <strong key={i} className="text-[#F4F1EC] font-semibold">
-        {parte}
-      </strong>
-    ) : (
-      <span key={i}>{parte}</span>
-    )
-  );
+  const partes = texto.split(/(\*\*.+?\*\*|\[[^\]]+\]\([^)]+\))/g);
+  return partes.map((parte, i) => {
+    const negrita = parte.match(/^\*\*(.+)\*\*$/);
+    if (negrita) {
+      return (
+        <strong key={i} className="text-[#F4F1EC] font-semibold">
+          {negrita[1]}
+        </strong>
+      );
+    }
+    const enlace = parte.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+    if (enlace) {
+      return (
+        <Link
+          key={i}
+          href={enlace[2]}
+          className="text-[#C9A961] underline underline-offset-4 decoration-[#C9A961]/40 hover:decoration-[#C9A961] transition"
+        >
+          {enlace[1]}
+        </Link>
+      );
+    }
+    return <span key={i}>{parte}</span>;
+  });
 }
 
 function BloqueLegal({ bloque }: { bloque: LegalBloque }) {
@@ -76,6 +89,46 @@ function BloqueLegal({ bloque }: { bloque: LegalBloque }) {
             </li>
           ))}
         </ul>
+      );
+    case 'lista_num':
+      return (
+        <ol className="mb-4 space-y-2">
+          {bloque.items.map((item, i) => (
+            <li key={i} className="font-almaq text-[14px] text-[#F4F1EC]/85 leading-[1.8] pl-7 relative">
+              <span className="absolute left-0 top-0 font-mono text-[12px] leading-[2.1] text-[#C9A961]">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              {renderInline(item)}
+            </li>
+          ))}
+        </ol>
+      );
+    case 'tabla':
+      // Dos columnas: el texto largo se envuelve en la primera y el
+      // importe queda alineado a la derecha, así cabe en 320px sin scroll.
+      return (
+        <div className="my-6">
+          <table className="w-full border-collapse font-almaq text-[14px] leading-[1.6]">
+            <thead>
+              <tr className="border-b border-[#F4F1EC]/30">
+                <th scope="col" className="text-left font-semibold text-[#F4F1EC] text-[11px] tracking-[0.1em] uppercase py-3 pr-4">
+                  {bloque.encabezados[0]}
+                </th>
+                <th scope="col" className="text-right font-semibold text-[#F4F1EC] text-[11px] tracking-[0.1em] uppercase py-3 whitespace-nowrap">
+                  {bloque.encabezados[1]}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {bloque.filas.map(([a, b], i) => (
+                <tr key={i} className="border-b border-[rgba(244,241,236,0.08)]">
+                  <td className="py-3 pr-4 text-[#F4F1EC]/85 align-top">{renderInline(a)}</td>
+                  <td className="py-3 text-right text-[#F4F1EC] align-top whitespace-nowrap">{renderInline(b)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       );
     default:
       return null;

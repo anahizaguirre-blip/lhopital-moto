@@ -20,6 +20,12 @@ const nextConfig: NextConfig = {
     maxInactiveAge: 60 * 60 * 1000,
     pagesBufferLength: 5,
   },
+  // Los legales citan URLs cortas (www.lhopital.mx/aviso-de-privacidad);
+  // las páginas viven en /legal/[slug].
+  redirects: async () =>
+    ['aviso-de-privacidad', 'terminos-y-condiciones', 'politicas-de-entrega', 'politica-de-devoluciones'].map(
+      (slug) => ({ source: `/${slug}`, destination: `/legal/${slug}`, permanent: true })
+    ),
   headers: async () => {
     return [
       {
