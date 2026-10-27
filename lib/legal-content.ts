@@ -16,12 +16,9 @@ const CONTACTO = 'contacto@lhopital.mx · +52 (55) 9462 1951';
 const DOMICILIO =
   'Andador 5, 5C-31, Col. Alianza Popular Revolucionaria, Alcaldía Coyoacán, C.P. 04800, Ciudad de México';
 
-export const LEGAL_RUTAS = {
-  privacidad: '/legal/aviso-de-privacidad',
-  terminos: '/legal/terminos-y-condiciones',
-  entrega: '/legal/politicas-de-entrega',
-  devoluciones: '/legal/politica-de-devoluciones',
-} as const;
+import { LEGAL_RUTAS } from '@/lib/legal-rutas';
+
+export { LEGAL_RUTAS };
 
 export type LegalBloque =
   | { tipo: 'h2'; texto: string }

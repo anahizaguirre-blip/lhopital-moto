@@ -41,6 +41,7 @@ export function formatearDireccion(direccion: unknown): string[] {
   const numeroExt = val('numero_ext', 'numero_exterior', 'numero');
   const numeroInt = val('numero_int', 'numero_interior');
   const colonia = val('colonia', 'neighborhood', 'barrio');
+  const alcaldia = val('alcaldia_municipio', 'alcaldia');
   const ciudad = val('ciudad', 'municipio', 'delegacion', 'city');
   const estado = val('estado', 'state');
   const cp = val('cp', 'codigo_postal', 'zip');
@@ -53,7 +54,8 @@ export function formatearDireccion(direccion: unknown): string[] {
     .filter(Boolean)
     .join(' ');
   if (calleLinea) lineas.push(calleLinea);
-  if (colonia) lineas.push(colonia);
+  const coloniaLinea = [colonia, alcaldia].filter(Boolean).join(', ');
+  if (coloniaLinea) lineas.push(coloniaLinea);
 
   const ciudadLinea = [ciudad, estado, cp].filter(Boolean).join(', ');
   if (ciudadLinea) lineas.push(ciudadLinea);

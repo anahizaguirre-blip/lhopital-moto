@@ -61,3 +61,28 @@ export const ETIQUETA_DISPONIBILIDAD: Record<Disponibilidad, string> = {
 export function formatoMXN(n: number): string {
   return `$${Math.round(n).toLocaleString('es-MX')} MXN`;
 }
+
+// ─── Envío ────────────────────────────────────────────────────────────────
+
+export type MetodoEntrega = 'envio' | 'recoleccion';
+
+export const COSTO_ENVIO_CASCO = 400;
+export const COSTO_ENVIO_SIN_CASCO = 200;
+
+/**
+ * Costo por pedido (Políticas de entrega 2026-10-26):
+ * recolección $0 · envío con ≥1 casco $400 · envío sin casco $200.
+ * El checkout lo calcula en el servidor; el cliente solo lo muestra.
+ */
+export function costoEnvio(metodo: MetodoEntrega, lineas: { esCasco: boolean }[]): number {
+  if (metodo === 'recoleccion') return 0;
+  return lineas.some((l) => l.esCasco) ? COSTO_ENVIO_CASCO : COSTO_ENVIO_SIN_CASCO;
+}
+
+export const SHOWROOM = {
+  direccion:
+    'Pedro Sainz de Baranda 139, Edificio T, Locación 25, Col. Los Cipreses, Coyoacán, C.P. 04830, CDMX',
+  horario: 'Lunes a sábado 11:00–19:00, previa cita',
+  aviso:
+    'Te avisaremos por correo cuando tu pedido esté listo. Tienes 10 días naturales para recogerlo.',
+} as const;
