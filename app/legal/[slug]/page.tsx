@@ -75,16 +75,16 @@ function BloqueLegal({ bloque }: { bloque: LegalBloque }) {
       );
     case 'p':
       return (
-        <p className="font-almaq text-[14px] text-[#F4F1EC]/85 leading-[1.8] mb-4">
+        <p className="font-inter text-[16px] md:text-[17px] text-[#F4F1EC]/80 leading-[1.75] mb-5">
           {renderInline(bloque.texto)}
         </p>
       );
     case 'lista':
       return (
-        <ul className="mb-4 space-y-2">
+        <ul className="mb-5 space-y-3">
           {bloque.items.map((item, i) => (
-            <li key={i} className="font-almaq text-[14px] text-[#F4F1EC]/85 leading-[1.8] pl-5 relative">
-              <span className="absolute left-0 top-[0.7em] w-1.5 h-1.5 bg-[#C9A961]" />
+            <li key={i} className="font-inter text-[16px] md:text-[17px] text-[#F4F1EC]/80 leading-[1.75] pl-5 relative">
+              <span className="absolute left-0 top-[0.72em] w-1.5 h-1.5 bg-[#C9A961]" />
               {renderInline(item)}
             </li>
           ))}
@@ -92,10 +92,10 @@ function BloqueLegal({ bloque }: { bloque: LegalBloque }) {
       );
     case 'lista_num':
       return (
-        <ol className="mb-4 space-y-2">
+        <ol className="mb-5 space-y-3">
           {bloque.items.map((item, i) => (
-            <li key={i} className="font-almaq text-[14px] text-[#F4F1EC]/85 leading-[1.8] pl-7 relative">
-              <span className="absolute left-0 top-0 font-mono text-[12px] leading-[2.1] text-[#C9A961]">
+            <li key={i} className="font-inter text-[16px] md:text-[17px] text-[#F4F1EC]/80 leading-[1.75] pl-7 relative">
+              <span className="absolute left-0 top-[0.15em] font-mono text-[13px] leading-[1.75] text-[#C9A961]">
                 {String(i + 1).padStart(2, '0')}
               </span>
               {renderInline(item)}
@@ -108,13 +108,13 @@ function BloqueLegal({ bloque }: { bloque: LegalBloque }) {
       // importe queda alineado a la derecha, así cabe en 320px sin scroll.
       return (
         <div className="my-6">
-          <table className="w-full border-collapse font-almaq text-[14px] leading-[1.6]">
+          <table className="w-full border-collapse font-inter text-[15px] md:text-[16px] leading-[1.6]">
             <thead>
               <tr className="border-b border-[#F4F1EC]/30">
-                <th scope="col" className="text-left font-semibold text-[#F4F1EC] text-[11px] tracking-[0.1em] uppercase py-3 pr-4">
+                <th scope="col" className="text-left font-semibold text-[#F4F1EC] text-[12px] tracking-[0.08em] uppercase py-3 pr-4">
                   {bloque.encabezados[0]}
                 </th>
-                <th scope="col" className="text-right font-semibold text-[#F4F1EC] text-[11px] tracking-[0.1em] uppercase py-3 whitespace-nowrap">
+                <th scope="col" className="text-right font-semibold text-[#F4F1EC] text-[12px] tracking-[0.08em] uppercase py-3 whitespace-nowrap">
                   {bloque.encabezados[1]}
                 </th>
               </tr>
@@ -170,7 +170,7 @@ export default async function LegalPage({ params }: PageProps) {
             <BloqueLegal key={i} bloque={bloque} />
           ))}
 
-          <p className="font-almaq text-[11px] tracking-[0.1em] uppercase text-[#F4F1EC]/35 mt-12 pt-6 border-t border-[rgba(244,241,236,0.08)]">
+          <p className="font-inter text-[12px] tracking-[0.08em] uppercase text-[#F4F1EC]/50 mt-12 pt-6 border-t border-[rgba(244,241,236,0.08)]">
             Última actualización: {documento.ultimaActualizacion}
           </p>
         </div>
