@@ -82,7 +82,9 @@ export function costoEnvio(metodo: MetodoEntrega, lineas: { esCasco: boolean }[]
 export const SHOWROOM = {
   direccion:
     'Pedro Sainz de Baranda 139, Edificio T, Locación 25, Col. Los Cipreses, Coyoacán, C.P. 04830, CDMX',
-  horario: 'Lunes a sábado 11:00–19:00, previa cita',
+  // Mismo horario que ofrece /citas (lib/citas.ts): sábado solo mañana.
+  horario: ['Lunes a viernes 11:00–14:00 y 16:00–19:00', 'Sábado 11:00–14:00'],
+  citasHref: '/citas',
   aviso:
     'Te avisaremos por correo cuando tu pedido esté listo. Tienes 10 días naturales para recogerlo.',
 } as const;

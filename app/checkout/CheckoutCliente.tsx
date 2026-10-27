@@ -273,7 +273,20 @@ export function CheckoutCliente() {
             {metodo === 'recoleccion' && (
               <div className="border border-[#F4F1EC]/12 p-5 font-inter text-[15px] leading-relaxed space-y-2">
                 <p className="text-[#F4F1EC]">{SHOWROOM.direccion}</p>
-                <p className="text-[#F4F1EC]/70">{SHOWROOM.horario}</p>
+                <p className="text-[#F4F1EC]/70">
+                  {SHOWROOM.horario[0]}
+                  <br />
+                  {SHOWROOM.horario[1]} ·{' '}
+                  {/* Pestaña nueva para no perder lo capturado en el checkout */}
+                  <a
+                    href={SHOWROOM.citasHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#C9A961] underline underline-offset-4 hover:text-[#F4F1EC] transition"
+                  >
+                    previa cita
+                  </a>
+                </p>
                 <p className="text-[#F4F1EC]/70">{SHOWROOM.aviso}</p>
               </div>
             )}
