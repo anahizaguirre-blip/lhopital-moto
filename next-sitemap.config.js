@@ -2,7 +2,7 @@
 module.exports = {
   siteUrl: process.env.SITE_URL || 'https://www.lhopital-fr.mx',
   generateRobotsTxt: true,
-  exclude: ['/api/*'],
+  exclude: ['/api/*', '/admin', '/admin/*', '/carrito', '/checkout', '/checkout/*'],
   robotsTxtOptions: {
     policies: [
       {
