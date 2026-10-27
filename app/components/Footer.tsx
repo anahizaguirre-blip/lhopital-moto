@@ -11,6 +11,7 @@ const navLinks = [
   { href: '/hedon', label: 'Hedon' },
   { href: '/tees', label: 'Tees' },
   { href: 'mailto:contacto@lhopital.mx', label: 'Contacto' },
+  { href: 'https://www.lhopitalcorp.mx', label: 'Corporativo' },
 ]
 
 // Variantes de fondo disponibles
@@ -109,6 +110,15 @@ export default function Footer({ bg = 'dark' }: { bg?: 'dark' | 'hedon' }) {
               if (link.href.startsWith('mailto:')) {
                 return (
                   <a key={link.href} href={link.href} className={className}>
+                    {link.label}
+                  </a>
+                )
+              }
+
+              // Sitio externo (corporativo): pestaña nueva
+              if (link.href.startsWith('http')) {
+                return (
+                  <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer" className={className}>
                     {link.label}
                   </a>
                 )
