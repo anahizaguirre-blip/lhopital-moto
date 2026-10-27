@@ -16,6 +16,7 @@ import {
 import { GaleriaCasco } from '../GaleriaCasco';
 import { SelloMotivo, SelloVendida, AvisoElectrico, TextoDGR } from './Sellos';
 import { BotonAgregarPieza } from './BotonAgregarPieza';
+import { formatearCertificacion } from '@/lib/certificacion';
 
 interface Props {
   piezas: Product[];
@@ -139,7 +140,7 @@ function InfoPieza({ product }: { product: Product }) {
           </div>
           <div className="py-4 border-x border-[#F4F1EC]/10">
             <dt className="text-[10px] tracking-[0.3em] uppercase text-[#F4F1EC]/55 mb-1">Certificación</dt>
-            <dd className="text-lg font-medium">{product.certificacion ?? '—'}</dd>
+            <dd className="text-lg font-medium">{formatearCertificacion(product.certificacion) ?? '—'}</dd>
           </div>
           <div className="py-4">
             <dt className="text-[10px] tracking-[0.3em] uppercase text-[#F4F1EC]/55 mb-1">Piezas</dt>
@@ -186,7 +187,7 @@ function InfoPieza({ product }: { product: Product }) {
           {product.certificacion && (
             <div className="flex justify-between border-b border-[#F4F1EC]/8 pb-3">
               <dt className="text-[#F4F1EC]/55">Certificacion</dt>
-              <dd>{product.certificacion}</dd>
+              <dd>{formatearCertificacion(product.certificacion)}</dd>
             </div>
           )}
           {product.material && (
@@ -268,7 +269,7 @@ function TarjetaPieza({
       </div>
 
       <div className="text-[10px] tracking-[0.2em] uppercase text-[#F4F1EC]/45 mb-1.5">
-        {product.familia} · Talla {variante?.talla ?? '—'} · {product.certificacion}
+        {product.familia} · Talla {variante?.talla ?? '—'} · {formatearCertificacion(product.certificacion)}
       </div>
       <h3 className="text-lg font-medium leading-tight mb-2 text-[#F4F1EC] group-hover:text-[#C9A961] transition-colors">
         {esDGR(product) ? 'DGR 2026' : product.color}.

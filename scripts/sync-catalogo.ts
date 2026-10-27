@@ -256,11 +256,23 @@ async function syncHedonCascos(wb: XLSX.WorkBook): Promise<SyncResult> {
     const { variantes, ...productoSinVariantes } = productoData;
     const skuPadre: string = productoData.sku_padre;
 
-    const { data: producto, error: errProd } = await supabase
+    // Si el modelo + color ya existe con otro SKU Padre (p. ej. PSI-SIB-ECE
+    // → PSI-SIB-ECEDOT), se actualiza ese mismo producto en lugar de crear
+    // uno nuevo con el mismo slug (la base lo rechazaría y el casco se
+    // quedaría oculto).
+    const { data: previo } = await supabase
       .from('products')
-      .upsert(productoSinVariantes, { onConflict: 'sku_padre' })
-      .select()
-      .single();
+      .select('id, sku_padre')
+      .eq('slug', productoSinVariantes.slug)
+      .maybeSingle();
+
+    const { data: producto, error: errProd } = previo
+      ? await supabase.from('products').update(productoSinVariantes).eq('id', previo.id).select().single()
+      : await supabase.from('products').upsert(productoSinVariantes, { onConflict: 'sku_padre' }).select().single();
+
+    if (previo && previo.sku_padre !== skuPadre && !errProd) {
+      console.log(`    ↻ ${previo.sku_padre} → ${skuPadre} (mismo producto, SKU Padre actualizado)`);
+    }
 
     if (errProd) {
       logErr(`Error producto ${skuPadre}`, errProd);

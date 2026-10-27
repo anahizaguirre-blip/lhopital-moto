@@ -17,6 +17,7 @@ import {
   vistasPieza,
 } from '@/lib/fuera-de-serie';
 import { reglaVenta, type ReglaVenta } from '@/lib/venta';
+import { formatearCertificacion, detalleCertificacion } from '@/lib/certificacion';
 import { useAgregarCarrito, AvisoAgregado } from './useAgregarCarrito';
 
 interface ProductDetailProps {
@@ -300,9 +301,16 @@ export function ProductDetail({
               </div>
               <dl className="space-y-3 text-sm">
                 {product.certificacion && (
-                  <div className="flex justify-between border-b border-[#F4F1EC]/8 pb-3">
-                    <dt className="text-[#F4F1EC]/55">Certificacion</dt>
-                    <dd>{product.certificacion}</dd>
+                  <div className="flex justify-between gap-4 border-b border-[#F4F1EC]/8 pb-3">
+                    <dt className="text-[#F4F1EC]/55">Certificación</dt>
+                    <dd className="text-right">
+                      {formatearCertificacion(product.certificacion)}
+                      {detalleCertificacion(product.certificacion) && (
+                        <span className="block text-[12px] text-[#F4F1EC]/50">
+                          {detalleCertificacion(product.certificacion)}
+                        </span>
+                      )}
+                    </dd>
                   </div>
                 )}
                 {product.material && (

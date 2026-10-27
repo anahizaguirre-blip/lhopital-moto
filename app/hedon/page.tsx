@@ -16,7 +16,7 @@ export const revalidate = 60;
 export const metadata = {
   title: 'Hedon — Cascos sin compromiso | Lhopital-moto',
   description:
-    'Cascos Hedon: diseñados en Londres, curados en México. 4 modelos disponibles con certificación ECE 22.06.',
+    'Cascos Hedon: diseñados en Londres, curados en México. Certificación ECE 22.06; Psilo Explorer con doble certificación ECE 22.06 y DOT.',
 }
 
 export default function HedonPage() {
