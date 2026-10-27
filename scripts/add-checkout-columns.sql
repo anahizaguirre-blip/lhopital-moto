@@ -1,10 +1,8 @@
--- ============================================================================
 -- CHECKOUT (Fase 2) — columnas que faltan en orders + email único en customers
 -- Correr una sola vez en Supabase Studio → SQL Editor.
 --
 -- Ya existen y se reutilizan: orders.envio (costo de envío),
 -- orders.direccion_envio (jsonb), orders.subtotal/total, orders.estado.
--- ============================================================================
 
 -- 1. Entrega y prueba de consentimiento legal
 ALTER TABLE orders

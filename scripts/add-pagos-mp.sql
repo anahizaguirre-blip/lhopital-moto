@@ -1,10 +1,8 @@
--- ============================================================================
 -- FASE 3 — Pagos con Mercado Pago (Checkout API vía Orders)
 -- Correr una sola vez en Supabase Studio → SQL Editor.
 --
 -- Reutiliza columnas que ya existían en orders: mp_payment_id, mp_status,
 -- fecha_pago (= momento en que se confirmó el pago).
--- ============================================================================
 
 -- 1. Tipos de movimiento para la reserva temporal de stock -------------------
 ALTER TYPE tipo_movimiento_stock ADD VALUE IF NOT EXISTS 'reserva_pago';
