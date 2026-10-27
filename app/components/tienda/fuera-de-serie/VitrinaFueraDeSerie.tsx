@@ -106,9 +106,12 @@ function InfoPieza({ product }: { product: Product }) {
     <div className="lg:pt-4">
       <div className="mb-3 flex items-center gap-2">
         <span className="inline-block w-6 h-px bg-[#C9A961]" />
-        <span className="text-[10px] tracking-[0.3em] uppercase text-[#C9A961]">
+        <Link
+          href="/tienda/hedon"
+          className="text-[10px] tracking-[0.3em] uppercase text-[#C9A961] hover:underline"
+        >
           {product.familia}
-        </span>
+        </Link>
       </div>
 
       <h2 className="text-4xl md:text-5xl font-medium tracking-tight leading-[1] mb-5">
@@ -174,12 +177,36 @@ function InfoPieza({ product }: { product: Product }) {
         </Link>
       )}
 
-      <Link
-        href={`/tienda/hedon/${product.slug}`}
-        className="inline-block mt-3 text-xs tracking-[0.15em] uppercase text-[#C9A961] border-b border-[#C9A961]/40 pb-1 hover:border-[#C9A961] transition"
-      >
-        Ver ficha completa →
-      </Link>
+      {/* Ficha técnica — mismo bloque que la ficha de los cascos de la tienda */}
+      <div className="mt-10 pt-8 border-t border-[#F4F1EC]/8">
+        <div className="text-[10px] tracking-[0.3em] uppercase text-[#C9A961] mb-4">
+          Ficha tecnica
+        </div>
+        <dl className="space-y-3 text-sm">
+          {product.certificacion && (
+            <div className="flex justify-between border-b border-[#F4F1EC]/8 pb-3">
+              <dt className="text-[#F4F1EC]/55">Certificacion</dt>
+              <dd>{product.certificacion}</dd>
+            </div>
+          )}
+          {product.material && (
+            <div className="flex justify-between border-b border-[#F4F1EC]/8 pb-3">
+              <dt className="text-[#F4F1EC]/55">Material</dt>
+              <dd>{product.material}</dd>
+            </div>
+          )}
+          {product.peso_g && (
+            <div className="flex justify-between border-b border-[#F4F1EC]/8 pb-3">
+              <dt className="text-[#F4F1EC]/55">Peso</dt>
+              <dd>{product.peso_g} g</dd>
+            </div>
+          )}
+          <div className="flex justify-between border-b border-[#F4F1EC]/8 pb-3">
+            <dt className="text-[#F4F1EC]/55">Garantia</dt>
+            <dd>{product.garantia_meses} meses</dd>
+          </div>
+        </dl>
+      </div>
     </div>
   );
 }
