@@ -192,16 +192,29 @@ async function syncHedonCascos(wb: XLSX.WorkBook): Promise<SyncResult> {
   const sheet = wb.Sheets['Hedon Cascos'];
   const rows: any[] = XLSX.utils.sheet_to_json(sheet, { defval: null });
 
+  // Se agrupa por modelo + color (el slug), no por SKU Padre: si una talla
+  // trae otro SKU Padre (p. ej. PSI-SIB-ECEDOT junto a PSI-SIB-ECE), antes
+  // se intentaba crear un segundo producto con el mismo slug, la base lo
+  // rechazaba y esa talla desaparecía de la tienda sin aviso.
   const productosMap = new Map<string, any>();
 
   for (const row of rows) {
     const skuPadre = row['SKU Padre'];
     if (!skuPadre) continue;
+    const slug = makeSlug(`${row['Familia']} ${row['Color']}`);
 
-    if (!productosMap.has(skuPadre)) {
-      productosMap.set(skuPadre, {
+    const existente = productosMap.get(slug);
+    if (existente && existente.sku_padre !== skuPadre) {
+      console.log(
+        `    ⚠ ${row['SKU Variante']}: SKU Padre "${skuPadre}" distinto a "${existente.sku_padre}" ` +
+          `para ${row['Familia']} ${row['Color']} — se agrega como talla del mismo producto. Revisa el Excel.`
+      );
+    }
+
+    if (!existente) {
+      productosMap.set(slug, {
         sku_padre: skuPadre,
-        slug: makeSlug(`${row['Familia']} ${row['Color']}`),
+        slug,
         nombre: `${row['Familia']} ${row['Color']}`,
         marca: 'hedon',
         familia: row['Familia'],
@@ -222,7 +235,7 @@ async function syncHedonCascos(wb: XLSX.WorkBook): Promise<SyncResult> {
       });
     }
 
-    productosMap.get(skuPadre)!.variantes.push({
+    productosMap.get(slug)!.variantes.push({
       sku_variante: row['SKU Variante'],
       talla: clean(row['Talla']),
       precio: parseFloat(row['Precio MXN']) || null,
@@ -233,14 +246,15 @@ async function syncHedonCascos(wb: XLSX.WorkBook): Promise<SyncResult> {
     });
   }
 
-  const skusPadre = new Set(productosMap.keys());
+  const skusPadre = new Set([...productosMap.values()].map((p) => p.sku_padre as string));
   const variantesPorPadre = new Map<string, Set<string>>();
 
   let creados = 0;
   let variantesCreadas = 0;
 
-  for (const [skuPadre, productoData] of productosMap) {
+  for (const productoData of productosMap.values()) {
     const { variantes, ...productoSinVariantes } = productoData;
+    const skuPadre: string = productoData.sku_padre;
 
     const { data: producto, error: errProd } = await supabase
       .from('products')
