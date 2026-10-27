@@ -1,8 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createSupabaseAdmin } from '@/lib/supabase/admin';
-import { getOrderDetail } from '@/lib/orders-query';
-import { getResend, EMAIL_FROM, EMAIL_COPIA_INTERNA } from '@/lib/resend';
-import { PedidoConfirmadoEmail } from '@/emails/pedido-confirmado';
+import { enviarCorreosConfirmacion } from '@/lib/pedidos-pago';
 
 /**
  * Recibe el Database Webhook de Supabase sobre INSERT/UPDATE de `orders`.
@@ -38,32 +35,8 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true, skipped: true });
   }
 
-  const supabase = createSupabaseAdmin();
-  const order = await getOrderDetail(supabase, record.id);
-
-  if (!order) {
-    return NextResponse.json({ ok: false, error: 'orden no encontrada' }, { status: 200 });
-  }
-
-  if (!order.email_cliente) {
-    return NextResponse.json({ ok: false, error: 'orden sin email de cliente' }, { status: 200 });
-  }
-
-  const { data, error } = await getResend().emails.send({
-    from: EMAIL_FROM,
-    to: order.email_cliente,
-    cc: EMAIL_COPIA_INTERNA,
-    subject: `Tu pedido ${order.numero_orden} está confirmado`,
-    react: <PedidoConfirmadoEmail order={order} />,
-  });
-
-  if (error) {
-    // El SDK de Resend no truena en fallos de la API (dominio sin
-    // verificar, límite de la cuenta, etc.) — devuelve { error } — así
-    // que hay que revisarlo explícitamente en vez de asumir éxito.
-    console.error('[webhooks/pedido-confirmado] Resend:', error);
-    return NextResponse.json({ ok: false, error: error.message }, { status: 200 });
-  }
-
-  return NextResponse.json({ ok: true, id: data?.id });
+  // Mismo envío idempotente que usa el cobro con Mercado Pago: si ya se
+  // mandó (correo_confirmacion_at), no se repite.
+  const resultado = await enviarCorreosConfirmacion(record.id);
+  return NextResponse.json({ ok: resultado !== 'error', resultado });
 }
