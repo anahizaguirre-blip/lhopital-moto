@@ -353,7 +353,7 @@ export const LEGAL_DOCUMENTOS: LegalDocumento[] = [
         tipo: 'lista',
         items: [
           'Te avisaremos por correo cuando tu pedido esté listo para recoger.',
-          'Puedes recogerlo en nuestro showroom: Pedro Sainz de Baranda 139, Edificio T, Locación 25, Col. Los Cipreses, Alcaldía Coyoacán, C.P. 04830, Ciudad de México, de lunes a sábado de 11:00 a 19:00 horas, previa cita.',
+          'Puedes recogerlo en nuestro showroom: Pedro Sainz de Baranda 139, Edificio T, Locación 25, Col. Los Cipreses, Alcaldía Coyoacán, C.P. 04830, Ciudad de México, de lunes a viernes de 11:00 a 14:00 y de 16:00 a 19:00 horas, y sábados de 11:00 a 14:00 horas, [previa cita](/citas).',
           'Presenta tu número de pedido e identificación oficial. Si otra persona recoge por ti, avísanos antes por correo con su nombre; deberá presentar identificación oficial.',
           'Tienes 10 días naturales para recogerlo a partir del aviso. Pasado ese plazo, te contactaremos para coordinar la entrega o el envío, con el costo que aplique.',
         ],
