@@ -88,3 +88,13 @@ export const SHOWROOM = {
   aviso:
     'Te avisaremos por correo cuando tu pedido esté listo. Tienes 10 días naturales para recogerlo.',
 } as const;
+
+// ─── WhatsApp de ventas (pedidos mientras el pago en línea está en pausa) ───
+export const WHATSAPP = {
+  numero: '525621627604', // formato internacional para wa.me
+  visible: '56 2162 7604',
+} as const;
+
+export function linkWhatsApp(texto: string): string {
+  return `https://wa.me/${WHATSAPP.numero}?text=${encodeURIComponent(texto)}`;
+}

@@ -19,7 +19,7 @@ interface ErrorProducto {
 
 const DIRECCION_VACIA = { calle: '', colonia: '', cp: '', alcaldia: '', ciudad: '', estado: '', referencias: '' };
 
-export function CheckoutCliente() {
+export function CheckoutCliente({ pagosActivos }: { pagosActivos: boolean }) {
   const router = useRouter();
   const { items, hydrated } = useCart();
 
@@ -374,8 +374,18 @@ export function CheckoutCliente() {
             disabled={!acepto || enviando}
             className="mt-6 w-full bg-[#F4F1EC] text-[#0A0A0A] py-4 font-sora font-bold text-[13px] tracking-[0.1em] uppercase hover:bg-[#C9A961] transition disabled:bg-[#F4F1EC]/20 disabled:text-[#0A0A0A]/60 disabled:cursor-not-allowed"
           >
-            {enviando ? 'Creando tu pedido…' : `Continuar al pago · ${formatoMXN(total)}`}
+            {enviando
+              ? 'Creando tu pedido…'
+              : pagosActivos
+              ? `Continuar al pago · ${formatoMXN(total)}`
+              : `Apartar mi pedido · ${formatoMXN(total)}`}
           </button>
+          {!pagosActivos && (
+            <p className="mt-3 font-inter text-[13px] leading-relaxed text-[#F4F1EC]/65 text-center">
+              El pago en línea estará disponible muy pronto. Al apartar tu pedido te damos un número para terminar la
+              compra por WhatsApp.
+            </p>
+          )}
           <p className="mt-3 font-inter text-[12px] text-[#F4F1EC]/45 text-center">
             Precios en MXN con IVA incluido.
           </p>

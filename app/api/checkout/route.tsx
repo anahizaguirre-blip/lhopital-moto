@@ -16,7 +16,11 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 import { CheckoutSchema, type CheckoutDatos } from '@/lib/checkout-schema';
 import { createSupabaseAdmin } from '@/lib/supabase/admin';
 import { resolverSkus, type LineaResuelta } from '@/lib/carrito-server';
-import { costoEnvio } from '@/lib/venta';
+import { costoEnvio, formatoMXN } from '@/lib/venta';
+import { pagosEnLineaActivos } from '@/lib/pagos-estado';
+import { getOrderDetail } from '@/lib/orders-query';
+import { getResend, EMAIL_FROM, EMAIL_COPIA_INTERNA } from '@/lib/resend';
+import { PedidoNuevoInternoEmail } from '@/emails/pedido-nuevo-interno';
 import { VERSION_TERMINOS } from '@/lib/legal-content';
 import { firmarOrden, nombreCookieOrden, OPCIONES_COOKIE_ORDEN } from '@/lib/orden-acceso';
 
@@ -145,6 +149,25 @@ export async function POST(req: Request) {
     // Sin transacciones vía REST: deshacer la orden para no dejarla huérfana.
     await supabase.from('orders').delete().eq('id', orden.id);
     return json({ error: 'No pudimos crear tu pedido. Intenta de nuevo.' }, 500);
+  }
+
+  // Cobro en línea en pausa: el cliente termina por WhatsApp; avisar al equipo.
+  if (!pagosEnLineaActivos()) {
+    try {
+      const detalle = await getOrderDetail(supabase, orden.id);
+      if (detalle) {
+        const entrega = detalle.metodo_entrega === 'recoleccion' ? 'Recolección' : 'Envío';
+        const { error: errCorreo } = await getResend().emails.send({
+          from: EMAIL_FROM,
+          to: EMAIL_COPIA_INTERNA,
+          subject: `Pedido por WhatsApp #${detalle.numero_orden} · ${formatoMXN(total)} · ${entrega}`,
+          react: <PedidoNuevoInternoEmail order={detalle} etiqueta="PEDIDO POR WHATSAPP (SIN PAGO)" />,
+        });
+        if (errCorreo) console.error('[checkout] aviso WhatsApp', errCorreo.message);
+      }
+    } catch (e) {
+      console.error('[checkout] aviso WhatsApp', e instanceof Error ? e.message : e);
+    }
   }
 
   // Solo este navegador podrá abrir la página de pago de la orden

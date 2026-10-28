@@ -20,6 +20,7 @@ import { crearOrdenTarjeta, mensajeRechazo } from '@/lib/mp-orders';
 import { mpMaxInstallments } from '@/lib/mp-config';
 import { confirmarPago } from '@/lib/pedidos-pago';
 import { getResend, EMAIL_FROM, EMAIL_COPIA_INTERNA } from '@/lib/resend';
+import { pagosEnLineaActivos } from '@/lib/pagos-estado';
 
 export const dynamic = 'force-dynamic';
 
@@ -38,6 +39,9 @@ function json(body: unknown, status = 200) {
 }
 
 export async function POST(req: Request) {
+  if (!pagosEnLineaActivos()) {
+    return json({ error: 'El pago en línea está en pausa. Termina tu compra por WhatsApp. No se hizo ningún cargo.' }, 503);
+  }
   const parsed = Body.safeParse(await req.json().catch(() => null));
   if (!parsed.success) return json({ error: 'Datos de pago incompletos. Intenta de nuevo.' }, 400);
   const datos = parsed.data;

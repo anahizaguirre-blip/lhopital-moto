@@ -6,14 +6,20 @@ import { urlSitio } from '@/lib/sitio';
 import type { OrderDetail } from '@/lib/orders-query';
 
 /** Aviso interno. Asunto: "Nuevo pedido #<folio> · $<total> · Envío/Recolección". */
-export function PedidoNuevoInternoEmail({ order }: { order: OrderDetail }) {
+export function PedidoNuevoInternoEmail({
+  order,
+  etiqueta = 'NUEVO PEDIDO',
+}: {
+  order: OrderDetail;
+  etiqueta?: string;
+}) {
   const recoleccion = order.metodo_entrega === 'recoleccion';
   const direccion = formatearDireccion(order.direccion_envio);
   const celda = { fontFamily: FUENTE, fontSize: '14px', lineHeight: '20px', color: OSCURO.texto, margin: '6px 0' };
 
   return (
     <EmailOscuro preview={`Nuevo pedido #${order.numero_orden} · ${formatoMXN(Number(order.total))}`}>
-      <Text style={estilos.meta}>NUEVO PEDIDO</Text>
+      <Text style={estilos.meta}>{etiqueta}</Text>
       <Text style={estilos.h1}>
         #{order.numero_orden} · {formatoMXN(Number(order.total))}
       </Text>
