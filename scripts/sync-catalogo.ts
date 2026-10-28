@@ -67,6 +67,56 @@ const logErr = (msg: string, err?: any) => {
 };
 const clean = (v: any): any => (v === undefined || v === null || v === '' || v === 'N/A' ? null : v);
 
+// ─── Stock ───────────────────────────────────────────────────────────────────
+// El stock del Excel solo se usa al CREAR una variante. Después lo mueven las
+// ventas en línea y el admin (/admin/inventario); si el sync lo sobrescribiera,
+// lo vendido "regresaría" y se podría vender dos veces.
+// `npm run sync-catalogo -- --stock` fuerza el stock del Excel (p. ej. tras un
+// conteo físico).
+const FORZAR_STOCK = process.argv.includes('--stock');
+let variantesExistentes: Set<string> | null = null;
+let teesExistentes: Set<string> | null = null;
+
+async function skusExistentes(tabla: 'product_variants' | 'tees'): Promise<Set<string>> {
+  const set = new Set<string>();
+  for (let desde = 0; ; desde += 1000) {
+    const { data, error } = await supabase.from(tabla).select('sku_variante').range(desde, desde + 999);
+    if (error) throw new Error(`No se pudo leer ${tabla}: ${error.message}`);
+    (data ?? []).forEach((r: any) => set.add(r.sku_variante));
+    if (!data || data.length < 1000) break;
+  }
+  return set;
+}
+
+/**
+ * Upsert de variantes respetando el stock existente. Se mandan en dos lotes
+ * porque en un mismo lote las filas sin `stock_actual` lo dejarían en NULL.
+ */
+async function upsertVariantes(filas: any[]): Promise<{ error: any }> {
+  if (!variantesExistentes) variantesExistentes = await skusExistentes('product_variants');
+  const nuevas = filas.filter((f) => FORZAR_STOCK || !variantesExistentes!.has(f.sku_variante));
+  const existentes = filas
+    .filter((f) => !FORZAR_STOCK && variantesExistentes!.has(f.sku_variante))
+    .map(({ stock_actual, ...resto }) => resto);
+
+  for (const lote of [nuevas, existentes]) {
+    if (lote.length === 0) continue;
+    const { error } = await supabase.from('product_variants').upsert(lote, { onConflict: 'sku_variante' });
+    if (error) return { error };
+  }
+  nuevas.forEach((f) => variantesExistentes!.add(f.sku_variante));
+  return { error: null };
+}
+
+async function upsertTee(fila: any): Promise<{ error: any }> {
+  if (!teesExistentes) teesExistentes = await skusExistentes('tees');
+  const existe = !FORZAR_STOCK && teesExistentes.has(fila.sku_variante);
+  const { stock, ...sinStock } = fila;
+  const { error } = await supabase.from('tees').upsert(existe ? sinStock : fila, { onConflict: 'sku_variante' });
+  if (!error) teesExistentes.add(fila.sku_variante);
+  return { error };
+}
+
 // El Excel a veces trae variantes de texto ("descontinuada", "futuro") que no
 // existen en el enum estado_producto de Postgres. Se normalizan aquí en vez
 // de dejar que la corrida entera falle por una fila.
@@ -282,9 +332,7 @@ async function syncHedonCascos(wb: XLSX.WorkBook): Promise<SyncResult> {
     variantesPorPadre.set(producto.id, new Set(variantes.map((v: any) => v.sku_variante)));
 
     const variantesConProductId = variantes.map((v: any) => ({ ...v, product_id: producto.id }));
-    const { error: errVar } = await supabase
-      .from('product_variants')
-      .upsert(variantesConProductId, { onConflict: 'sku_variante' });
+    const { error: errVar } = await upsertVariantes(variantesConProductId);
 
     if (errVar) logErr(`Error variantes ${skuPadre}`, errVar);
     else variantesCreadas += variantes.length;
@@ -543,9 +591,7 @@ async function syncHedonAccesorios(wb: XLSX.WorkBook): Promise<SyncResult> {
     variantesPorPadre.set(prod.id, new Set(variantes.map((v: any) => v.sku_variante)));
 
     const variantesConId = variantes.map(({ _foto, ...v }: any) => ({ ...v, product_id: prod.id }));
-    const { error: errVar } = await supabase
-      .from('product_variants')
-      .upsert(variantesConId, { onConflict: 'sku_variante' });
+    const { error: errVar } = await upsertVariantes(variantesConId);
 
     if (errVar) logErr(`Error variantes ${skuPadre}`, errVar);
     else variantesCreadas += variantes.length;
@@ -638,7 +684,8 @@ async function syncMotoII(wb: XLSX.WorkBook): Promise<SyncResult> {
       visible_publico: true,
     };
 
-    await supabase.from('product_variants').upsert(variante, { onConflict: 'sku_variante' });
+    const { error: errV } = await upsertVariantes([variante]);
+    if (errV) logErr(`Error variante MOTO II ${sku}`, errV);
   }
 
   logOk(`${creados} productos MOTO II`);
@@ -711,11 +758,10 @@ async function syncTees(wb: XLSX.WorkBook): Promise<SyncResult> {
     variantesPorPadre.set(prod.id, new Set(variantes.map((v: any) => v.sku_variante)));
 
     const variantesConId = variantes.map((v: any) => ({ ...v, product_id: prod.id }));
-    const { error: errV } = await supabase
-      .from('product_variants')
-      .upsert(variantesConId, { onConflict: 'sku_variante' });
+    const { error: errV } = await upsertVariantes(variantesConId);
 
-    if (!errV) variantesCreadas += variantes.length;
+    if (errV) logErr(`Error variantes tee ${skuPadre}`, errV);
+    else variantesCreadas += variantes.length;
   }
 
   logOk(`${creados} diseños Tees · ${variantesCreadas} variantes`);
@@ -778,7 +824,7 @@ async function syncTeesTabla(wb: XLSX.WorkBook) {
       foto_lifestyle: fotos.lifestyle ?? null,
     };
 
-    const { error } = await supabase.from('tees').upsert(tee, { onConflict: 'sku_variante' });
+    const { error } = await upsertTee(tee);
     if (error) logErr(`Error tabla tees ${skuVariante}`, error);
     else sincronizadas++;
   }
@@ -989,6 +1035,11 @@ async function main() {
 
   console.log(`Archivo:  ${EXCEL_PATH}`);
   console.log(`Supabase: ${SUPABASE_URL}`);
+  console.log(
+    FORZAR_STOCK
+      ? 'Stock:    SE USARÁ EL DEL EXCEL para todas las variantes (--stock)'
+      : 'Stock:    se respeta el de la base; el Excel solo pone stock a variantes nuevas'
+  );
 
   const wb = XLSX.readFile(EXCEL_PATH);
   mostrarLeeme(wb);
