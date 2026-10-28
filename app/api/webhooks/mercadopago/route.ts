@@ -83,7 +83,11 @@ export async function POST(req: Request) {
 
     // 3. Fuente de verdad: la API de MP
     const mpOrden = await obtenerOrden(dataId);
-    if (!mpOrden) throw new Error(`MP no devolvió la order ${dataId}`);
+    if (!mpOrden) {
+      // Order inexistente en MP (p. ej. "Simular notificación" del panel)
+      await cerrarEvento(`order ${dataId} no existe en Mercado Pago`);
+      return NextResponse.json({ ok: true, sinOrden: true });
+    }
 
     // 4. Nuestra orden
     const ordenId = mpOrden.external_reference;

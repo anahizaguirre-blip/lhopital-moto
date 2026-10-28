@@ -124,12 +124,14 @@ export async function crearOrdenTarjeta(params: {
   };
 }
 
+/** null = la order no existe en MP (400/404, p. ej. "Simular notificación"); otros errores lanzan. */
 export async function obtenerOrden(mpOrderId: string): Promise<OrdenMP | null> {
   const res = await fetch(`${API}/${encodeURIComponent(mpOrderId)}`, {
     headers: { Authorization: `Bearer ${token()}` },
     cache: 'no-store',
   });
-  if (!res.ok) return null;
+  if (res.status === 404 || res.status === 400) return null;
+  if (!res.ok) throw new Error(`MP GET order ${mpOrderId}: HTTP ${res.status}`);
   return (await res.json()) as OrdenMP;
 }
 
