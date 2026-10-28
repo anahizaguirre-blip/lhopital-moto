@@ -21,6 +21,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <Link href="/admin/pedidos" style={{ color: '#F5EFE0', fontSize: '13px', textDecoration: 'none', opacity: 0.8 }}>
             Pedidos
           </Link>
+          <Link href="/admin/inventario" style={{ color: '#F5EFE0', fontSize: '13px', textDecoration: 'none', opacity: 0.8 }}>
+            Inventario
+          </Link>
           <Link href="/admin/citas" style={{ color: '#F5EFE0', fontSize: '13px', textDecoration: 'none', opacity: 0.8 }}>
             Citas
           </Link>

@@ -22,6 +22,8 @@ export interface OrderDetail {
   envio: number;
   total: number;
   direccion_envio: unknown;
+  metodo_entrega: 'envio' | 'recoleccion' | null;
+  tarjeta_ultimos4: string | null;
   paqueteria: string | null;
   numero_guia: string | null;
   url_rastreo: string | null;
@@ -85,6 +87,8 @@ export async function getOrderDetail(
     envio: order.envio,
     total: order.total,
     direccion_envio: order.direccion_envio,
+    metodo_entrega: order.metodo_entrega ?? null,
+    tarjeta_ultimos4: order.tarjeta_ultimos4 ?? null,
     paqueteria: order.paqueteria,
     numero_guia: order.numero_guia,
     url_rastreo: order.url_rastreo,
