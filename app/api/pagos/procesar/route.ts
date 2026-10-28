@@ -19,6 +19,7 @@ import { esUuid, nombreCookieOrden, verificarFirmaOrden } from '@/lib/orden-acce
 import { crearOrdenTarjeta, mensajeRechazo } from '@/lib/mp-orders';
 import { mpMaxInstallments } from '@/lib/mp-config';
 import { confirmarPago } from '@/lib/pedidos-pago';
+import { getResend, EMAIL_FROM, EMAIL_COPIA_INTERNA } from '@/lib/resend';
 
 export const dynamic = 'force-dynamic';
 
@@ -155,5 +156,28 @@ export async function POST(req: Request) {
 
   await supabase.rpc('liberar_stock', { p_order_id: orderId });
   await terminar();
+
+  // 401/403 sin order: Mercado Pago no autorizó la llamada (credenciales o
+  // cuenta), no fue el banco. Mensaje honesto al cliente + aviso interno.
+  if (!mp.orden && (mp.httpStatus === 401 || mp.httpStatus === 403)) {
+    console.error('[pagos] MP no autorizó la llamada', orderId, mp.httpStatus);
+    await avisoInterno(
+      'Pago bloqueado por Mercado Pago (revisar credenciales)',
+      `Mercado Pago respondió ${mp.httpStatus} al intentar cobrar el pedido ${orderId}. No se hizo cargo. Revisa las credenciales de producción y el tipo de integración de la app en Mercado Pago.`
+    );
+    return json({
+      result: 'rejected',
+      reason: 'No pudimos procesar el pago en este momento. No se hizo ningún cargo. Intenta más tarde o escríbenos a contacto@lhopital.mx.',
+    });
+  }
+
   return json({ result: 'rejected', reason: mensajeRechazo(mp.detalle) });
+}
+
+async function avisoInterno(asunto: string, texto: string) {
+  try {
+    await getResend().emails.send({ from: EMAIL_FROM, to: EMAIL_COPIA_INTERNA, subject: asunto, text: texto });
+  } catch (e) {
+    console.error('[pagos] aviso interno', e instanceof Error ? e.message : e);
+  }
 }

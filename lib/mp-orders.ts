@@ -108,9 +108,13 @@ export async function crearOrdenTarjeta(params: {
     | null;
   // Aprobado: la order viene en el cuerpo. Rechazado (402): { errors, data: order }.
   const orden = body?.id ? body : body?.data?.id ? body.data : null;
-  if (!res.ok && body?.errors) {
+  if (!res.ok) {
     // Solo códigos y motivos (p. ej. "PAY…: insufficient_amount"), nunca el token.
-    console.info('[mp] rechazo', res.status, JSON.stringify(body.errors.map((e) => ({ code: e.code, details: e.details }))));
+    const b = body as Record<string, unknown> | null;
+    const resumen = body?.errors
+      ? body.errors.map((e) => ({ code: e.code, details: e.details }))
+      : { code: b?.code, message: b?.message, blocked_by: b?.blocked_by };
+    console.warn('[mp] respuesta', res.status, JSON.stringify(resumen));
   }
   const { resultado, detalle } = clasificarOrden(orden);
 
