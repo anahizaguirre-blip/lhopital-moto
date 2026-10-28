@@ -9,6 +9,8 @@ import { createSupabaseAdmin } from '@/lib/supabase/admin';
 import { getOrderDetail } from '@/lib/orders-query';
 import { getResend, EMAIL_FROM, EMAIL_COPIA_INTERNA } from '@/lib/resend';
 import { PedidoConfirmadoEmail } from '@/emails/pedido-confirmado';
+import { PedidoNuevoInternoEmail } from '@/emails/pedido-nuevo-interno';
+import { formatoMXN } from '@/lib/venta';
 
 /**
  * Idempotente: la base solo pasa la orden a `pagada` si seguía en
@@ -63,10 +65,10 @@ export async function enviarCorreosConfirmacion(orderId: string): Promise<'envia
       return 'error';
     }
 
-    const { error } = await getResend().emails.send({
+    const resend = getResend();
+    const { error } = await resend.emails.send({
       from: EMAIL_FROM,
       to: order.email_cliente,
-      cc: EMAIL_COPIA_INTERNA,
       subject: `Tu pedido Lhopital #${order.numero_orden} está confirmado`,
       react: <PedidoConfirmadoEmail order={order} />,
     });
@@ -76,6 +78,17 @@ export async function enviarCorreosConfirmacion(orderId: string): Promise<'envia
       await liberar();
       return 'error';
     }
+
+    // Aviso interno aparte; si falla no se reenvía el del cliente.
+    const entrega = order.metodo_entrega === 'recoleccion' ? 'Recolección' : 'Envío';
+    const { error: errInterno } = await resend.emails.send({
+      from: EMAIL_FROM,
+      to: EMAIL_COPIA_INTERNA,
+      subject: `Nuevo pedido #${order.numero_orden} · ${formatoMXN(Number(order.total))} · ${entrega}`,
+      react: <PedidoNuevoInternoEmail order={order} />,
+    });
+    if (errInterno) console.error('[correo interno] Resend:', errInterno.message);
+
     return 'enviado';
   } catch (e) {
     console.error('[correo confirmación]', e instanceof Error ? e.message : e);
