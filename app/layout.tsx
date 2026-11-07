@@ -50,8 +50,8 @@ const sora = Sora({
 })
 
 export const metadata: Metadata = {
-  title: "Lhopital Moto",
-  description: "We are the standard. Equipo premium para motociclistas desde CDMX.",
+  title: "Lhopital Moto · Finest Motorcycle Gear en CDMX",
+  description: "Finest motorcycle gear: cascos Hedon, Moto II de Beeline y equipo premium para motociclistas desde CDMX. We are the standard.",
 };
 
 export default function RootLayout({
