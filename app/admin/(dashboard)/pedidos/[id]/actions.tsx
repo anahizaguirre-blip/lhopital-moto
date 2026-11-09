@@ -140,11 +140,8 @@ export async function cambiarEstado(
 // No hay estado propio en la base: el pedido sigue en "preparando" y la fecha
 // del aviso se guarda en fecha_envio (en recolección no se usa para otra cosa).
 
-export async function avisarListoRecoger(
-  orderId: string,
-  _prevState: CambiarEstadoState,
-  _formData: FormData
-): Promise<CambiarEstadoState> {
+// useActionState le pasa (estadoPrevio, formData); aquí no se usan.
+export async function avisarListoRecoger(orderId: string): Promise<CambiarEstadoState> {
   const supabase = createSupabaseAdmin();
   const order = await getOrderDetail(supabase, orderId);
   if (!order) return { error: 'No se encontró el pedido.' };
