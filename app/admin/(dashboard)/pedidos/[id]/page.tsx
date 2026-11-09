@@ -4,6 +4,7 @@ import { getOrderDetail } from '@/lib/orders-query';
 import { formatFecha, formatMoneda, formatearDireccion } from '@/lib/orders-format';
 import { cloudinaryUrl } from '@/lib/cloudinary';
 import { CaptureForm } from './CaptureForm';
+import { EstadoForm } from './EstadoForm';
 
 export default async function PedidoDetallePage({
   params,
@@ -17,6 +18,7 @@ export default async function PedidoDetallePage({
   if (!order) notFound();
 
   const direccionLineas = formatearDireccion(order.direccion_envio);
+  const recoleccion = order.metodo_entrega === 'recoleccion';
 
   return (
     <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: '24px', maxWidth: '1000px' }}>
@@ -61,6 +63,7 @@ export default async function PedidoDetallePage({
           {order.telefono_cliente && <p style={{ fontSize: '14px', margin: '2px 0' }}>{order.telefono_cliente}</p>}
         </Seccion>
 
+        {!recoleccion && (
         <Seccion titulo="Dirección de envío">
           {direccionLineas.length > 0 ? (
             direccionLineas.map((linea, i) => (
@@ -70,18 +73,33 @@ export default async function PedidoDetallePage({
             <p style={{ fontSize: '14px', color: '#888' }}>Sin dirección capturada.</p>
           )}
         </Seccion>
+        )}
       </div>
 
       <div>
-        <Seccion titulo="Envío">
-          <CaptureForm
+        <Seccion titulo="Estado del pedido">
+          <EstadoForm
             orderId={order.id}
-            paqueteria={order.paqueteria}
-            numeroGuia={order.numero_guia}
-            urlRastreo={order.url_rastreo}
-            yaEnviado={order.estado === 'enviada' || order.estado === 'entregada'}
+            estado={order.estado}
+            recoleccion={recoleccion}
+            avisoListoEn={recoleccion ? order.fecha_envio : null}
           />
         </Seccion>
+        {recoleccion ? (
+          <Seccion titulo="Entrega">
+            <p style={{ fontSize: '14px', margin: 0 }}>Recolección en showroom</p>
+          </Seccion>
+        ) : (
+          <Seccion titulo="Envío">
+            <CaptureForm
+              orderId={order.id}
+              paqueteria={order.paqueteria}
+              numeroGuia={order.numero_guia}
+              urlRastreo={order.url_rastreo}
+              yaEnviado={order.estado === 'enviada' || order.estado === 'entregada'}
+            />
+          </Seccion>
+        )}
       </div>
     </div>
   );
