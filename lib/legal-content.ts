@@ -42,7 +42,7 @@ export const LEGAL_DOCUMENTOS: LegalDocumento[] = [
   {
     slug: 'aviso-de-privacidad',
     titulo: 'Aviso de privacidad',
-    ultimaActualizacion: ACTUALIZACION,
+    ultimaActualizacion: '9 de noviembre de 2026',
     cuerpo: [
       { tipo: 'h2', texto: 'Responsable' },
       {
@@ -160,7 +160,7 @@ export const LEGAL_DOCUMENTOS: LegalDocumento[] = [
       },
 
       { tipo: 'h2', texto: 'Contacto' },
-      { tipo: 'p', texto: `${CONTACTO} · de 9:00 a 18:00 horas` },
+      { tipo: 'p', texto: `${CONTACTO} · Lunes a viernes 11:00–14:00 y 16:00–19:00 · Sábado 11:00–14:00` },
     ],
   },
 
