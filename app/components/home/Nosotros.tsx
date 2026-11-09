@@ -61,7 +61,7 @@ export default function Nosotros() {
             {/* Respaldo */}
             <p className="font-inter font-light text-moto-bone/75 text-[15px] md:text-base leading-relaxed mb-5">
               Somos una empresa mexicana fundada por amantes de las motocicletas,
-              con 17 años de experiencia en la industria de la seguridad. Sabemos
+              con experiencia en la industria de la seguridad desde 2007. Sabemos
               lo que se siente encontrar esa moto que te hace amar las dos ruedas
               — y lo que cuesta encontrar el equipo que esté a su altura.
             </p>
