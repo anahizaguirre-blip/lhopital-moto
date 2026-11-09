@@ -41,7 +41,7 @@ const MARCAS: MarcaCard[] = [
     textColor: 'text-[#F4F1EC]',
     brassColor: 'text-[#C9A961]',
     fraseColor: 'text-[#C9A961]',
-    cta: 'Ver cascos Hedon',
+    cta: 'Comprar cascos Hedon',
     heroImage: 'tienda-hedon-v1',
   },
   {
@@ -55,7 +55,7 @@ const MARCAS: MarcaCard[] = [
     textColor: 'text-[#F4F1EC]',
     brassColor: 'text-[#C9A961]',
     fraseColor: 'text-[#C9A961]',
-    cta: 'Conoce Moto II',
+    cta: 'Comprar Moto II',
     heroImage: 'tienda-moto-v1',
   },
   {
@@ -69,7 +69,7 @@ const MARCAS: MarcaCard[] = [
     textColor: 'text-[#F5F5F5]',
     brassColor: 'text-[#C9A961]',
     fraseColor: 'text-[#C9A961]',
-    cta: 'Ver playeras',
+    cta: 'Comprar playeras',
     heroImage: 'tienda-tees',
   },
 ];
