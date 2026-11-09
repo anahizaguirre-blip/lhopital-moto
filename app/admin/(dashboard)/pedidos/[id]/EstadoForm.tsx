@@ -66,8 +66,8 @@ export function EstadoForm({
       <p style={{ fontSize: '15px', fontWeight: 600, margin: 0 }}>{etiqueta}</p>
       <p style={{ fontSize: '12px', color: '#888', margin: 0 }}>
         {recoleccion
-          ? 'Recolección en showroom: Pagada → Preparando → Listo para recoger (se avisa al cliente) → Entregada'
-          : 'Envío: Pagada → Preparando → Enviada (al capturar la guía) → Entregada'}
+          ? 'Recolección en showroom: Pagada → Preparando → Listo para recoger (se avisa al cliente) → Entregada (se le agradece)'
+          : 'Envío: Pagada → Preparando → Enviada (al capturar la guía) → Entregada (se le agradece)'}
       </p>
 
       {listoAvisado && avisoListoEn && (
@@ -113,8 +113,11 @@ export function EstadoForm({
         <p style={{ color: '#2e7d32', fontSize: '13px', margin: 0 }}>Correo enviado al cliente.</p>
       )}
       {estadoState.success && !estadoState.error && (
-        <p style={{ color: '#2e7d32', fontSize: '13px', margin: 0 }}>Estado actualizado.</p>
+        <p style={{ color: '#2e7d32', fontSize: '13px', margin: 0 }}>
+          {estado === 'entregada' ? 'Marcado como entregado. Correo de agradecimiento enviado.' : 'Estado actualizado.'}
+        </p>
       )}
+      {estadoState.avisoCorreo && <p style={{ color: '#c62828', fontSize: '13px', margin: 0 }}>{estadoState.avisoCorreo}</p>}
     </div>
   );
 }

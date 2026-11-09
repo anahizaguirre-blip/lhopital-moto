@@ -6,6 +6,7 @@ import { getOrderDetail } from '@/lib/orders-query';
 import { getResend, EMAIL_FROM } from '@/lib/resend';
 import { PedidoEnviadoEmail } from '@/emails/pedido-enviado';
 import { PedidoListoRecogerEmail } from '@/emails/pedido-listo-recoger';
+import { PedidoEntregadoEmail } from '@/emails/pedido-entregado';
 
 export interface CapturarEnvioState {
   error?: string;
@@ -84,6 +85,7 @@ export async function capturarEnvio(
 export interface CambiarEstadoState {
   error?: string;
   success?: boolean;
+  avisoCorreo?: string;
 }
 
 const SIGUIENTE: Record<string, { envio: string[]; recoleccion: string[] }> = {
@@ -131,9 +133,33 @@ export async function cambiarEstado(
   }
   if (!actualizado?.length) return { error: 'El pedido cambió mientras tanto. Recarga la página.' };
 
+  // Entregado: correo de agradecimiento. Solo sale una vez, porque el cambio
+  // de estado de arriba solo ocurre una vez. Si falla, el estado ya quedó.
+  let avisoCorreo: string | undefined;
+  if (nuevo === 'entregada') {
+    const order = await getOrderDetail(supabase, orderId);
+    if (order?.email_cliente) {
+      try {
+        const { error: resendError } = await getResend().emails.send({
+          from: EMAIL_FROM,
+          to: order.email_cliente,
+          subject: `Gracias por tu compra en Lhopital · pedido #${order.numero_orden}`,
+          react: <PedidoEntregadoEmail order={order} />,
+        });
+        if (resendError) {
+          console.error('[admin/pedidos/[id]] Resend entregado:', resendError);
+          avisoCorreo = 'Se marcó como entregado, pero no se pudo enviar el correo de agradecimiento.';
+        }
+      } catch (err) {
+        console.error('[admin/pedidos/[id]] envío entregado:', err);
+        avisoCorreo = 'Se marcó como entregado, pero no se pudo enviar el correo de agradecimiento.';
+      }
+    }
+  }
+
   revalidatePath(`/admin/pedidos/${orderId}`);
   revalidatePath('/admin/pedidos');
-  return { success: true };
+  return { success: true, avisoCorreo };
 }
 
 // ── Aviso "listo para recoger" (solo recolección en showroom) ───────────
