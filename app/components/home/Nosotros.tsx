@@ -59,7 +59,7 @@ export default function Nosotros() {
             </blockquote>
 
             {/* Respaldo */}
-            <p className="font-almaq text-moto-bone/70 text-sm leading-relaxed mb-6">
+            <p className="font-inter font-light text-moto-bone/75 text-[15px] md:text-base leading-relaxed mb-5">
               Somos una empresa mexicana fundada por amantes de las motocicletas,
               con 17 años de experiencia en la industria de la seguridad. Sabemos
               lo que se siente encontrar esa moto que te hace amar las dos ruedas
@@ -67,10 +67,10 @@ export default function Nosotros() {
             </p>
 
             {/* Remate curatorial — conecta con "We are the standard" */}
-            <p className="font-almaq text-moto-bone/80 text-base md:text-lg leading-relaxed mb-8">
+            <p className="font-inter font-light text-moto-bone/75 text-[15px] md:text-base leading-relaxed mb-8">
               Por eso no vendemos cualquier cosa. Traemos a México solo las marcas
               del mundo que ya cumplen el estándar.{' '}
-              <span className="font-cormorant italic text-brass">
+              <span className="font-cormorant italic text-brass text-lg md:text-xl">
                 We are the standard.
               </span>
             </p>
