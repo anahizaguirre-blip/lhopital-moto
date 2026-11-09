@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { cloudinaryEditorialUrl } from '@/lib/cloudinary'
 
 // Video del hero en Cloudinary: cortado a 41s (eo_41). El logo de cierre aparece en el
@@ -84,12 +85,12 @@ export default function HeroHome() {
             className="flex flex-wrap items-center gap-4 opacity-0 animate-fade-in-up"
             style={{ animationDelay: '0.55s' }}
           >
-            <button
-              onClick={scrollToMarcas}
+            <Link
+              href="/tienda"
               className="bg-moto-bone text-moto-black px-7 py-3 font-almaq text-xs font-bold tracking-[0.2em] uppercase hover:bg-brass transition-colors duration-300"
             >
-              Conocer marcas
-            </button>
+              Comprar ahora
+            </Link>
             <button
               onClick={scrollToMarcas}
               className="group inline-flex items-center gap-3 font-almaq text-xs tracking-[0.3em] uppercase text-moto-bone hover:text-brass transition-colors duration-300"
