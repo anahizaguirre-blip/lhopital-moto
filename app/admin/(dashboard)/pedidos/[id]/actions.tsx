@@ -80,7 +80,7 @@ export async function capturarEnvio(
 
 // ── Cambio de estado manual (preparando / entregada) ────────────────────
 // Flujo: pagada → preparando → (envío: se captura la guía → enviada) → entregada.
-// Recolección en showroom: pagada → preparando → (aviso "listo para recoger") → entregada.
+// Recolección en showroom: pagada → preparando → lista_para_recoger (se avisa al cliente) → entregada.
 
 export interface CambiarEstadoState {
   error?: string;
@@ -91,6 +91,7 @@ export interface CambiarEstadoState {
 const SIGUIENTE: Record<string, { envio: string[]; recoleccion: string[] }> = {
   pagada: { envio: ['preparando'], recoleccion: ['preparando'] },
   preparando: { envio: [], recoleccion: ['entregada'] },
+  lista_para_recoger: { envio: [], recoleccion: ['entregada'] },
   enviada: { envio: ['entregada'], recoleccion: ['entregada'] },
 };
 
@@ -163,8 +164,8 @@ export async function cambiarEstado(
 }
 
 // ── Aviso "listo para recoger" (solo recolección en showroom) ───────────
-// No hay estado propio en la base: el pedido sigue en "preparando" y la fecha
-// del aviso se guarda en fecha_envio (en recolección no se usa para otra cosa).
+// Pasa el pedido a "lista_para_recoger". La fecha del aviso se guarda en
+// fecha_envio (en recolección no se usa para otra cosa) y cuenta los 10 días.
 
 // useActionState le pasa (estadoPrevio, formData); aquí no se usan.
 export async function avisarListoRecoger(orderId: string): Promise<CambiarEstadoState> {
@@ -196,7 +197,7 @@ export async function avisarListoRecoger(orderId: string): Promise<CambiarEstado
 
   const { error } = await supabase
     .from('orders')
-    .update({ estado: 'preparando', fecha_envio: ahora.toISOString(), updated_at: ahora.toISOString() })
+    .update({ estado: 'lista_para_recoger', fecha_envio: ahora.toISOString(), updated_at: ahora.toISOString() })
     .eq('id', orderId);
   if (error) {
     console.error('[admin/pedidos/[id]] guardar aviso listo:', error.message);

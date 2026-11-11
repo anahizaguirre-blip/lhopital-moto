@@ -40,7 +40,7 @@ export default async function ConfirmacionPage({ searchParams }: PageProps) {
   }
 
   const orden = r.orden;
-  const pagada = ['pagada', 'preparando', 'enviada', 'entregada'].includes(orden.estado);
+  const pagada = ['pagada', 'preparando', 'lista_para_recoger', 'enviada', 'entregada'].includes(orden.estado);
 
   if (orden.estado === 'pago_pendiente') {
     return (

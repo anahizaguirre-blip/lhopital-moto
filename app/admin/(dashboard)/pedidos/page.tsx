@@ -6,6 +6,7 @@ const ESTADOS = [
   'pago_pendiente',
   'pagada',
   'preparando',
+  'lista_para_recoger',
   'enviada',
   'entregada',
   'cancelada',
