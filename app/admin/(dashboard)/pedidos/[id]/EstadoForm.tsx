@@ -9,6 +9,7 @@ const ETIQUETA: Record<string, string> = {
   pago_pendiente: 'Pago pendiente',
   pagada: 'Pagada',
   preparando: 'Preparando',
+  lista_para_recoger: 'Listo para recoger',
   enviada: 'Enviada',
   entregada: 'Entregada',
   cancelada: 'Cancelada',
@@ -46,20 +47,21 @@ export function EstadoForm({
   orderId: string;
   estado: string;
   recoleccion: boolean;
-  /** Recolección: cuándo se mandó el correo "listo para recoger" (null si aún no). */
+  /** Recolección: cuándo se mandó el correo "listo para recoger" (fecha_envio). */
   avisoListoEn: string | null;
 }) {
   const [estadoState, estadoAction, estadoPending] = useActionState(cambiarEstado.bind(null, orderId), initialState);
   const [avisoState, avisoAction, avisoPending] = useActionState(avisarListoRecoger.bind(null, orderId), initialState);
   const pending = estadoPending || avisoPending;
 
-  const listoAvisado = recoleccion && estado === 'preparando' && !!avisoListoEn;
-  const etiqueta = listoAvisado ? 'Listo para recoger' : ETIQUETA[estado] ?? estado;
+  const listoAvisado = estado === 'lista_para_recoger';
+  const etiqueta = ETIQUETA[estado] ?? estado;
 
   // Botón principal (y, en recolección, uno secundario) según el paso actual.
   const marcarPreparando = estado === 'pagada';
-  const avisarListo = recoleccion && estado === 'preparando' && !avisoListoEn;
-  const marcarEntregado = (recoleccion && estado === 'preparando') || estado === 'enviada';
+  const avisarListo = recoleccion && estado === 'preparando';
+  const marcarEntregado =
+    (recoleccion && (estado === 'preparando' || estado === 'lista_para_recoger')) || estado === 'enviada';
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
